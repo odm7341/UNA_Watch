@@ -1,6 +1,6 @@
-# UNA Map Style Lab
+# UNA Rawtiles Exporter
 
-UNA Map Style Lab is a static browser tool for previewing the UNA Watch topographic style and exporting the selected area as a `.rawtiles` pack. It renders vector sources in [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/), then converts every export tile to the watch's 256 × 256 `ABGR2222` pixel format.
+UNA Rawtiles Exporter is a static browser tool for previewing the UNA Watch topographic style and exporting the selected area as a `.rawtiles` pack. It renders vector sources in [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/), then converts every export tile to the watch's 256 × 256 `ABGR2222` pixel format.
 
 It is the pack-creation step in the [complete own-watch guide](../../README.md#complete-guide-put-a-map-on-your-own-watch). That guide also explains building the watch app, installing upstream Map Manager, copying packs to the right USB directory, and waiting for verification.
 
@@ -20,7 +20,11 @@ From the repository root:
 python3 -m http.server 8000
 ```
 
-Open [http://localhost:8000/Tools/map-style-viewer/](http://localhost:8000/Tools/map-style-viewer/). `index.html` is the complete entry point, so this directory can also be hosted unchanged on GitHub Pages, a static object host, or a normal web server.
+Open [http://localhost:8000/Tools/rawtiles-exporter/](http://localhost:8000/Tools/rawtiles-exporter/). `index.html` is the complete entry point, so this directory can also be hosted unchanged on a static object host or normal web server.
+
+### GitHub Pages
+
+The repository deploys this directory on every push to `main` that changes the exporter. After the first successful deployment, open [https://odm7341.github.io/UNA_Watch/rawtiles-exporter/](https://odm7341.github.io/UNA_Watch/rawtiles-exporter/). Before the first deployment, set the repository's **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. The Pages artifact contains only this exporter and a root redirect; no watch sources, SDK checkout, or local tooling are published.
 
 ## Create your first watch map
 
@@ -35,14 +39,14 @@ For more detail, increase the zoom range gradually and use a tight selection. Th
 
 ## Put the pack on a watch
 
-The viewer produces the file but does not communicate with a watch. Follow the root guide's [USB-copy and verification step](../../README.md#6-copy-both-apps-and-the-pack-to-the-watch):
+The rawtiles exporter produces the file but does not communicate with a watch. Follow the root guide's [USB-copy and verification step](../../README.md#6-copy-both-apps-and-the-pack-to-the-watch):
 
 1. Copy the downloaded `.rawtiles` file directly into `SharedData/maps/` on the watch USB volume.
 2. Safely eject and disconnect the watch. USB stops apps, including Map Manager's verifier.
 3. Let upstream [Map Manager](https://github.com/tobymurray/watch-apps/tree/c752601/MapManager) mark the pack **Good** after the watch restarts.
 4. Open MapExplorer and use **PACK** mode to choose the installed pack.
 
-MapExplorer only accepts rawtiles v1 packs with 256 px `ABGR2222` tiles, Web Mercator projection, and XYZ/Quadtree addressing. This viewer writes those values, the geographic bounding box, a CRC-32 footer, and an `ATTR` attribution extension.
+MapExplorer only accepts rawtiles v1 packs with 256 px `ABGR2222` tiles, Web Mercator projection, and XYZ/Quadtree addressing. This exporter writes those values, the geographic bounding box, a CRC-32 footer, and an `ATTR` attribution extension.
 
 ## Data, attribution, and responsible use
 
@@ -78,4 +82,4 @@ Only these first-party static files belong in commits. Downloaded `.rawtiles` pa
 
 ## License
 
-The viewer's first-party static files are covered by the repository [MIT License](../../LICENSE). It does not relicense MapLibre, public map data, or exported tiles; see the root [third-party notices](../../THIRD_PARTY_NOTICES.md) and the providers' terms above.
+The exporter's first-party static files are covered by the repository [MIT License](../../LICENSE). It does not relicense MapLibre, public map data, or exported tiles; see the root [third-party notices](../../THIRD_PARTY_NOTICES.md) and the providers' terms above.

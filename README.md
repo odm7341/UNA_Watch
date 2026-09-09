@@ -3,7 +3,7 @@
 This repository builds an offline map browser for a UNA Watch and supplies the browser tool that creates its map packs.
 
 - [`MapExplorer`](MapExplorer/README.md) — the watch utility that opens, pans, zooms, and switches offline maps.
-- [`Tools/map-style-viewer`](Tools/map-style-viewer/README.md) — the static browser page that previews the watch style and exports `.rawtiles` packs.
+- [`Tools/rawtiles-exporter`](Tools/rawtiles-exporter/README.md) — the static browser page that previews the watch style and exports `.rawtiles` packs.
 - [`MapKit`](MapKit/README.md) — the shared offline-map reader used by MapExplorer. Its upstream relationship is recorded in [`MapKit/UPSTREAM.md`](MapKit/UPSTREAM.md).
 
 ## Complete guide: put a map on your own watch
@@ -74,11 +74,11 @@ Its build produces `MapManager_*.uapp` in that build directory or `MapManager/Ou
 
 ### 5. Create a small first map pack
 
-Serve this repository over HTTP, then open the viewer. Do not open `index.html` with `file://`.
+Serve this repository over HTTP, then open the rawtiles exporter. Do not open `index.html` with `file://`.
 
 ```bash
 python3 -m http.server 8000
-# Open http://localhost:8000/Tools/map-style-viewer/
+# Open http://localhost:8000/Tools/rawtiles-exporter/
 ```
 
 1. Move the map to a place you know and click **Use current view**.
@@ -86,7 +86,7 @@ python3 -m http.server 8000
 3. Leave the desired layers enabled and click **Download rawtiles**.
 4. Keep the downloaded `una-topo-z8-8.rawtiles` file. Larger regions and higher zooms work, but the page refuses exports above 1,024 tiles and uses roughly 64 KiB per tile.
 
-See the [viewer guide](Tools/map-style-viewer/README.md) for selection, layer, attribution, and hosting details.
+See the [rawtiles exporter guide](Tools/rawtiles-exporter/README.md) for selection, layer, attribution, and hosting details.
 
 ### 6. Copy both apps and the pack to the watch
 
@@ -117,7 +117,7 @@ For subsequent maps, repeat only steps 5–7. Copy every new or replaced pack to
 
 | Symptom | Cause and correction |
 | --- | --- |
-| The viewer opens blank or scripts fail after double-clicking the file | Serve the repository over HTTP(S), then use the `/Tools/map-style-viewer/` URL. |
+| The rawtiles exporter opens blank or scripts fail after double-clicking the file | Serve the repository over HTTP(S), then use the `/Tools/rawtiles-exporter/` URL. |
 | CMake cannot find SDK files | `UNA_SDK` must point to the SDK checkout in the shell that runs CMake. |
 | Link failures mentioning newlib/syscalls | The wrong ARM compiler is first on `PATH`; use the ST toolchain from CubeIDE/CubeCLT. |
 | MapExplorer has no map | Confirm the file ends in `.rawtiles`, is directly in `SharedData/maps/`, and Map Manager reported **Good** after the watch was unplugged. |
@@ -128,4 +128,4 @@ For subsequent maps, repeat only steps 5–7. Copy every new or replaced pack to
 
 The repository's original source and documentation are available under the [MIT License](LICENSE). It retains the copyright notices required for the MapKit code derived from [Toby Murray's watch-apps](https://github.com/tobymurray/watch-apps) and the UNA Watch SDK examples. The [third-party notices](THIRD_PARTY_NOTICES.md) identify separately licensed Poppins fonts and TouchGFX-generated integration; neither is relicensed under MIT.
 
-The viewer uses browser-loaded MapLibre and public vector-tile services. Exported packs retain attribution, but their data remains subject to the providers' terms and [OpenStreetMap attribution](https://www.openstreetmap.org/copyright).
+The rawtiles exporter uses browser-loaded MapLibre and public vector-tile services. Exported packs retain attribution, but their data remains subject to the providers' terms and [OpenStreetMap attribution](https://www.openstreetmap.org/copyright).

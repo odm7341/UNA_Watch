@@ -12,7 +12,7 @@ MapExplorer needs all three of these before it can draw a map:
 2. One or more `.rawtiles` files directly in `SharedData/maps/`.
 3. A **Good** verdict for each pack from upstream [Map Manager](https://github.com/tobymurray/watch-apps/tree/c752601/MapManager). MapExplorer checks Map Manager's marker for the pack's exact size and declared CRC; it intentionally does not render an unverified or corrupt pack.
 
-Create packs with the [map-style viewer](../Tools/map-style-viewer/README.md). Do not manually create `<pack>.rawtiles.trust`: Map Manager owns it and regenerates it after the watch is unplugged.
+Create packs with the [rawtiles exporter](../Tools/rawtiles-exporter/README.md). Do not manually create `<pack>.rawtiles.trust`: Map Manager owns it and regenerates it after the watch is unplugged.
 
 ## Build from a fresh checkout
 
@@ -58,7 +58,7 @@ The package is written as `MapExplorer_*.uapp` under `Output/`. Build output, pa
 5. Safely eject the volume, unplug the watch, and power-cycle it. The [UNA SDK deployment guide](https://developers.unawatch.com/latest/deploy.html) requires this for the watch to rescan installed apps.
 6. Leave the watch unplugged until Map Manager reports the new pack **Good**. The verifier cannot scan while USB mass storage is active.
 
-A valid pack must be rawtiles v1 with 256 px `ABGR2222` tiles, Web Mercator, and XYZ/Quadtree addressing. MapKit rejects incompatible headers before rendering; the viewer generates the required format.
+A valid pack must be rawtiles v1 with 256 px `ABGR2222` tiles, Web Mercator, and XYZ/Quadtree addressing. MapKit rejects incompatible headers before rendering; the rawtiles exporter generates the required format.
 
 ## Watch controls
 

@@ -17,7 +17,7 @@ The repository [MIT License](LICENSE) covers the repository's original source an
 
 ## Browser runtime and map data
 
-The map-style viewer loads, but does not redistribute, [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/), [OpenFreeMap](https://openfreemap.org/), and [OpenStreetMap US vector tiles](https://tiles.openstreetmap.us/) at runtime. The viewer's README records those services and the exported pack preserves source attribution. Exported data remains subject to the providers' terms and the [OpenStreetMap attribution and licence](https://www.openstreetmap.org/copyright).
+The rawtiles exporter loads, but does not redistribute, [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/), [OpenFreeMap](https://openfreemap.org/), and [OpenStreetMap US vector tiles](https://tiles.openstreetmap.us/) at runtime. The exporter's README records those services and the exported pack preserves source attribution. Exported data remains subject to the providers' terms and the [OpenStreetMap attribution and licence](https://www.openstreetmap.org/copyright).
 
 ## Excluded proprietary assets
 
