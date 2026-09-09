@@ -15,7 +15,9 @@ class MapBrowserSession {
 public:
     enum class Operation : uint8_t { NorthSouth, EastWest, Zoom, Pack, Exit };
 
-    static constexpr int64_t kPanPixels = 96;
+    /// Desired pan distance on the 240px display; converted to TRACE_ZOOM
+    /// world pixels for the active pack zoom.
+    static constexpr int64_t kPanScreenPixels = 48;
 
     explicit MapBrowserSession(MapSession& session) : mSession(session) {}
 
