@@ -16,6 +16,7 @@ class MainView : public MainViewBase
     MapKit::MapBrowserSession mBrowser;
     uint8_t mPollTicks = 0;
     bool mWasRenderable = false;
+    uint8_t mLastKey = 0;
 public:
     MainView();
     virtual ~MainView() {}

@@ -54,6 +54,13 @@ void MainView::handleTickEvent()
 
 void MainView::handleKeyEvent(uint8_t key)
 {
+    // Keep the tutorial's deliberate double-R2 escape hatch. One R2 remains
+    // the browser's positive adjustment; two consecutive presses return to
+    // the watch launcher without requiring a hidden gesture.
+    if (key == Gui::Config::Button::R2 && mLastKey == key) {
+        presenter->exit();
+        return;
+    }
     if (key == Gui::Config::Button::L1) {
         mBrowser.cycleOperation(-1);
     } else if (key == Gui::Config::Button::L2) {
@@ -63,5 +70,6 @@ void MainView::handleKeyEvent(uint8_t key)
     } else if (key == Gui::Config::Button::R2) {
         mBrowser.adjust(true);
     }
+    mLastKey = key;
     refreshMap();
 }
