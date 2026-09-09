@@ -19,7 +19,6 @@ class MainView : public MainViewBase
     MapKit::MapBrowserSession mBrowser;
     uint8_t mPollTicks = 0;
     bool mWasRenderable = false;
-    uint8_t mLastKey = 0;
     touchgfx::Box mOperationBackground;
     touchgfx::TextAreaWithOneWildcard mOperationText;
     touchgfx::Unicode::UnicodeChar mOperationBuffer[20] {};

@@ -35,9 +35,9 @@ if(DEFINED TOUCHGFX_PATH)
 endif()
 
 project(${APP_NAME})
-# First public MapExplorer package. Keep this explicit until the project adopts
-# an apps-v* release-tag workflow.
-set(BUILD_VERSION "0.1.0")
+# Patch release: replace the unreliable hidden double-press exit with a
+# visible EXIT operation.
+set(BUILD_VERSION "0.1.1")
 una_app_setup_version(BUILD_VERSION ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Build service

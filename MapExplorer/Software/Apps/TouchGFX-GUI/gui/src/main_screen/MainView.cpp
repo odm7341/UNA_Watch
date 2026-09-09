@@ -75,6 +75,7 @@ void MainView::refreshOperationHint()
     case MapKit::MapBrowserSession::Operation::EastWest:   label = "PAN E/W"; break;
     case MapKit::MapBrowserSession::Operation::Zoom:       label = "ZOOM"; break;
     case MapKit::MapBrowserSession::Operation::Pack:       label = "PACK"; break;
+    case MapKit::MapBrowserSession::Operation::Exit:       label = "EXIT"; break;
     }
     touchgfx::Unicode::strncpy(mOperationBuffer, label, sizeof(mOperationBuffer) / sizeof(mOperationBuffer[0]) - 1);
     mOperationBuffer[sizeof(mOperationBuffer) / sizeof(mOperationBuffer[0]) - 1] = 0;
@@ -82,23 +83,17 @@ void MainView::refreshOperationHint()
 }
 void MainView::handleKeyEvent(uint8_t key)
 {
-    // Keep the tutorial's deliberate double-R2 escape hatch. One R2 remains
-    // the browser's positive adjustment; two consecutive presses return to
-    // the watch launcher without requiring a hidden gesture.
-    if (key == Gui::Config::Button::R2 && mLastKey == key) {
-        presenter->exit();
-        return;
-    }
     if (key == Gui::Config::Button::L1) {
         mBrowser.cycleOperation(-1);
     } else if (key == Gui::Config::Button::L2) {
         mBrowser.cycleOperation(1);
-    } else if (key == Gui::Config::Button::R1) {
-        mBrowser.adjust(false);
-    } else if (key == Gui::Config::Button::R2) {
-        mBrowser.adjust(true);
+    } else if (key == Gui::Config::Button::R1 || key == Gui::Config::Button::R2) {
+        if (mBrowser.operation() == MapKit::MapBrowserSession::Operation::Exit) {
+            presenter->exit();
+            return;
+        }
+        mBrowser.adjust(key == Gui::Config::Button::R2);
     }
-    mLastKey = key;
     refreshMap();
     refreshOperationHint();
 }

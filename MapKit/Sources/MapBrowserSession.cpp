@@ -36,13 +36,15 @@ bool MapBrowserSession::adjust(bool positive)
         mZoom = mSession.zoom();
         mSession.poll();
         return true;
+    case Operation::Exit:
+        return false;
     }
     return false;
 }
 
 void MapBrowserSession::cycleOperation(int direction)
 {
-    constexpr int kOperationCount = 4;
+    constexpr int kOperationCount = 5;
     const int current = static_cast<int>(mOperation);
     mOperation = static_cast<Operation>((current + direction + kOperationCount) % kOperationCount);
 }

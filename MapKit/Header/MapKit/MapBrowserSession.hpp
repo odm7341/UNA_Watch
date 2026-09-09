@@ -13,7 +13,7 @@ namespace MapKit {
  */
 class MapBrowserSession {
 public:
-    enum class Operation : uint8_t { NorthSouth, EastWest, Zoom, Pack };
+    enum class Operation : uint8_t { NorthSouth, EastWest, Zoom, Pack, Exit };
 
     static constexpr int64_t kPanPixels = 96;
 
