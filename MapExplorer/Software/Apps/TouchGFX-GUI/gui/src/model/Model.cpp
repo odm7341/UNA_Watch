@@ -1,5 +1,7 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
+
+#include "Commands.hpp"
 #include <gui/common/FrontendApplication.hpp>
 
 #include "SDK/Kernel/KernelProviderGUI.hpp"
@@ -23,6 +25,7 @@ Model::Model()
     , mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
 {
     SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(this);
+    SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(this);
 
 #if defined(SIMULATOR)
     LOG_INFO("Application is running through simulator! \n");
@@ -83,6 +86,19 @@ void Model::exitApp()
     // on where this function was called, Model::tick(), Model::handleKeyEvent(),
     // as well as handleTickEvent() and handleKeyEvent() for the
     // current screen will be called.
+}
+
+bool Model::customMessageHandler(SDK::MessageBase* message)
+{
+    if (message == nullptr || message->getType() != MapExplorerMessage::GPS_LOCATION) {
+        return false;
+    }
+
+    const auto* gps = static_cast<const MapExplorerMessage::GpsLocation*>(message);
+    if (modelListener != nullptr) {
+        modelListener->onGpsLocation(gps->valid != 0, gps->latitude, gps->longitude);
+    }
+    return true;
 }
 
 // IUserApp implementation

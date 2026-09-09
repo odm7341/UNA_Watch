@@ -37,6 +37,7 @@ ADDITIONAL_SOURCES_UNA :=\
 Libs/Source/Simulator/OS/OS.cpp\
 Libs/Source/UnaLogger/Logger.cpp\
 Libs/Source/Wrappers/StdLibWrappers.c\
+Libs/Source/SensorLayer/SensorConnection.cpp\
 Libs/Source/Kernel/KernelBuilder.cpp\
 Libs/Source/Port/TouchGFX/TouchGFXCommandProcessor.cpp\
 Libs/Source/Simulator/App/DualAppComm.cpp\

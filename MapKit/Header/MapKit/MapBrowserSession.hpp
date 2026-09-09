@@ -13,7 +13,7 @@ namespace MapKit {
  */
 class MapBrowserSession {
 public:
-    enum class Operation : uint8_t { NorthSouth, EastWest, Zoom, Pack, Exit };
+    enum class Operation : uint8_t { NorthSouth, EastWest, Zoom, Pack, Follow, Exit };
 
     /// Desired pan distance on the 240px display; converted to TRACE_ZOOM
     /// world pixels for the active pack zoom.
@@ -34,6 +34,9 @@ public:
     bool renderable() const { return mSession.renderable(); }
     const SDK::RawTiles::Container& container() const { return mSession.container(); }
     TileCache& cache() const { return mSession.cache(); }
+    bool onLocation(int64_t x, int64_t y);
+    bool following() const { return mFollowing; }
+    void clearLocation();
 
 private:
     MapSession& mSession;
@@ -41,6 +44,10 @@ private:
     int64_t mCenterX = 0;
     int64_t mCenterY = 0;
     uint8_t mZoom = 0;
+    int64_t mLocationX = 0;
+    int64_t mLocationY = 0;
+    bool mHasLocation = false;
+    bool mFollowing = true;
 };
 
 } // namespace MapKit

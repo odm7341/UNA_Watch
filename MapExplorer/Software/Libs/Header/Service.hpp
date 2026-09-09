@@ -16,8 +16,14 @@ public:
     void run();
 
 private:
+    static constexpr float kGpsPeriodMs = 1000.0F;
+
     SDK::Kernel&             mKernel;
+    SDK::Sensor::Connection  mGpsSensor;
     bool                     mGUIStarted;
+
+    void handleGpsData(SDK::Sensor::DataBatch& data);
+    void publishGpsLocation(bool valid, int32_t latitudeUdeg, int32_t longitudeUdeg);
 
     void onStartGUI();
     void onStopGUI();

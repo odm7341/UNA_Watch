@@ -77,6 +77,15 @@ public:
         invalidate();
     }
 
+    /// Draw a live position in world pixels at MapMath::TRACE_ZOOM.
+    void setLocation(bool valid, int64_t x, int64_t y)
+    {
+        mHasLocation = valid;
+        mLocationX = x;
+        mLocationY = y;
+        invalidate();
+    }
+
     virtual touchgfx::Rect getSolidRect() const
     {
         return touchgfx::Rect(0, 0, getWidth(), getHeight());
@@ -93,6 +102,9 @@ private:
                    int16_t absDX, int16_t absDY) const;
     void drawMarker(const touchgfx::Rect& absArea,
                     int16_t absDX, int16_t absDY) const;
+    void drawLocation(const touchgfx::Rect& absArea,
+                      int64_t viewOriginX, int64_t viewOriginY,
+                      int16_t absDX, int16_t absDY) const;
     static void dot(const touchgfx::Rect& clip, int16_t absX, int16_t absY,
                     int16_t size, uint8_t r, uint8_t g, uint8_t b);
 
@@ -105,6 +117,9 @@ private:
     bool                            mFix       = false;
     bool                            mSuppressTiles = true;
     bool                            mShowMarker = true;
+    int64_t                         mLocationX = 0;
+    int64_t                         mLocationY = 0;
+    bool                            mHasLocation = false;
 };
 
 } // namespace MapKit

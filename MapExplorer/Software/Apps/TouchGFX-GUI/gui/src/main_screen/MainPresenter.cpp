@@ -16,3 +16,8 @@ void MainPresenter::deactivate()
 {
 
 }
+
+void MainPresenter::onGpsLocation(bool valid, int32_t latitudeUdeg, int32_t longitudeUdeg)
+{
+    view.onGpsLocation(valid, latitudeUdeg, longitudeUdeg);
+}

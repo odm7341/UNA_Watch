@@ -31,6 +31,8 @@ public:
         model->exitApp();
     }
 
+    void onGpsLocation(bool valid, int32_t latitudeUdeg, int32_t longitudeUdeg) override;
+
 private:
     MainPresenter();
 

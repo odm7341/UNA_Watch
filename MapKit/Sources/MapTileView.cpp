@@ -50,6 +50,9 @@ void MapTileView::draw(const Rect& area) const
     if (mShowMarker) {
         drawMarker(absArea, absDX, absDY);
     }
+    if (mHasLocation) {
+        drawLocation(absArea, viewOriginX, viewOriginY, absDX, absDY);
+    }
 }
 
 void MapTileView::drawTiles(const Rect& absArea,
@@ -188,6 +191,23 @@ void MapTileView::drawMarker(const Rect& absArea, int16_t absDX, int16_t absDY) 
     } else {
         dot(absArea, cx - 4, cy - 4, 9, 160, 160, 160);
     }
+}
+
+void MapTileView::drawLocation(const Rect& absArea,
+                               int64_t viewOriginX, int64_t viewOriginY,
+                               int16_t absDX, int16_t absDY) const
+{
+    const int64_t x = MapMath::rescale(mLocationX, MapMath::TRACE_ZOOM, mZoom) - viewOriginX;
+    const int64_t y = MapMath::rescale(mLocationY, MapMath::TRACE_ZOOM, mZoom) - viewOriginY;
+    if (x < -6 || x >= getWidth() + 6 || y < -6 || y >= getHeight() + 6) {
+        return;
+    }
+
+    const int16_t cx = static_cast<int16_t>(absDX + x);
+    const int16_t cy = static_cast<int16_t>(absDY + y);
+    dot(absArea, cx - 6, cy - 6, 13, 0, 0, 0);
+    dot(absArea, cx - 4, cy - 4, 9, 0, 105, 220);
+    dot(absArea, cx - 1, cy - 1, 3, 255, 255, 255);
 }
 
 } // namespace MapKit
