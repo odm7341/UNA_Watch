@@ -11,6 +11,10 @@ Two maintained projects live in this repository:
 
 The untracked `Tools/build_usgs_topo_rawtiles.py` is intentionally outside the map-style-viewer project. It is neither documented here nor included in this commit.
 
+## License and provenance
+
+The repository's original source and documentation are available under the [MIT License](LICENSE). It retains the copyright notices required for the MapKit code derived from [Toby Murray's watch-apps](https://github.com/tobymurray/watch-apps) and the UNA Watch SDK examples. The [third-party notices](THIRD_PARTY_NOTICES.md) identify separately licensed Poppins fonts and TouchGFX-generated integration; neither is relicensed under MIT.
+
 ## Build MapExplorer
 
 1. Install the [UNA Watch SDK](https://github.com/UNAWatch/una-sdk) and follow its [SDK setup guide](https://developers.unawatch.com/latest/sdk-setup.html). Set `UNA_SDK` to that checkout; this repository deliberately does not vendor the SDK.

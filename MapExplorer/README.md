@@ -51,3 +51,5 @@ Use the [map-style viewer](../Tools/map-style-viewer/README.md) to make a compat
 ## Dependencies and ownership
 
 MapExplorer is app-specific source. The UNA SDK is excluded by the root `.gitignore`; do not add a local SDK checkout or toolchain to this repository. MapKit has one explicitly marked vendored rawtiles reader—its source comment records the upstream branch and revision. See [MapKit's README](../MapKit/README.md) for the shared library's behavior and tests.
+
+The repository's original code is MIT-licensed; see the root [LICENSE](../LICENSE). Poppins font files retain their [SIL Open Font License 1.1](Software/Apps/TouchGFX-GUI/assets/fonts/OFL.txt), and TouchGFX-generated integration remains subject to STMicroelectronics' [SLA0048](https://www.st.com/resource/en/license_agreement/dm00107782.pdf). Full provenance and scope are in the root [third-party notices](../THIRD_PARTY_NOTICES.md).

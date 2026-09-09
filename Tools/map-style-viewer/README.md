@@ -35,6 +35,10 @@ The page downloads these upstream resources at runtime. Their availability, attr
 
 The exporter's `ATTR` extension names OpenFreeMap, OpenStreetMap contributors, OpenStreetMap US, and Mapzen DEM. Keep that attribution intact and consult the providers before bulk exporting or redistributing tiles.
 
+## License
+
+The viewer's first-party static files are covered by the repository [MIT License](../../LICENSE). It does not relicense MapLibre, public map data, or exported tiles; see the root [third-party notices](../../THIRD_PARTY_NOTICES.md) and the providers' terms above.
+
 ## Project contents
 
 - `index.html` — page shell and CDN references.
