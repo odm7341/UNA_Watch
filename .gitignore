@@ -1,0 +1,20 @@
+# Local SDK/toolchain checkout; do not publish vendor code.
+/una-sdk/
+/.tools/
+/stm32cubeclt_*.zip
+/.venv/
+/UNA_WATCH_APP_HANDOFF.md
+
+# Build/install artifacts.
+/build-app/
+/**/*.uapp
+/**/*.elf
+/**/*.map
+/**/build/
+/**/Output/
+/**/install/
+/**/watch-backups/
+
+# OS/editor noise.
+.DS_Store
+*.swp

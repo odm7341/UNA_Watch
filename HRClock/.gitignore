@@ -1,0 +1,25 @@
+# UNA/TouchGFX generated output
+/build*/
+/Output/
+/install/
+/watch-backups/
+Software/Apps/**/build/
+Software/Apps/**/generated/
+Software/Apps/**/una/
+
+# Packaged binaries and maps
+*.uapp
+*.elf
+*.map
+*.obj
+*.o
+*.d
+*.su
+*.cyclo
+
+# Local IDE/tooling
+.vscode/
+.idea/
+*.user
+*.suo
+.DS_Store
