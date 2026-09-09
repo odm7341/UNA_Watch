@@ -1,6 +1,13 @@
 import { style } from './map-style.js';
 import { TILE_BYTES, TILE_DIM, tileXToLon, tileYToLat } from './rawtiles.js';
 
+// MapLibre's world is 512 CSS pixels per XYZ tile. Render a 512-pixel tile
+// core plus context on every side, then reduce that core to rawtiles' 256px.
+// The context makes line joins and symbol collision decisions stable at edges.
+const MAPLIBRE_TILE_DIM = TILE_DIM * 2;
+const EDGE_BUFFER = 128;
+const METATILE_DIM = MAPLIBRE_TILE_DIM + EDGE_BUFFER * 2;
+
 function quantizeChannel(value) {
   if (value <= 42) return 0;
   if (value <= 127) return 1;
@@ -8,12 +15,16 @@ function quantizeChannel(value) {
   return 3;
 }
 
-function quantizeCanvas(canvas) {
+function quantizeMetatile(canvas) {
   const raster = document.createElement('canvas');
   raster.width = TILE_DIM;
   raster.height = TILE_DIM;
   const context = raster.getContext('2d', { willReadFrequently: true });
-  context.drawImage(canvas, 0, 0, TILE_DIM, TILE_DIM);
+  context.drawImage(
+    canvas,
+    EDGE_BUFFER, EDGE_BUFFER, MAPLIBRE_TILE_DIM, MAPLIBRE_TILE_DIM,
+    0, 0, TILE_DIM, TILE_DIM
+  );
   const rgba = context.getImageData(0, 0, TILE_DIM, TILE_DIM).data;
   const output = new Uint8Array(TILE_BYTES);
   for (let pixel = 0, source = 0; pixel < TILE_BYTES; pixel += 1, source += 4) {
@@ -35,7 +46,7 @@ function waitForIdle(map, tile) {
 
 export async function renderVectorTile(tile, hiddenLayerIds) {
   const host = document.createElement('div');
-  host.style.cssText = `position:fixed;left:-${TILE_DIM + 4}px;top:0;width:${TILE_DIM}px;height:${TILE_DIM}px;pointer-events:none;`;
+  host.style.cssText = `position:fixed;left:-${METATILE_DIM + 4}px;top:0;width:${METATILE_DIM}px;height:${METATILE_DIM}px;pointer-events:none;`;
   document.body.append(host);
   const exportStyle = structuredClone(style);
   for (const layer of exportStyle.layers) {
@@ -57,7 +68,7 @@ export async function renderVectorTile(tile, hiddenLayerIds) {
   });
   try {
     await waitForIdle(rendered, tile);
-    return quantizeCanvas(rendered.getCanvas());
+    return quantizeMetatile(rendered.getCanvas());
   } finally {
     rendered.remove();
     host.remove();

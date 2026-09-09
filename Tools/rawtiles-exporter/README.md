@@ -35,6 +35,8 @@ The repository deploys this directory on every push to `main` that changes the e
 5. Click **Download rawtiles**. The status updates once per rendered tile, then the browser downloads `una-topo-z<min>-<max>.rawtiles`.
 6. Keep that file unchanged. Do not unzip it, rename it to a different extension, edit it, or copy a `.trust` marker beside it.
 
+The zoom controls and exported packs support z8 through z19. At z15–19, MapLibre overzooms the highest available vector detail from the upstream sources; use tight selections because each zoom step quadruples the tile count. The exporter renders a buffered 512px MapLibre metatile for every 256px rawtiles tile, so line work and labels have rendering context beyond each tile edge before the tile core is reduced and quantized.
+
 For more detail, increase the zoom range gradually and use a tight selection. The page enforces a 1,024-tile browser-export limit because every tile is rendered and quantized locally. A large high-zoom region may be many megabytes and take substantial time.
 
 ## Put the pack on a watch
@@ -74,7 +76,7 @@ Every exported pack writes an `ATTR` extension naming OpenFreeMap, OpenStreetMap
 - `index.html` — page shell and CDN references.
 - `app.js` — map controls, selection, export sequencing, and download.
 - `map-style.js` — source definitions, layer groups, and watch palette.
-- `vector-renderer.js` — one-tile offscreen renderer and color quantizer.
+- `vector-renderer.js` — buffered MapLibre metatile renderer and ABGR2222 color quantizer.
 - `rawtiles.js` — tile range math and rawtiles pack writer.
 - `style.css` — responsive map-control layout.
 

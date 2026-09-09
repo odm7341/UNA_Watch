@@ -23,14 +23,14 @@ const map = new maplibregl.Map({
   center: [-70.7746224, 43.4387179],
   zoom: 12,
   minZoom: 2,
-  maxZoom: 14,
+  maxZoom: 19,
   attributionControl: true,
   preserveDrawingBuffer: true
 });
 map.addControl(new maplibregl.NavigationControl(), 'bottom-right');
 map.addControl(new maplibregl.ScaleControl({ maxWidth: 100, unit: 'imperial' }), 'bottom-left');
 
-for (let zoom = 8; zoom <= 14; zoom += 1) {
+for (let zoom = 8; zoom <= 19; zoom += 1) {
   for (const input of [zoomMinInput, zoomMaxInput]) {
     const option = document.createElement('option');
     option.value = String(zoom);
