@@ -1,2 +1,0 @@
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitCrc.cpp:19:10:uint16_t SDK::Fit::fitCrcByte(uint16_t, uint8_t)	8	static
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitCrc.cpp:34:10:uint16_t SDK::Fit::fitCrcUpdate(uint16_t, const void*, size_t)	16	static

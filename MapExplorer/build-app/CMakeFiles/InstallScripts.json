@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/owen/repos/UNA_Watch/MapExplorer/build-app/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

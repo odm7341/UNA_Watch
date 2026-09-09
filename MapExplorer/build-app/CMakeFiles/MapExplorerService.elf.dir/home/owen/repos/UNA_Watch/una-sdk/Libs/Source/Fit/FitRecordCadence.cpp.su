@@ -1,2 +1,0 @@
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitRecordCadence.cpp:16:18:SDK::FitRecordCadence::CadenceFitFields SDK::FitRecordCadence::encodeCadenceSpm(float)	32	static
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitRecordCadence.cpp:39:10:uint16_t SDK::FitRecordCadence::encodeStepLengthM(float)	8	static

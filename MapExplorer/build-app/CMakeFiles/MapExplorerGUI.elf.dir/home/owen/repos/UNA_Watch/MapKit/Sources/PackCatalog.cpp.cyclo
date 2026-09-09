@@ -1,9 +1,0 @@
-/home/owen/repos/UNA_Watch/MapKit/Sources/PackCatalog.cpp:21:10:uint32_t MapKit::{anonymous}::readU32LE(const uint8_t*)	1
-/home/owen/repos/UNA_Watch/MapKit/Header/MapKit/PackTrustReader.hpp:134:21:static uint32_t MapKit::PackTrustReader::readU32LE(const uint8_t*)	1
-/home/owen/repos/UNA_Watch/MapKit/Sources/PackCatalog.cpp:58:6:static bool MapKit::PackCatalog::fullPathFor(const char*, char*, size_t)	2
-/home/owen/repos/UNA_Watch/MapKit/Sources/PackCatalog.cpp:155:6:void MapKit::PackCatalog::collectAttribution(const char*)	5
-/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/unique_ptr.h:393:7:std::unique_ptr<_Tp, _Dp>::~unique_ptr() [with _Tp = SDK::Interface::IFile; _Dp = std::default_delete<SDK::Interface::IFile>]	2
-/home/owen/repos/UNA_Watch/MapKit/Sources/PackCatalog.cpp:64:6:bool MapKit::PackCatalog::declaredCrc(const char*, uint64_t&, uint32_t&) const	7
-/home/owen/repos/UNA_Watch/MapKit/Sources/PackCatalog.cpp:85:6:bool MapKit::PackCatalog::peek(const char*, MapKit::PackFacts&) const	20
-/home/owen/repos/UNA_Watch/MapKit/Header/MapKit/PackTrustReader.hpp:72:11:MapKit::PackTrustReader::Trust MapKit::PackTrustReader::read(uint64_t&, uint32_t&) const	9
-/home/owen/repos/UNA_Watch/MapKit/Sources/PackCatalog.cpp:178:8:size_t MapKit::PackCatalog::rescan()	16

@@ -1,7 +1,0 @@
-/home/owen/repos/UNA_Watch/MapExplorer/Software/Libs/Header/Service.hpp:14:13:Service::~Service()	1
-/home/owen/repos/UNA_Watch/MapExplorer/Software/Libs/Header/Service.hpp:14:13:virtual Service::~Service()	1
-/home/owen/repos/UNA_Watch/MapExplorer/Software/Libs/Sources/Service.cpp:9:1:Service::Service(SDK::Kernel&)	3
-/home/owen/repos/UNA_Watch/MapExplorer/Software/Libs/Sources/Service.cpp:51:6:void Service::onStartGUI()	1
-/home/owen/repos/UNA_Watch/MapExplorer/Software/Libs/Sources/Service.cpp:57:6:void Service::onStopGUI()	1
-/home/owen/repos/UNA_Watch/MapExplorer/Software/Libs/Sources/Service.cpp:14:6:void Service::run()	5
-/home/owen/repos/UNA_Watch/MapExplorer/Software/Libs/Sources/Service.cpp:63:10:static uint32_t Service::ParseVersion(const char*)	3

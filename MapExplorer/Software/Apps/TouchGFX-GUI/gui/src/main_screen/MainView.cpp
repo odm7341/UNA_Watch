@@ -20,11 +20,11 @@ void MainView::setupScreen()
     mMap.setPosition(0, 0, 240, 240);
     mMap.setSources(&mSession.container(), &mSession.cache(), nullptr);
     add(mMap);
-    mOperationBackground.setPosition(66, 210, 108, 24);
+    mOperationBackground.setPosition(76, 218, 88, 16);
     mOperationBackground.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(mOperationBackground);
-    mOperationText.setPosition(70, 213, 100, 20);
-    mOperationText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
+    mOperationText.setPosition(80, 220, 80, 12);
+    mOperationText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_10));
     mOperationText.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     mOperationText.setWildcard(mOperationBuffer);
     add(mOperationText);

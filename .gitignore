@@ -7,6 +7,7 @@
 
 # Build/install artifacts.
 /build-app/
+/**/build-app/
 /**/*.uapp
 /**/*.elf
 /**/*.map

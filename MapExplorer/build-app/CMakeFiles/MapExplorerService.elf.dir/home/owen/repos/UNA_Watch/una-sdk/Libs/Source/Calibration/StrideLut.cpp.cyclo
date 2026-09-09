@@ -1,9 +1,0 @@
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:22:7:static float SDK::Calibration::StrideLut::binCentreSpm(size_t)	1
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:28:8:static size_t SDK::Calibration::StrideLut::binIndexForCadence(float)	2
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:41:6:void SDK::Calibration::StrideLut::clear()	2
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:50:8:size_t SDK::Calibration::StrideLut::validBinCount() const	3
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:61:7:float SDK::Calibration::StrideLut::totalCalibrationDistanceM() const	2
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:70:6:bool SDK::Calibration::StrideLut::readyForPhase2() const	1
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:75:6:bool SDK::Calibration::StrideLut::readyForOutdoorEstimate() const	1
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:82:6:bool SDK::Calibration::StrideLut::parseBuffer(const char*, size_t)	15
-/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/StrideLut.cpp:163:6:bool SDK::Calibration::StrideLut::loadFromFile(SDK::Interface::IFileSystem&, const char*)	11
