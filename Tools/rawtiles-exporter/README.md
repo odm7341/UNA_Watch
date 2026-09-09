@@ -31,13 +31,17 @@ The repository deploys this directory on every push to `main` that changes the e
 1. Pan and zoom to an area you know. The readout shows the map center and viewport zoom.
 2. Click **Use current view** to select the visible bounds. To choose a smaller custom area, hold Shift and drag a rectangle on the map.
 3. For a quick first test, choose **Min zoom 8** and **Max zoom 8**. The estimate should be one or a few tiles; a 256 × 256 export is roughly 64 KiB per tile.
-4. Leave the desired layers enabled. The toggles control both the preview and the exported pixels: land cover, water, contours, roads, labels, trails, and peaks.
+4. Leave the desired layers enabled. The toggles control both the preview and the exported pixels: land cover, water, contours, roads, labels, trails, and peaks. At z15+, **Labels** includes names for minor and service streets.
 5. Click **Download rawtiles**. The status updates once per rendered tile, then the browser downloads `una-topo-z<min>-<max>.rawtiles`.
 6. Keep that file unchanged. Do not unzip it, rename it to a different extension, edit it, or copy a `.trust` marker beside it.
 
 The zoom controls and exported packs support z8 through z19. At z15–19, MapLibre overzooms the highest available vector detail from the upstream sources; use tight selections because each zoom step quadruples the tile count. The exporter renders a buffered 512px MapLibre metatile for every 256px rawtiles tile, so line work and labels have rendering context beyond each tile edge before the tile core is reduced and quantized.
 
 For more detail, increase the zoom range gradually and use a tight selection. The page enforces a 1,024-tile browser-export limit because every tile is rendered and quantized locally. A large high-zoom region may be many megabytes and take substantial time.
+
+## Preview at watch size
+
+Click **Watch mockup** to open the current center and zoom in the MapExplorer display geometry: a circular 1.2 in, 240 × 240 px, 200 PPI screen. It follows pans and zooms in the main preview and uses the same enabled layers, so labels and lines can be judged at their on-watch pixel scale. It does not simulate GPS trace or device controls. Browser zoom, OS display scaling, and monitor calibration can affect the mockup's physical size.
 
 ## Put the pack on a watch
 

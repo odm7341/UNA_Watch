@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UNA Rawtiles Exporter (v0.0.1)</title>
+  <title>UNA Rawtiles Exporter (v0.0.2)</title>
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main id="map" aria-label="UNA rawtiles export preview"></main>
   <section class="panel" aria-label="Map style and export controls">
-    <h1>UNA Rawtiles Exporter (v0.0.1)</h1>
+    <h1>UNA Rawtiles Exporter (v0.0.2)</h1>
     <p>OpenFreeMap PBF topology with OSM US vector contours. No raster source.</p>
     <dl class="readout">
       <dt>Center</dt><dd id="center">—</dd>
@@ -25,6 +25,7 @@
       <label><input type="checkbox" data-layer="trails" checked> OSM trails</label>
       <label><input type="checkbox" data-layer="peaks" checked> Mountain peaks</label>
     </fieldset>
+    <button type="button" id="watch-preview-toggle" aria-controls="watch-preview" aria-expanded="false">Watch mockup</button>
     <section class="export" aria-label="Rawtiles export">
       <h2>Rawtiles export</h2>
       <p>Shift-drag a rectangle, or use the current view. The pack is rendered and written locally in this browser.</p>
@@ -40,6 +41,17 @@
     </section>
     <div class="status" id="status" role="status">Loading vector tiles…</div>
   </section>
+  <aside id="watch-preview" class="watch-preview" hidden aria-label="Round 1.2 inch, 240 by 240 pixel watch map mockup">
+    <div class="watch-case">
+      <div class="watch-screen">
+        <div class="watch-pixels">
+          <main id="watch-map" aria-label="Current map view at watch display size"></main>
+        </div>
+      </div>
+    </div>
+    <p>UNA watch map · 1.2 in · 240 × 240 px · 200 PPI</p>
+    <button type="button" id="watch-preview-close">Close mockup</button>
+  </aside>
   <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
   <script type="module" src="app.js"></script>
 </body>

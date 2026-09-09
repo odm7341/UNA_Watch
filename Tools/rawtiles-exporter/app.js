@@ -11,11 +11,15 @@ const zoomMinInput = document.querySelector('#zoom-min');
 const zoomMaxInput = document.querySelector('#zoom-max');
 const exportButton = document.querySelector('#export-pack');
 const selectViewButton = document.querySelector('#select-view');
+const watchPreview = document.querySelector('#watch-preview');
+const watchPreviewToggle = document.querySelector('#watch-preview-toggle');
+const watchPreviewClose = document.querySelector('#watch-preview-close');
 
 let selectedBounds;
 let selecting = false;
 let selectionStart;
 let exportInProgress = false;
+let watchMap;
 
 const map = new maplibregl.Map({
   container: 'map',
@@ -45,6 +49,51 @@ function updateReadout() {
   const center = map.getCenter();
   centerReadout.textContent = `${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}`;
   zoomReadout.textContent = map.getZoom().toFixed(2);
+  syncWatchMap();
+}
+
+function applyLayerVisibility(target, input) {
+  if (!target?.isStyleLoaded()) return;
+  for (const id of layerGroups[input.dataset.layer]) {
+    target.setLayoutProperty(id, 'visibility', input.checked ? 'visible' : 'none');
+  }
+}
+
+function syncWatchMap() {
+  if (!watchMap || watchPreview.hidden) return;
+  watchMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom() });
+}
+
+function showWatchPreview() {
+  watchPreview.hidden = false;
+  watchPreviewToggle.setAttribute('aria-expanded', 'true');
+  if (watchMap) {
+    watchMap.resize();
+    syncWatchMap();
+    return;
+  }
+  watchMap = new maplibregl.Map({
+    container: 'watch-map',
+    style: structuredClone(style),
+    center: map.getCenter(),
+    zoom: map.getZoom(),
+    minZoom: 2,
+    maxZoom: 19,
+    interactive: false,
+    attributionControl: false,
+    renderWorldCopies: false,
+    fadeDuration: 0,
+    pixelRatio: 1
+  });
+  watchMap.on('load', () => {
+    document.querySelectorAll('[data-layer]').forEach(input => applyLayerVisibility(watchMap, input));
+    syncWatchMap();
+  });
+}
+
+function hideWatchPreview() {
+  watchPreview.hidden = true;
+  watchPreviewToggle.setAttribute('aria-expanded', 'false');
 }
 
 function setStatus(message, isError = false) {
@@ -171,9 +220,12 @@ map.on('error', event => {
   if (!message.includes('Source') && !message.includes('style')) setStatus(message, true);
 });
 document.querySelectorAll('[data-layer]').forEach(input => input.addEventListener('change', () => {
-  for (const id of layerGroups[input.dataset.layer]) map.setLayoutProperty(id, 'visibility', input.checked ? 'visible' : 'none');
+  applyLayerVisibility(map, input);
+  applyLayerVisibility(watchMap, input);
 }));
 selectViewButton.addEventListener('click', () => setSelectedBounds(map.getBounds()));
 zoomMinInput.addEventListener('change', updateEstimate);
 zoomMaxInput.addEventListener('change', updateEstimate);
 exportButton.addEventListener('click', exportRawtiles);
+watchPreviewToggle.addEventListener('click', showWatchPreview);
+watchPreviewClose.addEventListener('click', hideWatchPreview);
