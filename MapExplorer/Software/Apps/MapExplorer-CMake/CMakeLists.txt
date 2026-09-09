@@ -35,8 +35,8 @@ if(DEFINED TOUCHGFX_PATH)
 endif()
 
 project(${APP_NAME})
-# Patch release: pan by 48 display pixels at every supported map zoom.
-set(BUILD_VERSION "0.1.2")
+# Patch release: remove the activity-only centre marker from manual browsing.
+set(BUILD_VERSION "0.1.3")
 una_app_setup_version(BUILD_VERSION ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Build service

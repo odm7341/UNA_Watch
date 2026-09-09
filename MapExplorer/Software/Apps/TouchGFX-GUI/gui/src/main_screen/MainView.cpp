@@ -19,6 +19,7 @@ void MainView::setupScreen()
     buttons.setVisible(false);
     mMap.setPosition(0, 0, 240, 240);
     mMap.setSources(&mSession.container(), &mSession.cache(), nullptr);
+    mMap.setShowMarker(false);
     add(mMap);
     mOperationBackground.setPosition(76, 218, 88, 16);
     mOperationBackground.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));

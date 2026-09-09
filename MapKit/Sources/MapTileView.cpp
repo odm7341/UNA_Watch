@@ -47,7 +47,9 @@ void MapTileView::draw(const Rect& area) const
     if (mTrace != nullptr) {
         drawTrace(absArea, viewOriginX, viewOriginY, absDX, absDY);
     }
-    drawMarker(absArea, absDX, absDY);
+    if (mShowMarker) {
+        drawMarker(absArea, absDX, absDY);
+    }
 }
 
 void MapTileView::drawTiles(const Rect& absArea,

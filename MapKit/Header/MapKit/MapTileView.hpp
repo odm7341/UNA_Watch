@@ -69,6 +69,14 @@ public:
         setViewport(centerX, centerY, zoom, fix);
     }
 
+    /// A manual browser has no position fix at the viewport centre; hide the
+    /// activity-only centre marker rather than implying one.
+    void setShowMarker(bool show)
+    {
+        mShowMarker = show;
+        invalidate();
+    }
+
     virtual touchgfx::Rect getSolidRect() const
     {
         return touchgfx::Rect(0, 0, getWidth(), getHeight());
@@ -96,6 +104,7 @@ private:
     uint8_t                         mZoom      = MapMath::TRACE_ZOOM;
     bool                            mFix       = false;
     bool                            mSuppressTiles = true;
+    bool                            mShowMarker = true;
 };
 
 } // namespace MapKit
