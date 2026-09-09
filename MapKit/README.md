@@ -432,6 +432,10 @@ trace over it works on this hardware. That app was built for one place and one
 pack; nothing about that place survives here, and the apps that use MapKit are
 forks of the stock activity apps rather than of it.
 
+The exact upstream baseline and the intentional MapExplorer-specific divergence
+are recorded in [`UPSTREAM.md`](UPSTREAM.md). The upstream is a monorepo, so
+this directory cannot be linked as an independent Git submodule.
+
 What changed on the way over: the hardcoded pack path became the selection rule
 above; the `AthensRun::` namespace became `MapKit::`; the trace's storage zoom
 became a named constant and moved from z16 to z18; the drawing widget gained an
