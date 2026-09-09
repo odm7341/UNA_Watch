@@ -1,0 +1,24 @@
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:147:23:virtual touchgfx::Drawable* touchgfx::Drawable::getFirstChild()	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:315:18:virtual void touchgfx::Drawable::setX(int16_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:327:18:virtual void touchgfx::Drawable::setY(int16_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:356:18:virtual void touchgfx::Drawable::setWidth(int16_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:368:18:virtual void touchgfx::Drawable::setHeight(int16_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:378:18:virtual void touchgfx::Drawable::childGeometryChanged()	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:389:18:virtual void touchgfx::Drawable::handleClickEvent(const touchgfx::ClickEvent&)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:401:18:virtual void touchgfx::Drawable::handleGestureEvent(const touchgfx::GestureEvent&)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:490:18:virtual void touchgfx::Drawable::handleDragEvent(const touchgfx::DragEvent&)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:501:18:virtual void touchgfx::Drawable::handleTickEvent()	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:588:18:virtual void touchgfx::Drawable::moveTo(int16_t, int16_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:703:18:virtual void touchgfx::Drawable::setupDrawChain(const touchgfx::Rect&, touchgfx::Drawable**)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Screen.hpp:104:18:virtual void touchgfx::Screen::afterTransition()	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/Drawable.hpp:121:18:virtual void touchgfx::Drawable::invalidateContent() const	2
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/widgets/Widget.hpp:45:18:virtual void touchgfx::Widget::getLastChild(int16_t, int16_t, touchgfx::Drawable**)	3
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/include/gui/main_screen/MainView.hpp:21:13:MainView::~MainView()	2
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/include/gui/main_screen/MainView.hpp:21:13:virtual MainView::~MainView()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/main_screen/MainView.cpp:7:1:MainView::MainView()	3
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/main_screen/MainView.cpp:31:6:void MainView::refreshMap()	3
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/main_screen/MainView.cpp:41:6:virtual void MainView::handleTickEvent()	4
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/main_screen/MainView.cpp:55:6:virtual void MainView::handleKeyEvent(uint8_t)	5
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/main_screen/MainView.cpp:67:1:cpp)	17
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/main_screen/MainView.cpp:13:6:virtual void MainView::setupScreen()	2
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/main_screen/MainView.cpp:25:6:virtual void MainView::tearDownScreen()	1

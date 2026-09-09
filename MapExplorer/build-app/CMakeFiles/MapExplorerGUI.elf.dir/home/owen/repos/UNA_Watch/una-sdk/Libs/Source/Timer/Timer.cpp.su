@@ -1,0 +1,18 @@
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Header/SDK/Kernel/KernelProviderService.hpp:43:35:static SDK::KernelProviderService& SDK::KernelProviderService::GetInstance()	16	static,ignoring_inline_asm
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:24:1:SDK::Timer::Timer()	8	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:31:1:SDK::Timer::Timer(uint32_t)	16	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:38:6:void SDK::Timer::setActive(bool)	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:43:6:bool SDK::Timer::isActive() const	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:48:6:void SDK::Timer::setInterval(uint32_t)	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:53:10:uint32_t SDK::Timer::getInterval() const	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:70:6:void SDK::Timer::stop()	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:131:10:uint32_t SDK::Timer::getTimestamp() const	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:58:6:void SDK::Timer::start()	8	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:64:6:void SDK::Timer::start(uint32_t)	8	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:75:6:void SDK::Timer::reset()	8	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:136:10:static uint32_t SDK::Timer::elapsed(uint32_t, uint32_t)	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:80:6:bool SDK::Timer::tick()	16	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:97:6:bool SDK::Timer::expired() const	8	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:106:6:bool SDK::Timer::oneshot()	16	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:116:10:uint32_t SDK::Timer::left() const	8	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Timer/Timer.cpp:141:10:uint32_t SDK::Timer::elapsed() const	8	static

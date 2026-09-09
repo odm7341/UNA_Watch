@@ -1,0 +1,5 @@
+/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/MapExplorerService.elf.dir
+/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/MapExplorerGUI.elf.dir
+/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/MapExplorerApp.dir
+/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/edit_cache.dir
+/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/rebuild_cache.dir

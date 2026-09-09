@@ -1,0 +1,2 @@
+/home/owen/repos/UNA_Watch/MapKit/Sources/PackSelection.cpp:8:6:bool MapKit::preferPack(const PackFacts&, const PackFacts&)	3
+/home/owen/repos/UNA_Watch/MapKit/Sources/PackSelection.cpp:23:8:size_t MapKit::selectPack(const PackFacts*, size_t, int32_t, int32_t)	9

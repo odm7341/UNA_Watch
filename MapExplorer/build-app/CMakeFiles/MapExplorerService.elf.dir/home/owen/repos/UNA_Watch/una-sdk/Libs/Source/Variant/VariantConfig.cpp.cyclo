@@ -1,0 +1,7 @@
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Variant/VariantConfig.cpp:211:6:bool SDK::Variant::Config::queryFeature(const char*, SDK::JsonStreamReader&, char*, size_t) const	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Variant/VariantConfig.cpp:179:6:bool SDK::Variant::Config::featureBool(const char*, bool) const	5
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Variant/VariantConfig.cpp:195:10:uint32_t SDK::Variant::Config::featureU32(const char*, uint32_t) const	5
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/unique_ptr.h:393:7:std::unique_ptr<_Tp, _Dp>::~unique_ptr() [with _Tp = SDK::Interface::IFile; _Dp = std::default_delete<SDK::Interface::IFile>]	2
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/unique_ptr.h:393:7:std::unique_ptr<_Tp, _Dp>::~unique_ptr() [with _Tp = SDK::Interface::IDirectory; _Dp = std::default_delete<SDK::Interface::IDirectory>]	2
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/unique_ptr.h:200:12:void std::__uniq_ptr_impl<_Tp, _Dp>::reset(pointer) [with _Tp = char; _Dp = std::default_delete<char []>]	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Variant/VariantConfig.cpp:55:1:SDK::Variant::Config::Config(const SDK::Kernel&)	35

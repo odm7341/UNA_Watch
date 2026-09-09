@@ -1,0 +1,1849 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:16 (find_program)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "UNA_PYTHON_EXECUTABLE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "python3"
+      - "python"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/home/owen/repos/UNA_Watch/.venv/bin/python3"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/uname"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/uname"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/uname"
+      - "/usr/local/sbin/uname"
+      - "/usr/local/bin/uname"
+      - "/usr/sbin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineSystem.cmake:213 (message)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    message: |
+      The target system is: Generic -  - arm
+      The host system is: Linux - 7.0.0-31-generic - x86_64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gmake"
+      - "make"
+      - "smake"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/gmake"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/gmake"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/gmake"
+      - "/usr/local/sbin/gmake"
+      - "/usr/local/bin/gmake"
+      - "/usr/sbin/gmake"
+    found: "/usr/bin/gmake"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:64 (_cmake_find_compiler_path)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_ASM_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:1328 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:174 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      arm-none-eabi-gcc (GNU Tools for STM32 14.3.rel1.20251027-0700) 14.3.1 20250623
+      Copyright (C) 2024 Free Software Foundation, Inc.
+      This is free software; see the source for copying conditions.  There is NO
+      warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-ar"
+      - "ar"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-ranlib"
+      - "ranlib"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-strip"
+      - "strip"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-strip"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-ld"
+      - "ld"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ld"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-nm"
+      - "nm"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-nm"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-objdump"
+      - "objdump"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-objdump"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-readelf"
+      - "readelf"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-readelf"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-dlltool"
+      - "dlltool"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-dlltool"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-dlltool"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-dlltool"
+      - "/usr/local/sbin/arm-none-eabi-dlltool"
+      - "/usr/local/bin/arm-none-eabi-dlltool"
+      - "/usr/sbin/arm-none-eabi-dlltool"
+      - "/usr/bin/arm-none-eabi-dlltool"
+      - "/sbin/arm-none-eabi-dlltool"
+      - "/bin/arm-none-eabi-dlltool"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/dlltool"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/dlltool"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/dlltool"
+      - "/usr/local/sbin/dlltool"
+      - "/usr/local/bin/dlltool"
+      - "/usr/sbin/dlltool"
+      - "/usr/bin/dlltool"
+      - "/sbin/dlltool"
+      - "/bin/dlltool"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-addr2line"
+      - "addr2line"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-addr2line"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeFindBinUtils.cmake:247 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:270 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-tapi"
+      - "tapi"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-tapi"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-tapi"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-tapi"
+      - "/usr/local/sbin/arm-none-eabi-tapi"
+      - "/usr/local/bin/arm-none-eabi-tapi"
+      - "/usr/sbin/arm-none-eabi-tapi"
+      - "/usr/bin/arm-none-eabi-tapi"
+      - "/sbin/arm-none-eabi-tapi"
+      - "/bin/arm-none-eabi-tapi"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/tapi"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/tapi"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/tapi"
+      - "/usr/local/sbin/tapi"
+      - "/usr/local/bin/tapi"
+      - "/usr/sbin/tapi"
+      - "/usr/bin/tapi"
+      - "/sbin/tapi"
+      - "/bin/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:271 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_ASM_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc-ar-"
+      - "arm-none-eabi-gcc-ar-"
+      - "arm-none-eabi-gcc-ar"
+      - "arm-none-eabi-gcc-ar"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar-"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ar-"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ar-"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ar-"
+      - "/usr/local/bin/arm-none-eabi-gcc-ar-"
+      - "/usr/sbin/arm-none-eabi-gcc-ar-"
+      - "/usr/bin/arm-none-eabi-gcc-ar-"
+      - "/sbin/arm-none-eabi-gcc-ar-"
+      - "/bin/arm-none-eabi-gcc-ar-"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar-"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ar-"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ar-"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ar-"
+      - "/usr/local/bin/arm-none-eabi-gcc-ar-"
+      - "/usr/sbin/arm-none-eabi-gcc-ar-"
+      - "/usr/bin/arm-none-eabi-gcc-ar-"
+      - "/sbin/arm-none-eabi-gcc-ar-"
+      - "/bin/arm-none-eabi-gcc-ar-"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:271 (include)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:26 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    mode: "program"
+    variable: "CMAKE_ASM_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc-ranlib-"
+      - "arm-none-eabi-gcc-ranlib-"
+      - "arm-none-eabi-gcc-ranlib"
+      - "arm-none-eabi-gcc-ranlib"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib-"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ranlib-"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ranlib-"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ranlib-"
+      - "/usr/local/bin/arm-none-eabi-gcc-ranlib-"
+      - "/usr/sbin/arm-none-eabi-gcc-ranlib-"
+      - "/usr/bin/arm-none-eabi-gcc-ranlib-"
+      - "/sbin/arm-none-eabi-gcc-ranlib-"
+      - "/bin/arm-none-eabi-gcc-ranlib-"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib-"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ranlib-"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ranlib-"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ranlib-"
+      - "/usr/local/bin/arm-none-eabi-gcc-ranlib-"
+      - "/usr/sbin/arm-none-eabi-gcc-ranlib-"
+      - "/usr/bin/arm-none-eabi-gcc-ranlib-"
+      - "/sbin/arm-none-eabi-gcc-ranlib-"
+      - "/bin/arm-none-eabi-gcc-ranlib-"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:67 (_cmake_find_compiler_path)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/"
+    found: "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_INCLUDE_PATH:
+        - "/include"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:37 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-exit.o): in function `exit':
+      (.text.exit+0x28): undefined reference to `_exit'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-closer.o): in function `_close_r':
+      (.text._close_r+0x18): undefined reference to `_close'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-lseekr.o): in function `_lseek_r':
+      (.text._lseek_r+0x24): undefined reference to `_lseek'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-readr.o): in function `_read_r':
+      (.text._read_r+0x24): undefined reference to `_read'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-writer.o): in function `_write_r':
+      (.text._write_r+0x24): undefined reference to `_write'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-sbrkr.o): in function `_sbrk_r':
+      (.text._sbrk_r+0x18): undefined reference to `_sbrk'
+      collect2: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/"
+    found: "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_INCLUDE_PATH:
+        - "/include"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:37 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is GNU, found in:
+        /home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/4.4.3/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc-ar-14.3"
+      - "arm-none-eabi-gcc-ar-14"
+      - "arm-none-eabi-gcc-ar14"
+      - "arm-none-eabi-gcc-ar"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ar-14.3"
+      - "/usr/local/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/usr/sbin/arm-none-eabi-gcc-ar-14.3"
+      - "/usr/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/sbin/arm-none-eabi-gcc-ar-14.3"
+      - "/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar-14"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ar-14"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ar-14"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ar-14"
+      - "/usr/local/bin/arm-none-eabi-gcc-ar-14"
+      - "/usr/sbin/arm-none-eabi-gcc-ar-14"
+      - "/usr/bin/arm-none-eabi-gcc-ar-14"
+      - "/sbin/arm-none-eabi-gcc-ar-14"
+      - "/bin/arm-none-eabi-gcc-ar-14"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar14"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ar14"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ar14"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ar14"
+      - "/usr/local/bin/arm-none-eabi-gcc-ar14"
+      - "/usr/sbin/arm-none-eabi-gcc-ar14"
+      - "/usr/bin/arm-none-eabi-gcc-ar14"
+      - "/sbin/arm-none-eabi-gcc-ar14"
+      - "/bin/arm-none-eabi-gcc-ar14"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc-ranlib-14.3"
+      - "arm-none-eabi-gcc-ranlib-14"
+      - "arm-none-eabi-gcc-ranlib14"
+      - "arm-none-eabi-gcc-ranlib"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/usr/local/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/usr/sbin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/usr/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/sbin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ranlib-14"
+      - "/usr/local/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/usr/sbin/arm-none-eabi-gcc-ranlib-14"
+      - "/usr/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/sbin/arm-none-eabi-gcc-ranlib-14"
+      - "/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib14"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ranlib14"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ranlib14"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ranlib14"
+      - "/usr/local/bin/arm-none-eabi-gcc-ranlib14"
+      - "/usr/sbin/arm-none-eabi-gcc-ranlib14"
+      - "/usr/bin/arm-none-eabi-gcc-ranlib14"
+      - "/sbin/arm-none-eabi-gcc-ranlib14"
+      - "/bin/arm-none-eabi-gcc-ranlib14"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:71 (_cmake_find_compiler_path)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-g++"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-g++"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/"
+    found: "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_INCLUDE_PATH:
+        - "/include"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:37 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++ 
+      Build flags: -fno-exceptions;-fno-rtti;-fno-use-cxa-atexit
+      Id flags:  
+      
+      The output was:
+      1
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-exit.o): in function `exit':
+      (.text.exit+0x28): undefined reference to `_exit'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-closer.o): in function `_close_r':
+      (.text._close_r+0x18): undefined reference to `_close'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-lseekr.o): in function `_lseek_r':
+      (.text._lseek_r+0x24): undefined reference to `_lseek'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-readr.o): in function `_read_r':
+      (.text._read_r+0x24): undefined reference to `_read'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-writer.o): in function `_write_r':
+      (.text._write_r+0x24): undefined reference to `_write'
+      /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/ld: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/libc.a(libc_a-sbrkr.o): in function `_sbrk_r':
+      (.text._sbrk_r+0x18): undefined reference to `_sbrk'
+      collect2: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/"
+    found: "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_INCLUDE_PATH:
+        - "/include"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:37 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++ 
+      Build flags: -fno-exceptions;-fno-rtti;-fno-use-cxa-atexit
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/4.4.3/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc-ar-14.3"
+      - "arm-none-eabi-gcc-ar-14"
+      - "arm-none-eabi-gcc-ar14"
+      - "arm-none-eabi-gcc-ar"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ar-14.3"
+      - "/usr/local/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/usr/sbin/arm-none-eabi-gcc-ar-14.3"
+      - "/usr/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/sbin/arm-none-eabi-gcc-ar-14.3"
+      - "/bin/arm-none-eabi-gcc-ar-14.3"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar-14"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ar-14"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ar-14"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ar-14"
+      - "/usr/local/bin/arm-none-eabi-gcc-ar-14"
+      - "/usr/sbin/arm-none-eabi-gcc-ar-14"
+      - "/usr/bin/arm-none-eabi-gcc-ar-14"
+      - "/sbin/arm-none-eabi-gcc-ar-14"
+      - "/bin/arm-none-eabi-gcc-ar-14"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar14"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ar14"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ar14"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ar14"
+      - "/usr/local/bin/arm-none-eabi-gcc-ar14"
+      - "/usr/sbin/arm-none-eabi-gcc-ar14"
+      - "/usr/bin/arm-none-eabi-gcc-ar14"
+      - "/sbin/arm-none-eabi-gcc-ar14"
+      - "/bin/arm-none-eabi-gcc-ar14"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:37 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "arm-none-eabi-gcc-ranlib-14.3"
+      - "arm-none-eabi-gcc-ranlib-14"
+      - "arm-none-eabi-gcc-ranlib14"
+      - "arm-none-eabi-gcc-ranlib"
+    candidate_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+    searched_directories:
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/usr/local/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/usr/sbin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/usr/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/sbin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/bin/arm-none-eabi-gcc-ranlib-14.3"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ranlib-14"
+      - "/usr/local/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/usr/sbin/arm-none-eabi-gcc-ranlib-14"
+      - "/usr/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/sbin/arm-none-eabi-gcc-ranlib-14"
+      - "/bin/arm-none-eabi-gcc-ranlib-14"
+      - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib14"
+      - "/home/owen/repos/UNA_Watch/.venv/bin/arm-none-eabi-gcc-ranlib14"
+      - "/opt/st/stm32cubeclt_1.22.0/Make/bin/arm-none-eabi-gcc-ranlib14"
+      - "/usr/local/sbin/arm-none-eabi-gcc-ranlib14"
+      - "/usr/local/bin/arm-none-eabi-gcc-ranlib14"
+      - "/usr/sbin/arm-none-eabi-gcc-ranlib14"
+      - "/usr/bin/arm-none-eabi-gcc-ranlib14"
+      - "/sbin/arm-none-eabi-gcc-ranlib14"
+      - "/bin/arm-none-eabi-gcc-ranlib14"
+    found: "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/owen/repos/UNA_Watch/.venv/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin"
+        - "/opt/st/stm32cubeclt_1.22.0/Make/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PROGRAM_PATH:
+        - "/bin"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:123 (try_compile)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:37 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-daYTog"
+      binary: "/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-daYTog"
+    cmakeVariables:
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: false
+      stdout: |
+        Change Dir: '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-daYTog'
+        
+        Run Build Command(s): /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_48bef/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_48bef.dir/build.make CMakeFiles/cmTC_48bef.dir/build
+        gmake[1]: Entering directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-daYTog'
+        Building C object CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc   -std=gnu11   -v -o CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj -c /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc
+        Target: arm-none-eabi
+        Configured with: /build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/src/gcc/configure --target=arm-none-eabi --prefix=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native --libexecdir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/lib --infodir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/info --mandir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/man --htmldir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/html --pdfdir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/pdf --enable-checking=release --enable-languages=c,c++ --enable-plugins --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-newlib --with-headers=yes --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/arm-none-eabi --with-zstd=no --build=x86_64-linux-gnu --host=x86_64-linux-gnu --with-gmp=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-mpfr=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-mpc=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-isl=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Tools for STM32 14.3.rel1.20251027-0700' --with-multilib-list=rmprofile,aprofile
+        Thread model: single
+        Supported LTO compression algorithms: zlib
+        gcc version 14.3.1 20250623 (GNU Tools for STM32 14.3.rel1.20251027-0700) 
+        COLLECT_GCC_OPTIONS='-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_48bef.dir/'
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/cc1 -quiet -v -iprefix /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/ -isysroot /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi -D__USES_INITFINI__ /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_48bef.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -std=gnu11 -version -o /tmp/ccPkBG4n.s
+        GNU C11 (GNU Tools for STM32 14.3.rel1.20251027-0700) version 14.3.1 20250623 (arm-none-eabi)
+        	compiled by GNU C version 7.5.0, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/include"
+        ignoring nonexistent directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/usr/local/include"
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/include-fixed"
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include"
+        ignoring nonexistent directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/usr/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include-fixed
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include
+        End of search list.
+        Compiler executable checksum: 91583cfdc8b970f823bfd284aa7769b4
+        COLLECT_GCC_OPTIONS='-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_48bef.dir/'
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/as -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj /tmp/ccPkBG4n.s
+        GNU assembler version 2.44.0 (arm-none-eabi) using BFD version (GNU Tools for STM32 14.3.rel1.20251027-0700) 2.44.0.20250616
+        COMPILER_PATH=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/
+        LIBRARY_PATH=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/lib/
+        COLLECT_GCC_OPTIONS='-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.'
+        Linking C static library libcmTC_48bef.a
+        /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -P CMakeFiles/cmTC_48bef.dir/cmake_clean_target.cmake
+        /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_48bef.dir/link.txt --verbose=1
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ar qc libcmTC_48bef.a CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ranlib libcmTC_48bef.a
+        gmake[1]: Leaving directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-daYTog'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:255 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:37 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include]
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include-fixed]
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include]
+        end of search list found
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/lib/gcc/arm-none-eabi/14.3.1/include]
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include-fixed] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/lib/gcc/arm-none-eabi/14.3.1/include-fixed]
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include]
+        implicit include dirs: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/lib/gcc/arm-none-eabi/14.3.1/include;/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/lib/gcc/arm-none-eabi/14.3.1/include-fixed;/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:291 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:37 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild))("|,| |$)]
+        ignore line: [Change Dir: '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-daYTog']
+        ignore line: []
+        ignore line: [Run Build Command(s): /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_48bef/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_48bef.dir/build.make CMakeFiles/cmTC_48bef.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-daYTog']
+        ignore line: [Building C object CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc   -std=gnu11   -v -o CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj -c /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc]
+        ignore line: [Target: arm-none-eabi]
+        ignore line: [Configured with: /build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/src/gcc/configure --target=arm-none-eabi --prefix=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native --libexecdir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/lib --infodir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/info --mandir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/man --htmldir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/html --pdfdir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/pdf --enable-checking=release --enable-languages=c,c++ --enable-plugins --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-newlib --with-headers=yes --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/arm-none-eabi --with-zstd=no --build=x86_64-linux-gnu --host=x86_64-linux-gnu --with-gmp=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-mpfr=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-mpc=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-isl=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Tools for STM32 14.3.rel1.20251027-0700' --with-multilib-list=rmprofile,aprofile]
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 14.3.1 20250623 (GNU Tools for STM32 14.3.rel1.20251027-0700) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_48bef.dir/']
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/cc1 -quiet -v -iprefix /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/ -isysroot /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi -D__USES_INITFINI__ /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_48bef.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -std=gnu11 -version -o /tmp/ccPkBG4n.s]
+        ignore line: [GNU C11 (GNU Tools for STM32 14.3.rel1.20251027-0700) version 14.3.1 20250623 (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 7.5.0  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/include"]
+        ignore line: [ignoring nonexistent directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/include-fixed"]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include"]
+        ignore line: [ignoring nonexistent directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/usr/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include-fixed]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 91583cfdc8b970f823bfd284aa7769b4]
+        ignore line: [COLLECT_GCC_OPTIONS='-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_48bef.dir/']
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/as -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj /tmp/ccPkBG4n.s]
+        ignore line: [GNU assembler version 2.44.0 (arm-none-eabi) using BFD version (GNU Tools for STM32 14.3.rel1.20251027-0700) 2.44.0.20250616]
+        ignore line: [COMPILER_PATH=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/]
+        ignore line: [LIBRARY_PATH=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C static library libcmTC_48bef.a]
+        ignore line: [/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -P CMakeFiles/cmTC_48bef.dir/cmake_clean_target.cmake]
+        ignore line: [/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_48bef.dir/link.txt --verbose=1]
+        ignore line: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ar qc libcmTC_48bef.a CMakeFiles/cmTC_48bef.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ranlib libcmTC_48bef.a]
+        ignore line: [gmake[1]: Leaving directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-daYTog']
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:123 (try_compile)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:37 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-pgWfJs"
+      binary: "/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-pgWfJs"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-exceptions -fno-rtti -fno-use-cxa-atexit"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: false
+      stdout: |
+        Change Dir: '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-pgWfJs'
+        
+        Run Build Command(s): /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fa58c/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_fa58c.dir/build.make CMakeFiles/cmTC_fa58c.dir/build
+        gmake[1]: Entering directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-pgWfJs'
+        Building CXX object CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++   -fno-exceptions -fno-rtti -fno-use-cxa-atexit  -std=gnu++17   -v -o CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj -c /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++
+        Target: arm-none-eabi
+        Configured with: /build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/src/gcc/configure --target=arm-none-eabi --prefix=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native --libexecdir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/lib --infodir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/info --mandir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/man --htmldir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/html --pdfdir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/pdf --enable-checking=release --enable-languages=c,c++ --enable-plugins --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-newlib --with-headers=yes --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/arm-none-eabi --with-zstd=no --build=x86_64-linux-gnu --host=x86_64-linux-gnu --with-gmp=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-mpfr=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-mpc=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-isl=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Tools for STM32 14.3.rel1.20251027-0700' --with-multilib-list=rmprofile,aprofile
+        Thread model: single
+        Supported LTO compression algorithms: zlib
+        gcc version 14.3.1 20250623 (GNU Tools for STM32 14.3.rel1.20251027-0700) 
+        COLLECT_GCC_OPTIONS='-fno-exceptions' '-fno-rtti' '-fno-use-cxa-atexit' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_fa58c.dir/'
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/cc1plus -quiet -v -iprefix /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/ -isysroot /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi -D__USES_INITFINI__ /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_fa58c.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -std=gnu++17 -version -fno-exceptions -fno-rtti -fno-use-cxa-atexit -o /tmp/cchdcYYD.s
+        GNU C++17 (GNU Tools for STM32 14.3.rel1.20251027-0700) version 14.3.1 20250623 (arm-none-eabi)
+        	compiled by GNU C version 7.5.0, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1"
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/arm-none-eabi"
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/backward"
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/include"
+        ignoring nonexistent directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/usr/local/include"
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/include-fixed"
+        ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include"
+        ignoring nonexistent directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/usr/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/arm-none-eabi
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/backward
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include-fixed
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include
+        End of search list.
+        Compiler executable checksum: c7a0cbb4c17df2df56ed6be1c1e04844
+        COLLECT_GCC_OPTIONS='-fno-exceptions' '-fno-rtti' '-fno-use-cxa-atexit' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_fa58c.dir/'
+         /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/as -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cchdcYYD.s
+        GNU assembler version 2.44.0 (arm-none-eabi) using BFD version (GNU Tools for STM32 14.3.rel1.20251027-0700) 2.44.0.20250616
+        COMPILER_PATH=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/
+        LIBRARY_PATH=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/lib/
+        COLLECT_GCC_OPTIONS='-fno-exceptions' '-fno-rtti' '-fno-use-cxa-atexit' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX static library libcmTC_fa58c.a
+        /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -P CMakeFiles/cmTC_fa58c.dir/cmake_clean_target.cmake
+        /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fa58c.dir/link.txt --verbose=1
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ar qc libcmTC_fa58c.a CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ranlib libcmTC_fa58c.a
+        gmake[1]: Leaving directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-pgWfJs'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:255 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:37 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1]
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/arm-none-eabi]
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/backward]
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include]
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include-fixed]
+          add: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include]
+        end of search list found
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1]
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/arm-none-eabi] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/arm-none-eabi]
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/backward] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/backward]
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/lib/gcc/arm-none-eabi/14.3.1/include]
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include-fixed] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/lib/gcc/arm-none-eabi/14.3.1/include-fixed]
+        collapse include dir [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include] ==> [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include]
+        implicit include dirs: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1;/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/arm-none-eabi;/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/backward;/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/lib/gcc/arm-none-eabi/14.3.1/include;/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/lib/gcc/arm-none-eabi/14.3.1/include-fixed;/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:291 (message)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:37 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild))("|,| |$)]
+        ignore line: [Change Dir: '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-pgWfJs']
+        ignore line: []
+        ignore line: [Run Build Command(s): /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fa58c/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_fa58c.dir/build.make CMakeFiles/cmTC_fa58c.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-pgWfJs']
+        ignore line: [Building CXX object CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++   -fno-exceptions -fno-rtti -fno-use-cxa-atexit  -std=gnu++17   -v -o CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj -c /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++]
+        ignore line: [Target: arm-none-eabi]
+        ignore line: [Configured with: /build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/src/gcc/configure --target=arm-none-eabi --prefix=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native --libexecdir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/lib --infodir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/info --mandir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/man --htmldir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/html --pdfdir=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/share/doc/gcc-arm-none-eabi/pdf --enable-checking=release --enable-languages=c,c++ --enable-plugins --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-newlib --with-headers=yes --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/install-native/arm-none-eabi --with-zstd=no --build=x86_64-linux-gnu --host=x86_64-linux-gnu --with-gmp=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-mpfr=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-mpc=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-isl=/build/gnu-tools-for-stm32_14.3.rel1.20251027-0700/build-native/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Tools for STM32 14.3.rel1.20251027-0700' --with-multilib-list=rmprofile,aprofile]
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 14.3.1 20250623 (GNU Tools for STM32 14.3.rel1.20251027-0700) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-exceptions' '-fno-rtti' '-fno-use-cxa-atexit' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_fa58c.dir/']
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/cc1plus -quiet -v -iprefix /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/ -isysroot /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi -D__USES_INITFINI__ /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_fa58c.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -std=gnu++17 -version -fno-exceptions -fno-rtti -fno-use-cxa-atexit -o /tmp/cchdcYYD.s]
+        ignore line: [GNU C++17 (GNU Tools for STM32 14.3.rel1.20251027-0700) version 14.3.1 20250623 (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 7.5.0  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1"]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/arm-none-eabi"]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/backward"]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/include"]
+        ignore line: [ignoring nonexistent directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/include-fixed"]
+        ignore line: [ignoring duplicate directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/../../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include"]
+        ignore line: [ignoring nonexistent directory "/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/usr/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/arm-none-eabi]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/backward]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/include-fixed]
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: c7a0cbb4c17df2df56ed6be1c1e04844]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-exceptions' '-fno-rtti' '-fno-use-cxa-atexit' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_fa58c.dir/']
+        ignore line: [ /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/as -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cchdcYYD.s]
+        ignore line: [GNU assembler version 2.44.0 (arm-none-eabi) using BFD version (GNU Tools for STM32 14.3.rel1.20251027-0700) 2.44.0.20250616]
+        ignore line: [COMPILER_PATH=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/bin/]
+        ignore line: [LIBRARY_PATH=/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/:/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/../arm-none-eabi/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-exceptions' '-fno-rtti' '-fno-use-cxa-atexit' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX static library libcmTC_fa58c.a]
+        ignore line: [/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -P CMakeFiles/cmTC_fa58c.dir/cmake_clean_target.cmake]
+        ignore line: [/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fa58c.dir/link.txt --verbose=1]
+        ignore line: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ar qc libcmTC_fa58c.a CMakeFiles/cmTC_fa58c.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ranlib libcmTC_fa58c.a]
+        ignore line: [gmake[1]: Leaving directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-pgWfJs']
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Internal/CheckSourceCompiles.cmake:81 (try_compile)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CheckCCompilerFlag.cmake:105 (cmake_check_compiler_flag)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:180 (check_c_compiler_flag)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:230 (una_app_add_metrics_flags)"
+      - "CMakeLists.txt:53 (una_app_build_service)"
+    checks:
+      - "Performing Test UNA_HAVE_FCYCLOMATIC_COMPLEXITY_C"
+    directories:
+      source: "/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-wipetP"
+      binary: "/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-wipetP"
+    cmakeVariables:
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "UNA_HAVE_FCYCLOMATIC_COMPLEXITY_C"
+      cached: true
+      stdout: |
+        Change Dir: '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-wipetP'
+        
+        Run Build Command(s): /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8cc20/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_8cc20.dir/build.make CMakeFiles/cmTC_8cc20.dir/build
+        gmake[1]: Entering directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-wipetP'
+        Building C object CMakeFiles/cmTC_8cc20.dir/src.c.obj
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc -DUNA_HAVE_FCYCLOMATIC_COMPLEXITY_C  -std=gnu11   -fcyclomatic-complexity -o CMakeFiles/cmTC_8cc20.dir/src.c.obj -c /home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-wipetP/src.c
+        Linking C static library libcmTC_8cc20.a
+        /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -P CMakeFiles/cmTC_8cc20.dir/cmake_clean_target.cmake
+        /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8cc20.dir/link.txt --verbose=1
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ar qc libcmTC_8cc20.a CMakeFiles/cmTC_8cc20.dir/src.c.obj
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ranlib libcmTC_8cc20.a
+        gmake[1]: Leaving directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-wipetP'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Internal/CheckSourceCompiles.cmake:81 (try_compile)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/share/cmake-4.4/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:181 (check_cxx_compiler_flag)"
+      - "/home/owen/repos/UNA_Watch/una-sdk/cmake/una-app.cmake:230 (una_app_add_metrics_flags)"
+      - "CMakeLists.txt:53 (una_app_build_service)"
+    checks:
+      - "Performing Test UNA_HAVE_FCYCLOMATIC_COMPLEXITY_CXX"
+    directories:
+      source: "/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-7J9Bzg"
+      binary: "/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-7J9Bzg"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-exceptions -fno-rtti -fno-use-cxa-atexit"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "UNA_HAVE_FCYCLOMATIC_COMPLEXITY_CXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-7J9Bzg'
+        
+        Run Build Command(s): /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_388f2/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_388f2.dir/build.make CMakeFiles/cmTC_388f2.dir/build
+        gmake[1]: Entering directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-7J9Bzg'
+        Building CXX object CMakeFiles/cmTC_388f2.dir/src.cxx.obj
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++ -DUNA_HAVE_FCYCLOMATIC_COMPLEXITY_CXX  -fno-exceptions -fno-rtti -fno-use-cxa-atexit  -std=gnu++17   -fcyclomatic-complexity -o CMakeFiles/cmTC_388f2.dir/src.cxx.obj -c /home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-7J9Bzg/src.cxx
+        Linking CXX static library libcmTC_388f2.a
+        /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -P CMakeFiles/cmTC_388f2.dir/cmake_clean_target.cmake
+        /home/owen/repos/UNA_Watch/.venv/lib/python3.14/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_388f2.dir/link.txt --verbose=1
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ar qc libcmTC_388f2.a CMakeFiles/cmTC_388f2.dir/src.cxx.obj
+        /opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/bin/arm-none-eabi-ranlib libcmTC_388f2.a
+        gmake[1]: Leaving directory '/home/owen/repos/UNA_Watch/MapExplorer/build-app/CMakeFiles/CMakeScratch/TryCompile-7J9Bzg'
+        
+      exitCode: 0
+...

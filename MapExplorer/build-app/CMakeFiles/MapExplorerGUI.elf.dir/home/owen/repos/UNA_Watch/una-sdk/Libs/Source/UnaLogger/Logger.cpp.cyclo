@@ -1,0 +1,3 @@
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/UnaLogger/Logger.cpp:19:6:void Logger_init(SDK::Interface::ILogger&)	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/UnaLogger/Logger.cpp:26:6:)	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/UnaLogger/Logger.cpp:41:6:void Logger_hexdump(const char*, const char*, const char*, int, const void*, int)	7

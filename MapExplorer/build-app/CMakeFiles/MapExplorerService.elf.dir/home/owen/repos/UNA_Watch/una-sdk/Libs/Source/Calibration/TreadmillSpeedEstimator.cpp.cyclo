@@ -1,0 +1,5 @@
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/TreadmillSpeedEstimator.cpp:32:1:SDK::Calibration::TreadmillSpeedEstimator::TreadmillSpeedEstimator(const SDK::Calibration::CadenceStrideModel&)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/TreadmillSpeedEstimator.cpp:37:6:void SDK::Calibration::TreadmillSpeedEstimator::startSession()	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/TreadmillSpeedEstimator.cpp:52:6:void SDK::Calibration::TreadmillSpeedEstimator::tick(float, bool, float)	6
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/TreadmillSpeedEstimator.cpp:98:6:void SDK::Calibration::TreadmillSpeedEstimator::pause()	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Calibration/TreadmillSpeedEstimator.cpp:105:6:void SDK::Calibration::TreadmillSpeedEstimator::resume()	1

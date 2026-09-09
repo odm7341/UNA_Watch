@@ -1,0 +1,30 @@
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:76:36:void exitA(int)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:88:10:void una_init_kernel()	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:110:10:void __una_init_array()	3
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:135:10:void __una_fini_array()	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:220:11:void* _malloc_r(_reent*, size_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:170:11:void* malloc(size_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:190:11:void* calloc(size_t, size_t)	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:233:10:void _free_r(_reent*, void*)	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:179:10:void free(void*)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:251:11:void* _calloc_r(_reent*, size_t, size_t)	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:268:11:void* _realloc_r(_reent*, void*, size_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:209:11:void* realloc(void*, size_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:288:9:int __cxa_guard_acquire(uint64_t*)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:297:10:void __cxa_guard_release(uint64_t*)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:306:10:void __cxa_guard_abort(uint64_t*)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:346:36:void exit(int)	0
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:320:36:void __assert_func(const char*, int, const char*, const char*)	0
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:158:11:void* _sbrk(ptrdiff_t)	0
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:278:36:void __cxa_pure_virtual()	0
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:333:36:void abort()	0
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:366:32:void __gnu_cxx::__verbose_terminate_handler()	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:378:32:void std::__throw_bad_alloc()	0
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:387:32:void std::__throw_bad_array_new_length()	0
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:397:32:void std::__throw_length_error(const char*)	0
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:412:7:void* operator new(std::size_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:422:6:void operator delete(void*)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:432:7:void* operator new [](std::size_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:441:6:void operator delete [](void*)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:452:6:void operator delete(void*, std::size_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/system.cpp:463:6:void operator delete [](void*, std::size_t)	1

@@ -1,0 +1,5 @@
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/AtExitImpl.cpp:87:5:int __cxa_atexit(void (*)(void*), void*, void*)	16	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/AtExitImpl.cpp:105:5:int __aeabi_atexit(void*, void (*)(void*), void*)	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/AtExitImpl.cpp:110:5:int atexit(void (*)())	0	static
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/AtExitImpl.cpp:124:8:size_t atexit_registered_count()	0	static,ignoring_inline_asm
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/AppSystem/AtExitImpl.cpp:129:6:void __cxa_finalize(void*)	24	static

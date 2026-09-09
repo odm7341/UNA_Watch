@@ -1,0 +1,3 @@
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Header/SDK/Kernel/Kernel.hpp:58:13:SDK::Kernel::~Kernel()	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Header/SDK/Kernel/Kernel.hpp:58:13:virtual SDK::Kernel::~Kernel()	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Kernel/KernelBuilder.cpp:3:13:static SDK::Kernel SDK::KernelBuilder::make(const SDK::Interface::IKernel*)	1

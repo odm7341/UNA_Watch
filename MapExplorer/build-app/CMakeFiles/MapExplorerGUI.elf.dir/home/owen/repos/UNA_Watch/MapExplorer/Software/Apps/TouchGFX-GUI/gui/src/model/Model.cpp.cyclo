@@ -1,0 +1,21 @@
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/UIEventListener.hpp:44:18:virtual void touchgfx::UIEventListener::handleClickEvent(const touchgfx::ClickEvent&)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/UIEventListener.hpp:54:18:virtual void touchgfx::UIEventListener::handleDragEvent(const touchgfx::DragEvent&)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/UIEventListener.hpp:64:18:virtual void touchgfx::UIEventListener::handleGestureEvent(const touchgfx::GestureEvent&)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/UIEventListener.hpp:74:18:virtual void touchgfx::UIEventListener::handleKeyEvent(uint8_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/UIEventListener.hpp:83:18:virtual void touchgfx::UIEventListener::handleTickEvent()	1
+/home/owen/repos/UNA_Watch/una-sdk/ThirdParty/touchgfx/framework/include/touchgfx/UIEventListener.hpp:88:18:virtual void touchgfx::UIEventListener::handlePendingScreenTransition()	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Header/SDK/Interfaces/IGuiLifeCycleCallback.hpp:46:18:virtual void SDK::Interface::IGuiLifeCycleCallback::onFrame()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/include/gui/model/Model.hpp:17:7:Model::~Model()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/include/gui/model/Model.hpp:17:7:virtual Model::~Model()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:89:6:virtual void Model::onStart()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:94:6:virtual void Model::onResume()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:102:6:virtual void Model::onStop()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:107:6:virtual void Model::onSuspend()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/include/gui/model/Model.hpp:17:7:virtual void* Model::_ZThn4_N5ModelD1Ev()	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Header/SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp:38:38:static SDK::TouchGFXCommandProcessor& SDK::TouchGFXCommandProcessor::GetInstance()	3
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:21:1:Model::Model()	3
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:55:22:FrontendApplication& Model::application()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:60:6:void Model::tick()	2
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:70:6:void Model::exitApp()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/gui/src/model/Model.cpp:110:1:cpp)	17
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Header/SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp:40:41:void __tcf_0()	1

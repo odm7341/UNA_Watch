@@ -1,0 +1,33 @@
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:142:10:bool SDK::Fit::{anonymous}::readExact(SDK::Interface::IFile&, void*, size_t)	4
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/stl_algobase.h:913:5:_BI2 std::move_backward(_BI1, _BI1, _BI2) [with _BI1 = unsigned char*; _BI2 = unsigned char*]	3
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/stl_vector.h:380:7:std::_Vector_base<_Tp, _Alloc>::pointer std::_Vector_base<_Tp, _Alloc>::_M_allocate(std::size_t) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Header/SDK/Fit/FitBaseType.hpp:55:19:constexpr uint8_t SDK::Fit::baseTypeSize(BaseType)	5
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:33:6:bool SDK::Fit::FitWriter::writeBytes(const void*, size_t)	4
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:67:6:bool SDK::Fit::FitWriter::begin(uint16_t, uint8_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:158:6:static bool SDK::Fit::FitWriter::finalize(SDK::Interface::IFile&, uint32_t)	26
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:249:6:bool SDK::Fit::FitWriter::finish()	5
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:269:6:static bool SDK::Fit::FitWriter::recover(SDK::Interface::IFile&, uint32_t)	13
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/stl_vector.h:1927:7:std::vector<_Tp, _Alloc>::size_type std::vector<_Tp, _Alloc>::_M_check_len(size_type, const char*) const [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]	2
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/vector.tcc:111:7:) [with _Args = {unsigned char}; _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]	4
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:23:10:void SDK::Fit::{anonymous}::appendLE(std::vector<unsigned char>&, T, uint8_t) [with T = short unsigned int]	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:335:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::i16(int16_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:334:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::u16(uint16_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:23:10:void SDK::Fit::{anonymous}::appendLE(std::vector<unsigned char>&, T, uint8_t) [with T = long unsigned int]	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:341:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::f32(float)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:337:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::i32(int32_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:336:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::u32(uint32_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:357:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::str(const char*, uint8_t)	4
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:23:10:void SDK::Fit::{anonymous}::appendLE(std::vector<unsigned char>&, T, uint8_t) [with T = long long unsigned int]	2
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:338:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::u64(uint64_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:339:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::i64(int64_t)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:349:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::f64(double)	1
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:373:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::invalid(SDK::Fit::BaseType, uint8_t)	14
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:333:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::i8(int8_t)	1
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/stl_vector.h:1296:7:void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]	4
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:77:6:bool SDK::Fit::FitWriter::defineMessage(uint8_t, uint16_t, std::initializer_list<Field>, std::initializer_list<DevField>)	9
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:332:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::u8(uint8_t)	1
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/stl_algobase.h:448:2:static _Up* std::__copy_move<_IsMove, true, std::random_access_iterator_tag>::__copy_m(_Tp*, _Tp*, _Up*) [with _Tp = const unsigned char; _Up = unsigned char; bool _IsMove = false]	3
+/opt/st/stm32cubeclt_1.22.0/GNU-tools-for-STM32/arm-none-eabi/include/c++/14.3.1/bits/stl_algobase.h:448:2:static _Up* std::__copy_move<_IsMove, true, std::random_access_iterator_tag>::__copy_m(_Tp*, _Tp*, _Up*) [with _Tp = unsigned char; _Up = unsigned char; bool _IsMove = true]	3
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:366:18:SDK::Fit::FitWriter::Data& SDK::Fit::FitWriter::Data::bytes(const void*, size_t)	4
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:126:6:bool SDK::Fit::FitWriter::emitData(uint8_t, const std::vector<unsigned char>&)	9
+/home/owen/repos/UNA_Watch/una-sdk/Libs/Source/Fit/FitWriter.cpp:383:6:bool SDK::Fit::FitWriter::Data::write()	1

@@ -1,0 +1,3 @@
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/generated/fonts/include/fonts/ApplicationFontProvider.hpp:57:7:ApplicationFontProvider::~ApplicationFontProvider()	1
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/generated/fonts/src/ApplicationFontProvider.cpp:8:17:virtual touchgfx::Font* ApplicationFontProvider::getFont(touchgfx::FontId)	18
+/home/owen/repos/UNA_Watch/MapExplorer/Software/Apps/TouchGFX-GUI/generated/fonts/include/fonts/ApplicationFontProvider.hpp:57:7:virtual ApplicationFontProvider::~ApplicationFontProvider()	1
