@@ -1,6 +1,9 @@
 #include <gui/main_screen/MainView.hpp>
 
 #include <gui/common/GuiConfig.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
+
+#include <touchgfx/Color.hpp>
 
 #include "SDK/Kernel/KernelProviderGUI.hpp"
 
@@ -17,13 +20,24 @@ void MainView::setupScreen()
     mMap.setPosition(0, 0, 240, 240);
     mMap.setSources(&mSession.container(), &mSession.cache(), nullptr);
     add(mMap);
+    mOperationBackground.setPosition(66, 210, 108, 24);
+    mOperationBackground.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    add(mOperationBackground);
+    mOperationText.setPosition(70, 213, 100, 20);
+    mOperationText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
+    mOperationText.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    mOperationText.setWildcard(mOperationBuffer);
+    add(mOperationText);
     mBrowser.openInitialPack();
     mWasRenderable = mBrowser.renderable();
+    refreshOperationHint();
     refreshMap();
 }
 
 void MainView::tearDownScreen()
 {
+    remove(mOperationText);
+    remove(mOperationBackground);
     remove(mMap);
     MainViewBase::tearDownScreen();
 }
@@ -52,6 +66,20 @@ void MainView::handleTickEvent()
     }
 }
 
+
+void MainView::refreshOperationHint()
+{
+    const char* label = nullptr;
+    switch (mBrowser.operation()) {
+    case MapKit::MapBrowserSession::Operation::NorthSouth: label = "PAN N/S"; break;
+    case MapKit::MapBrowserSession::Operation::EastWest:   label = "PAN E/W"; break;
+    case MapKit::MapBrowserSession::Operation::Zoom:       label = "ZOOM"; break;
+    case MapKit::MapBrowserSession::Operation::Pack:       label = "PACK"; break;
+    }
+    touchgfx::Unicode::strncpy(mOperationBuffer, label, sizeof(mOperationBuffer) / sizeof(mOperationBuffer[0]) - 1);
+    mOperationBuffer[sizeof(mOperationBuffer) / sizeof(mOperationBuffer[0]) - 1] = 0;
+    mOperationText.invalidate();
+}
 void MainView::handleKeyEvent(uint8_t key)
 {
     // Keep the tutorial's deliberate double-R2 escape hatch. One R2 remains
@@ -72,4 +100,5 @@ void MainView::handleKeyEvent(uint8_t key)
     }
     mLastKey = key;
     refreshMap();
+    refreshOperationHint();
 }
