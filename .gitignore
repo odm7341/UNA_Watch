@@ -16,6 +16,11 @@
 /**/install/
 /**/watch-backups/
 
+# Compiler and Python cache outputs.
+*.d
+*.o
+__pycache__/
+
 # OS/editor noise.
 .DS_Store
 *.swp

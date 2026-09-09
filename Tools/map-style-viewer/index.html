@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UNA Map Style Lab</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="map" aria-label="UNA vector map style preview"></main>
+  <section class="panel" aria-label="Map style and export controls">
+    <h1>UNA Map Style Lab</h1>
+    <p>OpenFreeMap PBF topology with OSM US vector contours. No raster source.</p>
+    <dl class="readout">
+      <dt>Center</dt><dd id="center">—</dd>
+      <dt>Zoom</dt><dd id="zoom">—</dd>
+    </dl>
+    <fieldset>
+      <label><input type="checkbox" data-layer="landcover" checked> Land cover</label>
+      <label><input type="checkbox" data-layer="water" checked> Water</label>
+      <label><input type="checkbox" data-layer="contours" checked> Contours</label>
+      <label><input type="checkbox" data-layer="roads" checked> Roads</label>
+      <label><input type="checkbox" data-layer="labels" checked> Labels</label>
+      <label><input type="checkbox" data-layer="trails" checked> OSM trails</label>
+      <label><input type="checkbox" data-layer="peaks" checked> Mountain peaks</label>
+    </fieldset>
+    <section class="export" aria-label="Rawtiles export">
+      <h2>Rawtiles export</h2>
+      <p>Shift-drag a rectangle, or use the current view. The pack is rendered and written locally in this browser.</p>
+      <div class="zoom-fields">
+        <label>Min zoom <select id="zoom-min" aria-label="Minimum export zoom"></select></label>
+        <label>Max zoom <select id="zoom-max" aria-label="Maximum export zoom"></select></label>
+      </div>
+      <div class="actions">
+        <button type="button" id="select-view">Use current view</button>
+        <button type="button" id="export-pack">Download rawtiles</button>
+      </div>
+      <div class="estimate" id="estimate" aria-live="polite">Choose an export area.</div>
+    </section>
+    <div class="status" id="status" role="status">Loading vector tiles…</div>
+  </section>
+  <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
