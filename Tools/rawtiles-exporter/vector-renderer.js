@@ -7,6 +7,20 @@ import { TILE_BYTES, TILE_DIM, tileXToLon, tileYToLat } from './rawtiles.js';
 const MAPLIBRE_TILE_DIM = TILE_DIM * 2;
 const EDGE_BUFFER = 128;
 const METATILE_DIM = MAPLIBRE_TILE_DIM + EDGE_BUFFER * 2;
+// Glyphs are rasterized at MapLibre's 512px tile scale, then reduced to
+// MapKit's 256px tile. Double every symbol size so the output keeps the
+// authored watch-pixel text size instead of halving it.
+const RAWTILES_TEXT_SCALE = 2;
+
+function compensateTextDownsampling(textSize) {
+  if (typeof textSize === 'number') return textSize * RAWTILES_TEXT_SCALE;
+  if (textSize[0] !== 'interpolate') return textSize;
+  return textSize.map((value, index) => (
+    index >= 4 && index % 2 === 0 && typeof value === 'number'
+      ? value * RAWTILES_TEXT_SCALE
+      : value
+  ));
+}
 
 function quantizeChannel(value) {
   if (value <= 42) return 0;
@@ -51,6 +65,9 @@ export async function renderVectorTile(tile, hiddenLayerIds) {
   const exportStyle = structuredClone(style);
   for (const layer of exportStyle.layers) {
     if (hiddenLayerIds.includes(layer.id)) layer.layout = { ...layer.layout, visibility: 'none' };
+    if (layer.type === 'symbol' && layer.layout?.['text-size'] !== undefined) {
+      layer.layout['text-size'] = compensateTextDownsampling(layer.layout['text-size']);
+    }
   }
   const rendered = new maplibregl.Map({
     container: host,
