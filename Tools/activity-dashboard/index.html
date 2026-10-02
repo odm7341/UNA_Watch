@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080d14">
+  <meta name="description" content="Private, browser-local FIT activity and SleepVue sleep analytics.">
+  <title>UNA Activity Dashboard</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="UNA Activity Dashboard home">
+      <span class="eyebrow">UNA WATCH · LOCAL ANALYTICS</span>
+      <strong>Activity <span>Dashboard</span></strong>
+    </a>
+    <nav class="site-nav" aria-label="Dashboard navigation">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#library">Library</a>
+    </nav>
+    <div class="privacy-pill" title="FIT files and activity data stay in this browser">
+      <span class="privacy-dot" aria-hidden="true"></span>
+      Browser-local
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="import-panel" aria-labelledby="import-title">
+      <div class="import-copy">
+        <p class="eyebrow">FIT INGESTION</p>
+        <h1 id="import-title">Review sleep and workouts in one place.</h1>
+        <p>Import completed activity FIT files. Processing and storage happen entirely in this browser.</p>
+      </div>
+      <div class="import-actions">
+        <label class="button button-primary file-button">
+          Import FIT files
+          <input id="file-input" type="file" accept=".fit,application/octet-stream" multiple>
+        </label>
+      </div>
+      <div id="progress-area" class="progress-area" hidden>
+        <div class="progress-heading">
+          <span id="progress-label">Preparing import…</span>
+          <span id="progress-value"></span>
+        </div>
+        <progress id="import-progress" max="1" value="0"></progress>
+      </div>
+      <div id="import-results" class="result-banner" role="status" aria-live="polite" hidden></div>
+      <div id="error-banner" class="error-banner" role="alert" hidden></div>
+      <p id="capability-note" class="capability-note">Strict FIT integrity checks are enabled. Sleep FIT requires the SleepVue sleep_stage developer field.</p>
+    </section>
+
+    <section id="dashboard" class="dashboard-section" aria-labelledby="dashboard-title">
+      <div class="section-toolbar">
+        <div>
+          <p class="eyebrow">OVERVIEW</p>
+          <h2 id="dashboard-title">Dashboard</h2>
+        </div>
+        <div class="filter-row" aria-label="Dashboard filters">
+          <label>Period
+            <select id="range-filter">
+              <option value="7d">7 days</option>
+              <option value="30d" selected>30 days</option>
+              <option value="90d">90 days</option>
+              <option value="1y">1 year</option>
+              <option value="all">All time</option>
+            </select>
+          </label>
+          <label>Kind
+            <select id="kind-filter">
+              <option value="all">All</option>
+              <option value="workout">Workouts</option>
+              <option value="sleep">Sleep</option>
+            </select>
+          </label>
+          <label>Sport
+            <select id="sport-filter">
+              <option value="all">All sports</option>
+            </select>
+          </label>
+          <label>Units
+            <select id="unit-filter">
+              <option value="metric">Metric</option>
+              <option value="statute">Statute</option>
+            </select>
+          </label>
+          <button id="clear-filters" class="button button-quiet" type="button">Reset</button>
+        </div>
+      </div>
+
+      <div id="dashboard-empty" class="empty-panel">
+        <strong>No matching activities</strong>
+        <span>Import FIT files or change the active filters.</span>
+      </div>
+
+      <div id="dashboard-content" hidden>
+        <section id="workout-analytics" class="analytics-block" aria-labelledby="workout-title">
+          <div class="block-heading">
+            <div><p class="eyebrow">TRAINING</p><h3 id="workout-title">Workout load</h3></div>
+            <span id="workout-range-label" class="subtle-label"></span>
+          </div>
+          <div id="workout-summary" class="summary-grid"></div>
+          <div class="analytics-grid">
+            <article class="chart-card chart-card-wide">
+              <div class="card-heading"><h4>Weekly volume</h4><span>Duration by sport · distance line</span></div>
+              <canvas id="weekly-chart" class="dashboard-chart" aria-label="Weekly workout duration by sport and distance"></canvas>
+            </article>
+            <article class="chart-card">
+              <div class="card-heading"><h4>Heart-rate trend</h4><span>Average by activity</span></div>
+              <canvas id="heart-rate-trend" class="dashboard-chart" aria-label="Average heart rate trend"></canvas>
+            </article>
+            <article class="data-card">
+              <div class="card-heading"><h4>Sport totals</h4><span>Filtered period</span></div>
+              <div id="sport-totals"></div>
+            </article>
+            <article class="data-card">
+              <div class="card-heading"><h4>Recorded highs</h4><span>Per sport · imported data</span></div>
+              <div id="recorded-highs"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="sleep-analytics" class="analytics-block" aria-labelledby="sleep-title">
+          <div class="block-heading">
+            <div><p class="eyebrow">RECOVERY</p><h3 id="sleep-title">Sleep trend</h3></div>
+            <span class="subtle-label">SleepVue three-stage model</span>
+          </div>
+          <div id="sleep-summary" class="summary-grid"></div>
+          <article class="chart-card">
+            <div class="card-heading"><h4>Nightly sleep</h4><span>Duration, stages, and average HR</span></div>
+            <canvas id="sleep-trend" class="dashboard-chart" aria-label="Nightly sleep duration, stages, and average heart rate"></canvas>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <section id="library" class="workspace" aria-labelledby="library-title">
+      <aside class="activity-sidebar">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">LOCAL LIBRARY</p>
+            <h2 id="library-title">Activities</h2>
+          </div>
+          <span id="activity-count" class="count-badge">0</span>
+        </div>
+        <div id="activity-list" class="activity-list"></div>
+        <p id="empty-library" class="empty-library">No activities match the current filters.</p>
+      </aside>
+
+      <section class="activity-detail" aria-live="polite">
+        <div id="empty-detail" class="empty-detail">
+          <div class="pulse-mark" aria-hidden="true"></div>
+          <h2>No activity selected</h2>
+          <p>Select an imported activity to inspect its metrics.</p>
+        </div>
+
+        <div id="detail-content" hidden>
+          <div class="detail-header">
+            <div>
+              <p id="detail-kind" class="eyebrow"></p>
+              <h2 id="detail-title"></h2>
+              <p id="detail-timing" class="detail-timing"></p>
+            </div>
+            <div class="button-row compact">
+              <button id="download-button" class="button button-quiet" type="button">Download FIT</button>
+              <button id="delete-button" class="button button-danger" type="button">Remove local</button>
+            </div>
+          </div>
+
+          <div id="detail-summary" class="summary-grid"></div>
+          <section id="comparison-section" class="comparison-card" hidden>
+            <div class="card-heading"><h3>Compared with previous</h3><span id="comparison-date"></span></div>
+            <div id="comparison-grid" class="comparison-grid"></div>
+          </section>
+
+          <article id="detail-chart-card" class="chart-card" hidden>
+            <div class="card-heading"><h3>Timeline</h3><span id="detail-chart-caption"></span></div>
+            <canvas id="detail-chart" class="detail-chart" aria-label="Activity metric timeline"></canvas>
+          </article>
+
+          <div class="detail-grid">
+            <article id="route-card" class="chart-card" hidden>
+              <div class="card-heading"><h3>Route trace</h3><span>Local rendering · no map tiles</span></div>
+              <canvas id="route-chart" class="route-chart" aria-label="Activity route trace"></canvas>
+            </article>
+            <article id="sessions-card" class="data-card" hidden>
+              <div class="card-heading"><h3>Sessions</h3><span>Multisport segments</span></div>
+              <div id="sessions-table"></div>
+            </article>
+          </div>
+
+          <article id="laps-card" class="data-card" hidden>
+            <div class="card-heading"><h3>Laps</h3><span>Recorded FIT lap summaries</span></div>
+            <div id="laps-table" class="table-scroll"></div>
+          </article>
+          <p id="detail-accessible-summary" class="sr-only"></p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>UNA Activity Dashboard</span>
+    <span>Data stays in IndexedDB on this device.</span>
+  </footer>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

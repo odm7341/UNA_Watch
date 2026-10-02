@@ -1,0 +1,17 @@
+{
+  "name": "una-activity-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=./",
+    "preview": "vite preview",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "fit-file-parser": "6.1.2"
+  },
+  "devDependencies": {
+    "vite": "8.3.2"
+  }
+}

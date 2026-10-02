@@ -1,0 +1,27 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #edf4fb;
+  background: #070b11;
+}
+* { box-sizing: border-box; }
+body { min-width: 320px; min-height: 100vh; margin: 0; background: radial-gradient(circle at 80% 0%, rgba(54, 124, 108, 0.18), transparent 34rem), radial-gradient(circle at 5% 30%, rgba(57, 88, 137, 0.16), transparent 30rem), #070b11; }
+main { width: min(1080px, calc(100% - 2rem)); margin: 0 auto; padding: clamp(3rem, 9vw, 7rem) 0 2rem; }
+header { max-width: 720px; margin-bottom: 2rem; }
+.eyebrow { margin: 0 0 0.45rem; color: #8d9cb0; font-size: 0.68rem; font-weight: 780; letter-spacing: 0.17em; }
+h1 { margin: 0; font-size: clamp(2.8rem, 8vw, 5.8rem); line-height: 0.95; letter-spacing: -0.065em; }
+h1 span { color: #6cd8ae; font-weight: 450; }
+.intro { max-width: 570px; margin: 1.2rem 0 0; color: #9aa8ba; font-size: 1.02rem; line-height: 1.6; }
+.tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.tool-card { display: block; min-height: 330px; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid #243348; border-radius: 18px; color: inherit; background: linear-gradient(145deg, rgba(18, 29, 42, 0.95), rgba(10, 16, 24, 0.95)); box-shadow: 0 24px 65px rgba(0, 0, 0, 0.28); text-decoration: none; transition: transform 150ms ease, border-color 150ms ease; }
+.tool-card:hover { transform: translateY(-3px); border-color: #3f5a72; }
+.tool-card:focus-visible { outline: 2px solid #6cd8ae; outline-offset: 3px; }
+.tool-card h2 { margin: 0 0 0.65rem; font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing: -0.04em; }
+.tool-card > p:not(.eyebrow) { min-height: 4.7rem; margin: 0 0 1.5rem; color: #9aa8ba; line-height: 1.55; }
+.tool-card > span { color: #8fe6c6; font-size: 0.82rem; font-weight: 720; }
+.tool-card b { margin-left: 0.3rem; }
+.icon { width: 4rem; height: 4rem; margin-bottom: 2rem; border: 1px solid #345169; border-radius: 16px; background-color: #101d29; }
+.icon.activity { background-image: linear-gradient(90deg, transparent 0 18%, #6cd8ae 19% 23%, transparent 24% 39%, #6cd8ae 40% 46%, transparent 47% 58%, #6cd8ae 59% 63%, transparent 64%), radial-gradient(circle, #6cd8ae 0 8%, transparent 9%); }
+.icon.map { background-image: linear-gradient(130deg, transparent 0 35%, #68a8e8 36% 39%, transparent 40%), linear-gradient(45deg, transparent 0 48%, #6cd8ae 49% 52%, transparent 53%); }
+footer { margin-top: 2rem; color: #748399; font-size: 0.72rem; }
+@media (max-width: 700px) { main { padding-top: 3rem; } .tool-grid { grid-template-columns: 1fr; } .tool-card { min-height: 280px; } }

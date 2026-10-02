@@ -24,7 +24,7 @@ Open [http://localhost:8000/Tools/rawtiles-exporter/](http://localhost:8000/Tool
 
 ### GitHub Pages
 
-The repository deploys this directory on every push to `main` that changes the exporter. After the first successful deployment, open [https://odm7341.github.io/UNA_Watch/rawtiles-exporter/](https://odm7341.github.io/UNA_Watch/rawtiles-exporter/). Before the first deployment, set the repository's **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. The Pages artifact contains only this exporter and a root redirect; no watch sources, SDK checkout, or local tooling are published.
+The repository deploys the combined browser-tools artifact on pushes to `main` that change either tool or the Pages workflow. Open the [utility landing page](https://odm7341.github.io/UNA_Watch/) or go directly to the [rawtiles exporter](https://odm7341.github.io/UNA_Watch/rawtiles-exporter/). Set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. The artifact contains the landing page, this exporter, and the FIT activity dashboard; watch sources, SDK checkouts, local tooling, and imported user data are never published.
 
 ## Create your first watch map
 

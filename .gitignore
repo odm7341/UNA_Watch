@@ -16,6 +16,11 @@
 /**/install/
 /**/watch-backups/
 
+# Browser-tool dependencies and generated Pages output.
+/Tools/activity-dashboard/node_modules/
+/Tools/activity-dashboard/dist/
+/_site/
+
 # Compiler and Python cache outputs.
 *.d
 *.o

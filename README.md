@@ -1,10 +1,21 @@
-# UNA Watch map projects
+# UNA Watch apps and browser tools
 
-This repository builds an offline map browser for a UNA Watch and supplies the browser tool that creates its map packs.
+This repository contains UNA Watch applications, shared libraries, and a GitHub Pages utility site for maps and activity data.
 
 - [`MapExplorer`](MapExplorer/README.md) — the watch utility that opens, pans, zooms, and switches offline maps.
-- [`Tools/rawtiles-exporter`](Tools/rawtiles-exporter/README.md) — the static browser page that previews the watch style and exports `.rawtiles` packs.
 - [`MapKit`](MapKit/README.md) — the shared offline-map reader used by MapExplorer. Its upstream relationship is recorded in [`MapKit/UPSTREAM.md`](MapKit/UPSTREAM.md).
+- [`Tools/activity-dashboard`](Tools/activity-dashboard/README.md) — the browser-local FIT activity and SleepVue sleep dashboard.
+- [`Tools/rawtiles-exporter`](Tools/rawtiles-exporter/README.md) — the browser tool that previews the watch style and exports `.rawtiles` packs.
+
+## Hosted browser tools
+
+The combined utility site is deployed from `main` with GitHub Actions:
+
+- [UNA browser tools](https://odm7341.github.io/UNA_Watch/)
+- [FIT activity dashboard](https://odm7341.github.io/UNA_Watch/activity-dashboard/)
+- [Rawtiles exporter](https://odm7341.github.io/UNA_Watch/rawtiles-exporter/)
+
+The activity dashboard parses completed activity FIT files in the browser, stores them in local IndexedDB, and does not upload health or route data. It recognizes SleepVue sleep FIT files through their `sleep_stage` developer field. The tracked SleepLab app writes CSV/JSON rather than FIT; those files are not accepted by the dashboard.
 
 ## Complete guide: put a map on your own watch
 

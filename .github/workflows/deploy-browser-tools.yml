@@ -1,0 +1,63 @@
+name: Deploy UNA browser tools
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Tools/activity-dashboard/**
+      - Tools/site/**
+      - Tools/rawtiles-exporter/**
+      - .github/workflows/deploy-browser-tools.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: Tools/activity-dashboard/package-lock.json
+      - name: Install dashboard dependencies
+        working-directory: Tools/activity-dashboard
+        run: npm ci
+      - name: Test dashboard core
+        working-directory: Tools/activity-dashboard
+        run: npm test
+      - name: Build activity dashboard
+        working-directory: Tools/activity-dashboard
+        run: npm run build
+      - name: Assemble Pages artifact
+        run: |
+          mkdir -p _site/rawtiles-exporter _site/activity-dashboard
+          cp -a Tools/site/. _site/
+          cp -a Tools/rawtiles-exporter/. _site/rawtiles-exporter/
+          cp -a Tools/activity-dashboard/dist/. _site/activity-dashboard/
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
