@@ -433,9 +433,15 @@ async function scanWatch() {
   setBusy(true);
   elements.watch_status.textContent = "Looking for activity FIT files…";
   try {
-    state.watchFiles = await listWatchFits(watch);
+    state.watchFiles = await listWatchFits(watch, (message) => {
+      elements.watch_status.textContent = message;
+      reportWatchDiagnostic(message);
+    });
     renderWatchFiles();
     elements.watch_status.textContent = `${state.watchFiles.length} FIT file${state.watchFiles.length === 1 ? "" : "s"} on watch`;
+  } catch (error) {
+    reportWatchDiagnostic(`Scan failed: ${error instanceof Error ? error.message : String(error)}`);
+    throw error;
   } finally {
     setBusy(false);
   }
@@ -534,6 +540,17 @@ watch.addEventListener("statechange", (event) => {
   }
   setBusy(state.busy);
 });
+function reportWatchDiagnostic(message) {
+  console.info("[watch]", message);
+  if (import.meta.env.DEV) {
+    fetch("/__watch-diagnostics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+    }).catch(() => {});
+  }
+}
+watch.addEventListener("log", (event) => reportWatchDiagnostic(event.detail));
 for (const filter of [elements.range_filter, elements.kind_filter, elements.sport_filter]) filter.addEventListener("change", applyFilters);
 elements.unit_filter.value = state.units;
 elements.unit_filter.addEventListener("change", () => {

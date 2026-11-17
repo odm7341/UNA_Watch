@@ -48,17 +48,21 @@ export class FTSClient extends EventTarget {
 
     try {
       this._state("connecting", `Connecting to ${device.name || "Bluetooth device"}`);
+      this._log("Connecting to GATT server");
       this.server = await device.gatt.connect();
+      this._log("Finding FTS service");
       const service = await this.server.getPrimaryService(FTS.serviceUUID);
-      const [versionCharacteristic, rawCharacteristic] = await Promise.all([
-        service.getCharacteristic(FTS.versionUUID),
-        service.getCharacteristic(FTS.rawUUID),
-      ]);
+      this._log("Finding FTS version characteristic");
+      const versionCharacteristic = await service.getCharacteristic(FTS.versionUUID);
+      this._log("Finding FTS transfer characteristic");
+      const rawCharacteristic = await service.getCharacteristic(FTS.rawUUID);
 
       this.rawCharacteristic = rawCharacteristic;
+      this._log("Enabling transfer notifications");
       await rawCharacteristic.startNotifications();
       rawCharacteristic.addEventListener("characteristicvaluechanged", this._onNotification);
 
+      this._log("Reading FTS protocol version");
       const versionValue = await versionCharacteristic.readValue();
       if (versionValue.byteLength < 4) throw new Error("Watch returned an invalid FTS version");
       this.protocolVersion = versionValue.getUint32(0, true);
@@ -68,6 +72,7 @@ export class FTSClient extends EventTarget {
       this._state("ready", `Connected to ${device.name || "UNA Watch"}`);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
+      this._log(`Connection failed: ${message}`);
       device.removeEventListener("gattserverdisconnected", this._onDisconnected);
       this._clearConnection();
       this.device = null;
@@ -185,12 +190,21 @@ export class FTSClient extends EventTarget {
     return new Promise((resolve, reject) => {
       this.pending = { kind, state, resolve, reject, timer: null };
       this._armTimeout();
-      this._write(packet).catch((error) => this._rejectPending(error));
+      this._log(`Sending ${kind} request (${packet.byteLength} bytes)`);
+      this._write(packet)
+        .then(() => this._log(`${kind} request write accepted`))
+        .catch((error) => {
+          this._log(`${kind} request write failed: ${error instanceof Error ? error.message : String(error)}`);
+          this._rejectPending(error);
+        });
     });
   }
 
   async _write(packet) {
     if (!this.rawCharacteristic) throw new Error("Watch transfer characteristic is unavailable");
+    if (!this.rawCharacteristic.properties.writeWithoutResponse) {
+      throw new Error("Watch transfer characteristic does not allow writes without response");
+    }
     if (typeof this.rawCharacteristic.writeValueWithoutResponse === "function") {
       await this.rawCharacteristic.writeValueWithoutResponse(packet);
     } else {
