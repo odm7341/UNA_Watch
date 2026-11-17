@@ -24,6 +24,8 @@ import {
   parseReadData,
 } from "../src/protocol.js";
 import { makeMultisportFit, makeSleepFit, makeWorkoutFit } from "../test-support/fit-fixtures.js";
+import { listWatchFits } from "../src/watch-files.js";
+import { FTSClient } from "../src/fts-client.js";
 
 function hex(bytes) {
   return Buffer.from(bytes).toString("hex");
@@ -201,4 +203,50 @@ test("unit formatters preserve signed comparisons and human duration", () => {
   assert.equal(formatDuration(-10, { sign: true }), "−10s");
   assert.equal(formatDistance(1609.344, "statute"), "1.00 mi");
   assert.equal(formatDistance(1000, "metric", { sign: true }), "+1.00 km");
+});
+
+test("watch discovery lists only recorded FIT files under app Activity folders", async () => {
+  const directories = {
+    "/Apps": [{ name: "SleepVue", isDirectory: true }, { name: "Maps", isDirectory: true }],
+    "/Apps/SleepVue/Activity": [{ name: "202601", isDirectory: true }, { name: "summary.json", isDirectory: false }],
+    "/Apps/SleepVue/Activity/202601": [{ name: "night.FIT", isDirectory: false, fileSize: 2048 }],
+  };
+  const client = { listDir: async (path) => {
+    if (!(path in directories)) throw new Error("Missing directory");
+    return directories[path];
+  } };
+  assert.deepEqual(await listWatchFits(client), [{
+    path: "/Apps/SleepVue/Activity/202601/night.FIT", name: "night.FIT", size: 2048, app: "SleepVue",
+  }]);
+});
+
+test("v5 read pacing waits for a full window rather than each notification", () => {
+  const client = new FTSClient();
+  client.protocolVersion = 5;
+  const paced = [];
+  client._write = (packet) => { paced.push(packet); return Promise.resolve(); };
+  client.pending = {
+    kind: "read",
+    state: { chunks: new Map(), contiguousEnd: 0, totalLength: 0, lastPacedOffset: -1, windowEnd: 4096 },
+    resolve: () => {},
+    reject: () => {},
+    timer: null,
+  };
+  const chunk = (offset, length) => {
+    const bytes = new Uint8Array(16 + length);
+    const view = new DataView(bytes.buffer);
+    bytes[0] = FTS.command.readData;
+    bytes[1] = FTS.status.ok;
+    view.setUint32(4, offset, true);
+    view.setUint32(8, 5000, true);
+    view.setUint32(12, length, true);
+    client._handleRead(view);
+  };
+  chunk(0, 2000);
+  assert.equal(paced.length, 0);
+  chunk(2000, 2096);
+  assert.equal(paced.length, 1);
+  assert.equal(new DataView(paced[0].buffer).getUint32(4, true), 4096);
+  chunk(4096, 904);
+  assert.equal(paced.length, 1);
 });

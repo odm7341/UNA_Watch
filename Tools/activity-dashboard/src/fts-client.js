@@ -68,6 +68,11 @@ export class FTSClient extends EventTarget {
       this._state("ready", `Connected to ${device.name || "UNA Watch"}`);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
+      device.removeEventListener("gattserverdisconnected", this._onDisconnected);
+      this._clearConnection();
+      this.device = null;
+      if (device.gatt?.connected) device.gatt.disconnect();
+      this._state("idle", "Not connected");
       if (reused) {
         this.skipKnownOnce = true;
         this._log("Known-watch reconnect failed; next Connect will open the device picker");
@@ -145,6 +150,7 @@ export class FTSClient extends EventTarget {
         contiguousEnd: 0,
         totalLength: 0,
         lastPacedOffset: -1,
+        windowEnd: FTS.readWindow,
         onProgress,
       },
       makeRead(path),
@@ -282,8 +288,12 @@ export class FTSClient extends EventTarget {
       return;
     }
 
-    if (state.lastPacedOffset !== state.contiguousEnd) {
+    // v5 sends a burst for each window; pacing after every notification can
+    // interrupt that burst. v4 sends only one chunk per request.
+    if ((this.protocolVersion < 5 || state.contiguousEnd >= state.windowEnd)
+        && state.lastPacedOffset !== state.contiguousEnd) {
       state.lastPacedOffset = state.contiguousEnd;
+      state.windowEnd = state.contiguousEnd + FTS.readWindow;
       this._write(makeReadPacing(state.contiguousEnd)).catch((error) => this._rejectPending(error));
     }
   }

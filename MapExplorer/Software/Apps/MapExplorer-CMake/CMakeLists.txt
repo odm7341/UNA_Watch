@@ -35,8 +35,10 @@ if(DEFINED TOUCHGFX_PATH)
 endif()
 
 project(${APP_NAME})
-# Patch release: add foreground GPS location and manual follow mode.
-set(BUILD_VERSION "0.1.4")
+# Keep the default for local builds; allow -DBUILD_VERSION for releases.
+if(NOT DEFINED BUILD_VERSION)
+    set(BUILD_VERSION "0.1.4")
+endif()
 una_app_setup_version(BUILD_VERSION ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Build service

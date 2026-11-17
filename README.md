@@ -7,6 +7,8 @@ This repository contains UNA Watch applications, shared libraries, and a GitHub 
 - [`Tools/activity-dashboard`](Tools/activity-dashboard/README.md) — the browser-local FIT activity and SleepVue sleep dashboard.
 - [`Tools/rawtiles-exporter`](Tools/rawtiles-exporter/README.md) — the browser tool that previews the watch style and exports `.rawtiles` packs.
 
+For the watch-app inventory, repeatable per-app build commands, SDK update procedure and store release checklist, see [watch app development](docs/DEVELOPMENT.md) and [publishing](docs/PUBLISHING.md).
+
 ## Hosted browser tools
 
 The combined utility site is deployed from `main` with GitHub Actions:
@@ -15,7 +17,7 @@ The combined utility site is deployed from `main` with GitHub Actions:
 - [FIT activity dashboard](https://odm7341.github.io/UNA_Watch/activity-dashboard/)
 - [Rawtiles exporter](https://odm7341.github.io/UNA_Watch/rawtiles-exporter/)
 
-The activity dashboard parses completed activity FIT files in the browser, stores them in local IndexedDB, and does not upload health or route data. It recognizes SleepVue sleep FIT files through their `sleep_stage` developer field. The tracked SleepLab app writes CSV/JSON rather than FIT; those files are not accepted by the dashboard.
+The activity dashboard parses completed activity FIT files in the browser, stores them in local IndexedDB, and does not upload health or route data. It can import manually or read completed recordings from a watch with Web Bluetooth. It recognizes SleepVue sleep FIT files through their `sleep_stage` developer field. The tracked SleepLab app writes CSV/JSON rather than FIT; those files are not accepted by the dashboard.
 
 ## Complete guide: put a map on your own watch
 
@@ -39,6 +41,7 @@ git clone https://github.com/odm7341/UNA_Watch.git
 cd UNA_Watch
 
 git clone https://github.com/UNAWatch/una-sdk.git ../una-sdk
+git -C ../una-sdk checkout b9869927e8688db001ec544dffde9c729ffa06c1
 export UNA_SDK="$(cd ../una-sdk && pwd)"
 python3 -m pip install -r "$UNA_SDK/Utilities/Scripts/app_packer/requirements.txt"
 
@@ -54,10 +57,7 @@ On Windows, use the SDK's PowerShell environment-export script instead of the PO
 From this repository's root:
 
 ```bash
-cmake -G "Unix Makefiles" \
-  -S MapExplorer/Software/Apps/MapExplorer-CMake \
-  -B MapExplorer/Software/Apps/MapExplorer-CMake/build
-cmake --build MapExplorer/Software/Apps/MapExplorer-CMake/build
+bash MapExplorer/build.sh
 ```
 
 The SDK packages a `MapExplorer_*.uapp` under `MapExplorer/Output/`. Keep the printed output path; `.uapp` files and build directories are deployment artifacts and deliberately ignored by Git.

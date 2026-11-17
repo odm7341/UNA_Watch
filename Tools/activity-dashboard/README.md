@@ -11,7 +11,7 @@ Open the deployed dashboard at [https://odm7341.github.io/UNA_Watch/activity-das
 - Single-session and multisport recordings.
 - Optional standard activity fields including heart rate, distance, speed, altitude, cadence, power, calories, and GPS coordinates.
 
-The dashboard deliberately rejects invalid CRCs and FIT files that define planned workouts, courses, schedules, or monitoring data. The tracked SleepLab watch app writes CSV/JSON rather than FIT; those files are not supported. The first release uses manual file selection only. The retained UNA FTS modules are transport code for a possible later Bluetooth adapter and are not loaded by the current UI.
+The dashboard deliberately rejects invalid CRCs and FIT files that define planned workouts, courses, schedules, or monitoring data. The tracked SleepLab watch app writes CSV/JSON rather than FIT; those files are not supported.
 
 ## Privacy and local storage
 
@@ -29,6 +29,12 @@ The repository contains no personal FIT files. Test inputs are generated from sy
 4. Select an activity for its timeline, route, session/lap data, previous-activity comparison, raw download, or local deletion.
 
 Imports continue after an invalid file, and the result banner reports imported, duplicate, and failed files separately. Metric/statute preference is retained in local storage. Imported activities persist in IndexedDB across page reloads.
+
+### Import from a watch over Bluetooth
+
+On a Web Bluetooth-capable browser over HTTPS or localhost, pair/bond the watch, then select **Connect watch**. Disconnect it from other active phone connections if necessary. The dashboard scans `/Apps/<app>/Activity/` for completed `.fit` files; select recordings and choose **Import selected FIT files**. Transfers use the watch's read-only UNA FTS service, with CRC-32 verification on protocol v5 watches and strict FIT CRC validation on all imports. The watch's original files are never deleted. If Bluetooth is unavailable, manual file import continues to work.
+
+Bluetooth requires a compatible browser (typically Chrome/Edge; Bluefy may work on iPhone), a bonded/encrypted watch connection, and the watch advertising while connecting. The browser may ask you to select the watch. Watch scanning does not import anything until you choose files. Bluetooth is not covered by the synthetic parser tests or a hardware integration test.
 
 ## Develop and verify
 
@@ -59,6 +65,7 @@ npm run preview
 - `src/chart.js` — Canvas dashboard, activity, sleep-stage, and route renderers.
 - `src/store.js` — IndexedDB activity metadata and raw-byte storage.
 - `src/fts-client.js` and `src/protocol.js` — retained UNA Bluetooth file-transfer transport and packet codec.
+- `src/watch-files.js` — discovers completed FIT recordings in app Activity directories.
 - `test/` and `test-support/` — behavioral tests and synthetic FIT builders.
 
 ## Deployment

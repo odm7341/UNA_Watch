@@ -1,0 +1,3 @@
+# Keep generated TouchGFX sources available to builds, but collapse their
+# large diffs by default on GitHub. This does not ignore them or alter bytes.
+MapExplorer/Software/Apps/TouchGFX-GUI/generated/** linguist-generated=true

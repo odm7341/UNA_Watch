@@ -33,10 +33,21 @@
         <p>Import completed activity FIT files. Processing and storage happen entirely in this browser.</p>
       </div>
       <div class="import-actions">
+        <button id="connect-watch" class="button" type="button">Connect watch</button>
         <label class="button button-primary file-button">
           Import FIT files
           <input id="file-input" type="file" accept=".fit,application/octet-stream" multiple>
         </label>
+      </div>
+      <div id="watch-panel" class="watch-panel" hidden>
+        <div class="button-row">
+          <strong id="watch-status">Not connected</strong>
+          <button id="scan-watch" class="button button-quiet" type="button">Refresh watch files</button>
+          <button id="disconnect-watch" class="button button-quiet" type="button">Disconnect</button>
+        </div>
+        <p>Select completed recordings to import. Watch files are read only and remain on the watch.</p>
+        <div id="watch-files" class="watch-files"></div>
+        <button id="import-watch" class="button button-primary" type="button" disabled>Import selected FIT files</button>
       </div>
       <div id="progress-area" class="progress-area" hidden>
         <div class="progress-heading">

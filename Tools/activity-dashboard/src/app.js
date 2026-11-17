@@ -16,7 +16,9 @@ import {
 } from "./analytics.js";
 import { renderActivityChart, renderHeartRateTrend, renderRouteChart, renderSleepTrend, renderWeeklyChart } from "./chart.js";
 import { compactActivity, parseFitActivity } from "./fit.js";
+import { FTSClient } from "./fts-client.js";
 import { deleteActivity, getActivity, listActivities, putActivity } from "./store.js";
+import { listWatchFits } from "./watch-files.js";
 
 const UNIT_KEY = "una.activity.units";
 const elements = Object.fromEntries([
@@ -27,13 +29,16 @@ const elements = Object.fromEntries([
   "detail-kind", "detail-title", "detail-timing", "download-button", "delete-button", "detail-summary", "comparison-section", "comparison-date",
   "comparison-grid", "detail-chart-card", "detail-chart-caption", "detail-chart", "route-card", "route-chart", "sessions-card", "sessions-table",
   "laps-card", "laps-table", "detail-accessible-summary",
+  "connect-watch", "scan-watch", "disconnect-watch", "watch-panel", "watch-status", "watch-files", "import-watch",
 ].map((id) => [id.replaceAll("-", "_"), document.querySelector(`#${id}`)]));
 
+const watch = new FTSClient();
 const state = {
   records: [],
   selectedId: null,
   selectedActivity: null,
   busy: false,
+  watchFiles: [],
   filters: { range: "30d", kind: "all", sport: "all" },
   units: localStorage.getItem(UNIT_KEY) === "statute" ? "statute" : "metric",
 };
@@ -41,6 +46,10 @@ const state = {
 function setBusy(value) {
   state.busy = value;
   elements.file_input.disabled = value;
+  elements.connect_watch.disabled = value || !FTSClient.isSupported();
+  elements.scan_watch.disabled = value || !watch.isConnected;
+  elements.disconnect_watch.disabled = value || !watch.isConnected;
+  elements.import_watch.disabled = value || !watch.isConnected || !elements.watch_files.querySelector("input:checked");
 }
 
 function setProgress(label, value, detail = "") {
@@ -399,6 +408,87 @@ async function importFiles(files) {
   }
 }
 
+function renderWatchFiles() {
+  elements.watch_files.replaceChildren();
+  if (state.watchFiles.length === 0) {
+    const empty = document.createElement("p");
+    empty.textContent = "No completed activity FIT files found on the watch.";
+    elements.watch_files.append(empty);
+  }
+  for (const file of state.watchFiles) {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = file.path;
+    checkbox.addEventListener("change", () => setBusy(state.busy));
+    const name = document.createElement("span");
+    name.textContent = `${file.app} · ${file.name} (${Math.round(file.size / 1024)} KB)`;
+    label.append(checkbox, name);
+    elements.watch_files.append(label);
+  }
+  setBusy(state.busy);
+}
+
+async function scanWatch() {
+  setBusy(true);
+  elements.watch_status.textContent = "Looking for activity FIT files…";
+  try {
+    state.watchFiles = await listWatchFits(watch);
+    renderWatchFiles();
+    elements.watch_status.textContent = `${state.watchFiles.length} FIT file${state.watchFiles.length === 1 ? "" : "s"} on watch`;
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function connectWatch() {
+  clearMessages();
+  // The browser's device picker must be opened directly from the click gesture.
+  const connection = watch.connect();
+  setBusy(true);
+  elements.watch_panel.hidden = false;
+  try {
+    await connection;
+    await scanWatch();
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function importWatchFiles() {
+  const selected = new Set([...elements.watch_files.querySelectorAll("input:checked")].map((input) => input.value));
+  const files = state.watchFiles.filter((file) => selected.has(file.path));
+  if (files.length === 0) return;
+  clearMessages();
+  setBusy(true);
+  const results = [];
+  let preferredId = null;
+  try {
+    for (const [index, file] of files.entries()) {
+      setProgress(`Reading ${file.name}`, index / files.length, `${index + 1} / ${files.length}`);
+      try {
+        const bytes = await watch.readVerified(file.path, (fraction) =>
+          setProgress(`Reading ${file.name}`, (index + fraction) / files.length, `${index + 1} / ${files.length}`));
+        const activity = await parseFitActivity({
+          bytes, filename: file.name, source: { kind: "watch", path: file.path },
+        });
+        const result = await putActivity(compactActivity(activity));
+        results.push(`${file.name}: ${result.status}`);
+        preferredId = activity.id;
+      } catch (error) {
+        results.push(`${file.name}: failed (${error instanceof Error ? error.message : String(error)})`);
+        if (!watch.isConnected) break;
+      }
+    }
+    elements.import_results.textContent = results.join(" · ");
+    elements.import_results.hidden = false;
+    await refresh(preferredId);
+  } finally {
+    hideProgress();
+    setBusy(false);
+  }
+}
+
 function applyFilters() {
   state.filters.range = elements.range_filter.value;
   state.filters.kind = elements.kind_filter.value;
@@ -424,10 +514,26 @@ function checkCapabilities() {
     showError(`This dashboard requires ${missing.join(", ")}. Use a current browser over HTTPS or localhost.`);
     return false;
   }
+  if (!FTSClient.isSupported()) {
+    elements.connect_watch.disabled = true;
+    elements.capability_note.textContent += " Web Bluetooth is unavailable here; manual FIT import still works.";
+  }
   return true;
 }
 
 elements.file_input.addEventListener("change", () => importFiles([...elements.file_input.files]).catch(showError));
+elements.connect_watch.addEventListener("click", () => connectWatch().catch(showError));
+elements.scan_watch.addEventListener("click", () => scanWatch().catch(showError));
+elements.import_watch.addEventListener("click", () => importWatchFiles().catch(showError));
+elements.disconnect_watch.addEventListener("click", () => watch.disconnect());
+watch.addEventListener("statechange", (event) => {
+  elements.watch_status.textContent = event.detail.message;
+  if (!watch.isConnected) {
+    state.watchFiles = [];
+    elements.watch_files.replaceChildren();
+  }
+  setBusy(state.busy);
+});
 for (const filter of [elements.range_filter, elements.kind_filter, elements.sport_filter]) filter.addEventListener("change", applyFilters);
 elements.unit_filter.value = state.units;
 elements.unit_filter.addEventListener("change", () => {
