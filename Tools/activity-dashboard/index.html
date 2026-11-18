@@ -25,12 +25,17 @@
     </div>
   </header>
 
+  <nav class="app-navigation" aria-label="Main navigation">
+    <button type="button" data-view="library" aria-current="page">Library</button>
+    <button type="button" data-view="trends">Trends</button>
+    <button type="button" data-view="settings">Settings</button>
+  </nav>
   <main class="app-shell">
     <section class="import-panel" aria-labelledby="import-title">
       <div class="import-copy">
-        <p class="eyebrow">FIT INGESTION</p>
-        <h1 id="import-title">Review sleep and workouts in one place.</h1>
-        <p>Import completed activity FIT files. Processing and storage happen entirely in this browser.</p>
+        <p class="eyebrow">YOUR WATCH, YOUR DATA</p>
+        <h1 id="import-title">Your recordings</h1>
+        <p>Add a FIT file or share one from the UNA app.</p>
       </div>
       <div class="import-actions">
         <button id="connect-watch" class="button" type="button">Connect watch</button>
@@ -61,11 +66,44 @@
       <p id="capability-note" class="capability-note">Strict FIT integrity checks are enabled. Sleep FIT requires the SleepVue sleep_stage developer field.</p>
     </section>
 
+    <section id="settings-intro" class="dashboard-section">
+      <p class="eyebrow">PREFERENCES &amp; CONNECTIONS</p>
+      <h1>Settings</h1>
+      <div id="units-setting"></div>
+      <p>Your original FIT files stay local. Health sharing is optional.</p>
+    </section>
+    <details id="library-filters" class="library-filters">
+      <summary>Filter recordings <span id="filter-description">Last 30 days · all types</span></summary>
+      <div id="filter-controls"></div>
+    </details>
+    <section id="health-panel" class="dashboard-section" hidden aria-labelledby="health-heading">
+      <p class="eyebrow">CONNECTED HEALTH</p>
+      <h2 id="health-heading">Health Connect</h2>
+      <p>Share imported sleep and workouts with Google Fit or Google Health.</p>
+      <div class="button-row">
+        <button id="health-all" class="button button-primary" type="button">Share all unshared recordings</button>
+        <label><input id="health-auto" type="checkbox"> Automatically share new imports and type corrections</label>
+      </div>
+      <p id="health-batch-status" role="status">Sharing is optional. Your original FIT files stay on this phone.</p>
+      <h3>Daily heart rate</h3>
+      <p>Import the watch’s DailyHealth JSON files for heart-rate readings and recorded daily resting heart rate.
+        These are minute summaries, not continuous raw readings.
+        Shared sleep/workout intervals are excluded to avoid overlapping heart-rate records.</p>
+      <label>Watch history time zone <input id="daily-zone" type="text" placeholder="America/New_York"></label>
+      <div class="button-row">
+        <label class="button button-quiet">Import daily heart rate
+          <input id="daily-input" type="file" accept=".json,application/json" multiple>
+        </label>
+        <button id="daily-share" class="button button-primary" type="button">Sync daily heart rate</button>
+      </div>
+      <p id="daily-status" role="status">No daily heart-rate history imported.</p>
+    </section>
+
     <section id="dashboard" class="dashboard-section" aria-labelledby="dashboard-title">
       <div class="section-toolbar">
         <div>
           <p class="eyebrow">OVERVIEW</p>
-          <h2 id="dashboard-title">Dashboard</h2>
+          <h2 id="dashboard-title">Trends</h2>
         </div>
         <div class="filter-row" aria-label="Dashboard filters">
           <label>Period
@@ -159,6 +197,7 @@
       </aside>
 
       <section class="activity-detail" aria-live="polite">
+        <button id="back-library" class="button button-quiet" type="button">← Library</button>
         <div id="empty-detail" class="empty-detail">
           <div class="pulse-mark" aria-hidden="true"></div>
           <h2>No activity selected</h2>
@@ -174,10 +213,18 @@
             </div>
             <div class="button-row compact">
               <button id="download-button" class="button button-quiet" type="button">Download FIT</button>
+              <button id="strava-button" class="button button-primary" type="button" hidden>Save FIT for Strava</button>
+              <button id="health-button" class="button button-primary" type="button" hidden>Share to Health Connect</button>
               <button id="delete-button" class="button button-danger" type="button">Remove local</button>
             </div>
           </div>
 
+          <p id="health-status" role="status" hidden></p>
+          <div id="type-editor" class="filter-row" hidden>
+            <label>Workout type <select id="workout-type"></select></label>
+            <button id="save-type" class="button" type="button">Save type</button>
+            <p>Updates this dashboard and Health Connect. Original FIT / Strava exports keep their recorded type.</p>
+          </div>
           <div id="detail-summary" class="summary-grid"></div>
           <section id="comparison-section" class="comparison-card" hidden>
             <div class="card-heading"><h3>Compared with previous</h3><span id="comparison-date"></span></div>

@@ -1,0 +1,47 @@
+plugins {
+    id "com.android.application"
+}
+
+def dashboardDir = rootProject.file("../activity-dashboard")
+tasks.register("installDashboardDependencies", Exec) {
+    workingDir dashboardDir
+    commandLine "npm", "ci"
+}
+tasks.register("buildDashboard", Exec) {
+    dependsOn "installDashboardDependencies"
+    workingDir dashboardDir
+    commandLine "npm", "run", "build"
+}
+tasks.register("copyDashboard", Sync) {
+    dependsOn "buildDashboard"
+    from file("${dashboardDir}/dist")
+    into layout.buildDirectory.dir("generated/dashboardAssets/dashboard")
+}
+
+android {
+    namespace "dev.una.fitsync"
+    compileSdk 37
+
+    defaultConfig {
+        applicationId "dev.una.fitsync"
+        minSdk 31
+        targetSdk 37
+        versionCode 1
+        versionName "0.1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    sourceSets.main.assets.srcDir("$buildDir/generated/dashboardAssets")
+}
+
+tasks.configureEach {
+    if ((name.startsWith("merge") && name.endsWith("Assets"))
+            || name.toLowerCase(java.util.Locale.ROOT).contains("lint")) dependsOn "copyDashboard"
+}
+
+dependencies {
+    implementation "androidx.webkit:webkit:1.14.0"
+}
