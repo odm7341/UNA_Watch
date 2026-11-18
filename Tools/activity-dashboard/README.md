@@ -25,10 +25,18 @@ The repository contains no personal FIT files. Test inputs are generated from sy
 
 1. Open the hosted page or run the local development server.
 2. Select **Import FIT files** and choose one or more completed activity files.
-3. Use the period, kind, sport, and unit filters to change dashboard and library results.
-4. Select an activity for its timeline, route, session/lap data, previous-activity comparison, raw download, or local deletion.
+3. Use **Library → Filter recordings** to select a period, kind, and sport.
+4. Open a recording for its timeline, route, comparisons, type correction, original FIT download, or local deletion.
+5. Open **Trends** for aggregate charts and **Settings** for units.
 
 Imports continue after an invalid file, and the result banner reports imported, duplicate, and failed files separately. Metric/statute preference is retained in local storage. Imported activities persist in IndexedDB across page reloads.
+
+Workout-type corrections (including outdoor/indoor rowing) persist without
+changing the original FIT bytes. The Android app bundles this same dashboard
+and adds native Bluetooth, official-UNA share receiving, FIT saving, and
+Health Connect sharing. See the [Android guide](../android-fit-sync/README.md)
+for bulk sharing, daily/resting heart-rate imports, permissions, and limitations.
+Health Connect controls are available only in the native Android app.
 
 ### Import from a watch over Bluetooth
 
@@ -54,7 +62,11 @@ npm run build
 npm run preview
 ```
 
-`npm test` uses Node's built-in test runner. Coverage includes strict FIT validation, SleepVue developer fields, generic GPS workouts, multisport aggregation, content identity, analytics, unit formatting, comparisons, and the retained UNA FTS packet codec.
+`npm test` uses Node's built-in test runner and synthetic fixtures. Coverage
+includes strict FIT validation, SleepVue stages, workouts, multisport, analytics,
+FTS packets, concurrent duplicate imports, persisted type corrections and export
+receipts, stale acknowledgments, daily-heart-rate time zones/DST, overlap
+exclusion, and resting-heart-rate payloads.
 
 ## Project contents
 
@@ -64,6 +76,9 @@ npm run preview
 - `src/analytics.js` — filters, aggregates, comparisons, and unit/date formatting.
 - `src/chart.js` — Canvas dashboard, activity, sleep-stage, and route renderers.
 - `src/store.js` — IndexedDB activity metadata and raw-byte storage.
+- `src/activity-edits.js` — workout overrides and Health Connect sharing status.
+- `src/health.js` — FIT-derived Health Connect payloads.
+- `src/daily-health.js` — daily/resting HR validation, time-zone handling, separate storage, and export payloads.
 - `src/fts-client.js` and `src/protocol.js` — retained UNA Bluetooth file-transfer transport and packet codec.
 - `src/watch-files.js` — discovers completed FIT recordings in app Activity directories.
 - `test/` and `test-support/` — behavioral tests and synthetic FIT builders.

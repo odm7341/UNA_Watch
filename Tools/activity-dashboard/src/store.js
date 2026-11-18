@@ -1,4 +1,5 @@
 // Keep the legacy database name so the v2 upgrade preserves existing browser data.
+import { applyEdits, WORKOUT_TYPES } from "./activity-edits.js";
 const DB_NAME = "sleepvue-web";
 const DB_VERSION = 2;
 const ACTIVITY_STORE = "activities";
@@ -108,4 +109,37 @@ export async function deleteActivity(id) {
   } finally {
     database.close();
   }
+}
+
+// Metadata updates share the same serialized transaction as import deduplication.
+async function updateMetadata(id, update) {
+  const database = await openDatabase();
+  try {
+    const transaction = database.transaction(ACTIVITY_STORE, "readwrite");
+    const done = transactionDone(transaction);
+    const store = transaction.objectStore(ACTIVITY_STORE);
+    const request = store.get(id);
+    request.onsuccess = () => {
+      if (request.result) store.put(update(request.result));
+    };
+    await done;
+  } finally { database.close(); }
+}
+
+export async function changeWorkoutType(id, type) {
+  if (!WORKOUT_TYPES[type]) throw new Error("Unsupported workout type");
+  await updateMetadata(id, record => {
+    if (record.kind !== "workout" || record.typeOverride === type) return record;
+    const next = { ...record, typeOverride: type,
+      healthVersion: Math.max(Date.now(), (record.healthVersion ?? 1) + 1) };
+    return applyEdits(next, next);
+  });
+}
+
+export async function markHealthShared(id, version) {
+  await updateMetadata(id, record => ({
+    ...record,
+    healthSharedVersion: Math.max(record.healthSharedVersion ?? 0, version),
+    healthSharedAt: new Date().toISOString(),
+  }));
 }
