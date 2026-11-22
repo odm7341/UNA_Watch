@@ -6,6 +6,7 @@ This repository contains UNA Watch applications, shared libraries, and a GitHub 
 - [`MapManager`](MapManager/README.md) — background pack verifier.
 - [`MapKit`](MapKit/README.md) — shared offline-map reader used by the activity apps. Its upstream relationship is recorded in [`MapKit/UPSTREAM.md`](MapKit/UPSTREAM.md).
 - [`Tools/activity-dashboard`](Tools/activity-dashboard/README.md) — the browser-local FIT activity and SleepVue sleep dashboard.
+- [`Tools/android-fit-sync`](Tools/android-fit-sync/README.md) — UNA Activity for Android: offline recordings, Bluetooth imports, and opt-in Health Connect sharing.
 - [`Tools/rawtiles-exporter`](Tools/rawtiles-exporter/README.md) — the browser tool that previews the watch style and exports `.vtiles` packs.
 
 For the watch-app inventory, repeatable per-app build commands, SDK update procedure and store release checklist, see [watch app development](docs/DEVELOPMENT.md) and [publishing](docs/PUBLISHING.md).

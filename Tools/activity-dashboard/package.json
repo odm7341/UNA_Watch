@@ -12,6 +12,7 @@
     "fit-file-parser": "6.1.2"
   },
   "devDependencies": {
-    "vite": "8.3.2"
+    "fake-indexeddb": "6.2.8",
+    "vite": "8.3.8"
   }
 }

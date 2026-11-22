@@ -17,8 +17,11 @@ import {
 import { renderActivityChart, renderHeartRateTrend, renderRouteChart, renderSleepTrend, renderWeeklyChart } from "./chart.js";
 import { compactActivity, parseFitActivity } from "./fit.js";
 import { FTSClient } from "./fts-client.js";
-import { deleteActivity, getActivity, listActivities, putActivity } from "./store.js";
+import { deleteActivity, getActivity, listActivities, putActivity, changeWorkoutType, markHealthShared } from "./store.js";
 import { listWatchFits } from "./watch-files.js";
+import { healthPayload } from "./health.js";
+import { parseDailyHealth, dailyHealthPayload, putDailyHealth, listDailyHealth, markDailyHealthShared } from "./daily-health.js";
+import { applyEdits, healthShareLabel, needsHealthShare, WORKOUT_TYPES } from "./activity-edits.js";
 
 const UNIT_KEY = "una.activity.units";
 const elements = Object.fromEntries([
@@ -26,9 +29,10 @@ const elements = Object.fromEntries([
   "range-filter", "kind-filter", "sport-filter", "unit-filter", "clear-filters", "dashboard-empty", "dashboard-content",
   "workout-analytics", "workout-range-label", "workout-summary", "weekly-chart", "heart-rate-trend", "sport-totals", "recorded-highs",
   "sleep-analytics", "sleep-summary", "sleep-trend", "activity-count", "activity-list", "empty-library", "empty-detail", "detail-content",
-  "detail-kind", "detail-title", "detail-timing", "download-button", "delete-button", "detail-summary", "comparison-section", "comparison-date",
+  "detail-kind", "detail-title", "detail-timing", "download-button", "strava-button", "delete-button", "detail-summary", "comparison-section", "comparison-date",
   "comparison-grid", "detail-chart-card", "detail-chart-caption", "detail-chart", "route-card", "route-chart", "sessions-card", "sessions-table",
-  "laps-card", "laps-table", "detail-accessible-summary",
+  "laps-card", "laps-table", "detail-accessible-summary", "health-button", "health-status",
+  "health-panel", "health-all", "health-auto", "health-batch-status", "type-editor", "workout-type", "save-type",
   "connect-watch", "scan-watch", "disconnect-watch", "watch-panel", "watch-status", "watch-files", "import-watch",
 ].map((id) => [id.replaceAll("-", "_"), document.querySelector(`#${id}`)]));
 
@@ -42,6 +46,26 @@ const state = {
   filters: { range: "30d", kind: "all", sport: "all" },
   units: localStorage.getItem(UNIT_KEY) === "statute" ? "statute" : "metric",
 };
+
+// One task per screen; filters are shared by Library and Trends.
+document.documentElement.classList.add("focused-ui");
+const dashboardFilters = elements.range_filter.closest(".filter-row");
+document.querySelector("#units-setting").append(elements.unit_filter.closest("label"));
+document.querySelector("#filter-controls").append(dashboardFilters);
+function showView(view) {
+  document.documentElement.dataset.view = view;
+  for (const button of document.querySelectorAll(".app-navigation button")) {
+    if (button.dataset.view === (view === "detail" ? "library" : view)) button.setAttribute("aria-current", "page");
+    else button.removeAttribute("aria-current");
+  }
+  window.scrollTo({ top: 0, behavior: "instant" });
+  if (view === "trends") renderDashboard();
+  if (view === "detail") renderDetail();
+}
+for (const button of document.querySelectorAll(".app-navigation button"))
+  button.addEventListener("click", () => showView(button.dataset.view));
+document.querySelector("#back-library").addEventListener("click", () => showView("library"));
+document.documentElement.dataset.view = "library";
 
 function setBusy(value) {
   state.busy = value;
@@ -217,13 +241,20 @@ function renderLibrary() {
     button.setAttribute("aria-current", String(record.id === state.selectedId));
     const kind = document.createElement("span");
     kind.className = "item-kind";
-    kind.textContent = record.kind === "sleep" ? "SleepVue sleep" : sportLabel(record.summary.subSport || record.summary.sport);
+    kind.textContent = record.kind === "sleep" ? "SleepVue sleep" : sportLabel(
+      record.summary.subSport && record.summary.subSport !== "generic" ? record.summary.subSport : record.summary.sport);
     const title = document.createElement("strong");
     title.textContent = activityListTitle(record);
     const metadata = document.createElement("span");
     metadata.textContent = activityListMetadata(record);
     button.append(kind, title, metadata);
+    if (window.AndroidExport) {
+      const sharing = document.createElement("span");
+      sharing.textContent = healthShareLabel(record);
+      button.append(sharing);
+    }
     button.addEventListener("click", () => selectActivity(record.id).catch(showError));
+    button.addEventListener("click", () => showView("detail"));
     elements.activity_list.append(button);
   }
 }
@@ -318,6 +349,13 @@ function renderDetail() {
   }
   elements.empty_detail.hidden = true;
   elements.detail_content.hidden = false;
+  elements.strava_button.hidden = !window.AndroidExport || activity.kind !== "workout";
+  elements.health_button.hidden = !window.AndroidExport;
+  elements.health_status.hidden = !window.AndroidExport;
+  elements.health_status.textContent = healthShareLabel(activity);
+  elements.type_editor.hidden = activity.kind !== "workout";
+  elements.workout_type.value = activity.typeOverride ?? Object.keys(WORKOUT_TYPES).find(key =>
+    WORKOUT_TYPES[key][0] === activity.summary.sport && WORKOUT_TYPES[key][1] === activity.summary.subSport) ?? "";
   elements.detail_kind.textContent = activity.kind === "sleep" ? "SLEEPVUE SLEEP" : `${sportLabel(activity.summary.sport)} ACTIVITY`;
   elements.detail_title.textContent = activity.kind === "sleep" ? `Sleep · ${formatDate(activity.summary.startTime)}` : sportLabel(activity.summary.subSport === "generic" ? activity.summary.sport : activity.summary.subSport);
   elements.detail_timing.textContent = `${formatDateTime(activity.summary.startTime)} → ${formatDateTime(activity.summary.endTime, { dateStyle: "medium", timeStyle: "short" })} · ${activity.filename}`;
@@ -354,13 +392,14 @@ async function selectActivity(id) {
     importedAt: stored.importedAt,
   });
   state.selectedId = id;
-  state.selectedActivity = activity;
+  state.selectedActivity = applyEdits(activity, stored);
   renderLibrary();
   renderDetail();
 }
 
 async function refresh(preferredId = state.selectedId) {
   state.records = await listActivities();
+  updateHealthControls();
   renderSportOptions();
   renderDashboard();
   const filtered = filteredRecords();
@@ -386,6 +425,7 @@ async function importFiles(files) {
           source: { kind: "manual" },
         });
         const result = await putActivity(compactActivity(activity));
+        autoShare(result);
         results.push({ filename: file.name, status: result.status });
         preferredId = activity.id;
       } catch (error) {
@@ -433,9 +473,15 @@ async function scanWatch() {
   setBusy(true);
   elements.watch_status.textContent = "Looking for activity FIT files…";
   try {
-    state.watchFiles = await listWatchFits(watch);
+    state.watchFiles = await listWatchFits(watch, (message) => {
+      elements.watch_status.textContent = message;
+      reportWatchDiagnostic(message);
+    });
     renderWatchFiles();
     elements.watch_status.textContent = `${state.watchFiles.length} FIT file${state.watchFiles.length === 1 ? "" : "s"} on watch`;
+  } catch (error) {
+    reportWatchDiagnostic(`Scan failed: ${error instanceof Error ? error.message : String(error)}`);
+    throw error;
   } finally {
     setBusy(false);
   }
@@ -493,6 +539,9 @@ function applyFilters() {
   state.filters.range = elements.range_filter.value;
   state.filters.kind = elements.kind_filter.value;
   state.filters.sport = elements.sport_filter.value;
+  document.querySelector("#filter-description").textContent =
+    `${elements.range_filter.selectedOptions[0].textContent} · ${elements.kind_filter.selectedOptions[0].textContent}`
+    + (state.filters.sport !== "all" ? ` · ${sportLabel(state.filters.sport)}` : "");
   renderDashboard();
   const records = filteredRecords();
   if (!records.some((record) => record.id === state.selectedId)) {
@@ -521,7 +570,222 @@ function checkCapabilities() {
   return true;
 }
 
+// Called only by the Android shell after native FTS v5 digest verification.
+// FIT parsing here still enforces the completed-activity and FIT CRC checks.
+window.unaDashboardNative = () => {
+  document.documentElement.classList.add("android-app");
+  elements.connect_watch.hidden = true;
+  elements.watch_panel.hidden = true;
+  elements.download_button.hidden = true; // WebView has no browser blob download manager.
+  document.querySelector("#import-title").textContent = "Your recordings";
+  document.querySelector(".import-copy .eyebrow").textContent = "PRIVATE ACTIVITY LIBRARY";
+  document.querySelector(".import-copy > p:last-child").textContent =
+    "Share FIT files from UNA, or add them from your phone.";
+  elements.capability_note.textContent = "Offline on this phone · Watch transfers require CRC-32 and FIT integrity checks.";
+  elements.health_panel.hidden = false;
+  updateHealthControls();
+};
+let nativeTransfer = null;
+window.unaDashboardShareStart = (filename) => {
+  if (!filename.toLowerCase().endsWith(".fit")) throw new Error("Please share a FIT recording");
+  nativeTransfer = { filename, path: null, chunks: [] };
+};
+window.unaDashboardImportStart = (filename, path) => {
+  if (!filename.toLowerCase().endsWith(".fit")
+      || !/^\/Apps\/[^/.][^/]*\/Activity\/20[0-9]{4}\/[^/]+\.fit$/i.test(path)
+      || path.substring(path.lastIndexOf("/") + 1) !== filename) {
+    throw new Error("Unexpected watch file path");
+  }
+  nativeTransfer = { filename, path, chunks: [] };
+};
+window.unaDashboardImportChunk = (base64) => {
+  if (!nativeTransfer || !/^[a-zA-Z0-9+/=]+$/.test(base64)) throw new Error("Invalid watch transfer");
+  nativeTransfer.chunks.push(base64);
+};
+window.unaDashboardImportFinish = async () => {
+  const transfer = nativeTransfer;
+  nativeTransfer = null;
+  clearMessages();
+  try {
+    if (!transfer || transfer.chunks.length === 0) throw new Error("Incomplete watch transfer");
+    const { filename, path } = transfer;
+    const binary = atob(transfer.chunks.join(""));
+    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    const activity = await parseFitActivity({ bytes, filename, source: path ? { kind: "watch", path } : { kind: "shared" } });
+    const result = await putActivity(compactActivity(activity));
+    autoShare(result);
+    await refresh(activity.id);
+    showView("library");
+    elements.import_results.textContent = result.status === "duplicate"
+      ? `${filename}: Already imported — duplicate skipped. No extra copy added.`
+      : `${filename}: imported · ${path ? "Verified watch transfer" : "Shared FIT · integrity checked"}`;
+    elements.import_results.hidden = false;
+  } catch (error) {
+    showError(error);
+  }
+};
+
 elements.file_input.addEventListener("change", () => importFiles([...elements.file_input.files]).catch(showError));
+const AUTO_HEALTH_KEY = "una.health.auto";
+const healthQueue = [];
+let healthRunning = false;
+let healthPending = null;
+let stopHealthQueue = false;
+elements.health_auto.checked = localStorage.getItem(AUTO_HEALTH_KEY) === "true";
+for (const [key, [, , label]] of Object.entries(WORKOUT_TYPES)) {
+  elements.workout_type.add(new Option(label, key));
+}
+elements.workout_type.add(new Option("Original / unrecognized type", ""), 0);
+
+function updateHealthControls() {
+  const count = state.records.filter(needsHealthShare).length;
+  elements.health_all.textContent = `Share all unshared recordings (${count})`;
+  elements.health_all.disabled = healthRunning || count === 0;
+  elements.health_button.disabled = healthRunning;
+  document.querySelector("#daily-share").disabled = healthRunning;
+}
+
+function autoShare(result) {
+  if (result.status === "imported" && elements.health_auto.checked && window.AndroidExport)
+    enqueueHealth([result.record.id], true);
+}
+
+function enqueueHealth(ids, confirmed) {
+  if (!window.AndroidExport) return;
+  for (const id of ids) {
+    if (!healthQueue.some(item => item.id === id)) healthQueue.push({ id, confirmed });
+  }
+  if (!healthRunning) runHealthQueue().catch(showError);
+}
+
+window.unaHealthStatus = message => { elements.health_batch_status.textContent = message; };
+window.unaHealthResult = result => {
+  if (healthPending?.id === result.id && healthPending.version === result.version)
+    healthPending.resolve(result);
+};
+
+async function runHealthQueue() {
+  healthRunning = true;
+  stopHealthQueue = false;
+  updateHealthControls();
+  let shared = 0;
+  let failed = 0;
+  let failure = "";
+  try {
+    while (healthQueue.length && !stopHealthQueue) {
+      const item = healthQueue.shift();
+      try {
+        const daily = item.daily;
+        const stored = daily || await getActivity(item.id);
+        if (!stored) continue;
+        const payload = daily
+          ? { ...await dailyHealthPayload(daily, state.records), confirmed: true }
+          : { ...healthPayload(applyEdits(await parseFitActivity(stored), stored)), confirmed: item.confirmed };
+        if (daily && payload.signature === daily.sharedSignature) continue;
+        if (daily && !payload.heartRate.length && !payload.restingHeartRate) {
+          if (daily.sharedVersion) throw new Error("All daily samples now overlap recordings. Remove this day's previous daily heart-rate record in Health Connect before resyncing.");
+          continue;
+        }
+        const message = JSON.stringify(payload);
+        if (message.length > 2_000_000) throw new Error("Recording too large for Health Connect export");
+        elements.health_batch_status.textContent = `Sharing ${stored.filename} · ${healthQueue.length} remaining`;
+        const result = await new Promise((resolve, reject) => {
+          healthPending = { id: payload.id, version: payload.version, resolve };
+          try { window.AndroidExport.postMessage(message); }
+          catch (error) { reject(error); }
+        });
+        healthPending = null;
+        if (!result.success) {
+          failed++;
+          failure = result.message;
+          break; // Avoid repeated permission prompts; remaining items stay unshared.
+        }
+        if (daily) await markDailyHealthShared(item.id, payload);
+        else await markHealthShared(item.id, payload.version);
+        shared++;
+      } catch (error) {
+        failed++;
+        failure = error.message;
+        break;
+      }
+    }
+  } finally {
+    healthPending = null;
+    healthQueue.length = 0;
+    healthRunning = false;
+    await refresh();
+    elements.health_batch_status.textContent = `${shared} shared${failed ? ` · stopped: ${failure}` : ""}. `
+      + "Sharing status tracks this app's successful exports; Health Connect copies can be managed in Android settings.";
+    updateHealthControls();
+    await updateDailyStatus();
+  }
+}
+
+const dailyZone = document.querySelector("#daily-zone");
+dailyZone.value = localStorage.getItem("una.daily.zone") || Intl.DateTimeFormat().resolvedOptions().timeZone;
+async function updateDailyStatus() {
+  const days = await listDailyHealth();
+  document.querySelector("#daily-status").textContent = days.length
+    ? `${days.length} days · ${days[0].date} – ${days.at(-1).date} · `
+      + `${days.reduce((n, d) => n + (d.sharedSamples || 0), 0).toLocaleString()} samples last shared. `
+      + `${days.filter(d => d.sharedRestingHeartRate > 0).length} resting-HR summaries shared. `
+      + "Sync again after importing more recordings to reconcile overlaps."
+    : "No daily heart-rate history imported.";
+}
+window.unaImportDailyHealth = async files => {
+  const counts = { imported: 0, updated: 0, duplicate: 0, errors: [] };
+  for (const file of files) {
+    try {
+      const day = await parseDailyHealth(file.filename, file.data, dailyZone.value.trim());
+      counts[await putDailyHealth(day)]++;
+    } catch (error) { counts.errors.push(`${file.filename}: ${error.message}`); }
+  }
+  localStorage.setItem("una.daily.zone", dailyZone.value.trim());
+  await updateDailyStatus();
+  return counts;
+};
+document.querySelector("#daily-input").addEventListener("change", async event => {
+  try {
+    const files = await Promise.all([...event.target.files].map(async f => ({ filename: f.name, data: JSON.parse(await f.text()) })));
+    const result = await window.unaImportDailyHealth(files);
+    document.querySelector("#daily-status").textContent += ` Imported ${result.imported}, updated ${result.updated}, duplicates ${result.duplicate}. ${result.errors.join("; ")}`;
+  } catch (error) { document.querySelector("#daily-status").textContent = error.message; }
+});
+document.querySelector("#daily-share").addEventListener("click", async () => {
+  if (healthRunning || !window.AndroidExport) return;
+  const days = await listDailyHealth();
+  if (!days.length || !window.confirm(`Sync ${days.length} days of heart-rate history with Health Connect? Existing daily exports will be updated; shared recording intervals will be excluded.`)) return;
+  for (const daily of days) healthQueue.push({ id: daily.id, daily, confirmed: true });
+  runHealthQueue().catch(showError);
+});
+updateDailyStatus().catch(showError);
+
+elements.health_button.addEventListener("click", () => {
+  if (state.selectedActivity) enqueueHealth([state.selectedActivity.id], false);
+});
+elements.health_all.addEventListener("click", () => {
+  const ids = state.records.filter(needsHealthShare).map(record => record.id);
+  if (ids.length && window.confirm(`Share ${ids.length} unshared or changed recordings with Health Connect? `
+    + "Apps you have authorized, including Google Fit / Google Health, can read them."))
+    enqueueHealth(ids, true);
+});
+elements.health_auto.addEventListener("change", () => {
+  if (elements.health_auto.checked && !window.confirm("Automatically share future imports and type corrections "
+    + "with Health Connect? Authorized apps can read them. Existing imports are shared only with Share all."))
+    elements.health_auto.checked = false;
+  localStorage.setItem(AUTO_HEALTH_KEY, String(elements.health_auto.checked));
+  if (!elements.health_auto.checked) stopHealthQueue = true;
+});
+elements.save_type.addEventListener("click", async () => {
+  const id = state.selectedId;
+  const type = elements.workout_type.value;
+  if (!id || !type) return;
+  try {
+    await changeWorkoutType(id, type);
+    await refresh(id);
+    if (elements.health_auto.checked) enqueueHealth([id], true);
+  } catch (error) { showError(error); }
+});
 elements.connect_watch.addEventListener("click", () => connectWatch().catch(showError));
 elements.scan_watch.addEventListener("click", () => scanWatch().catch(showError));
 elements.import_watch.addEventListener("click", () => importWatchFiles().catch(showError));
@@ -534,6 +798,17 @@ watch.addEventListener("statechange", (event) => {
   }
   setBusy(state.busy);
 });
+function reportWatchDiagnostic(message) {
+  console.info("[watch]", message);
+  if (import.meta.env.DEV) {
+    fetch("/__watch-diagnostics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+    }).catch(() => {});
+  }
+}
+watch.addEventListener("log", (event) => reportWatchDiagnostic(event.detail));
 for (const filter of [elements.range_filter, elements.kind_filter, elements.sport_filter]) filter.addEventListener("change", applyFilters);
 elements.unit_filter.value = state.units;
 elements.unit_filter.addEventListener("change", () => {
@@ -558,6 +833,23 @@ elements.download_button.addEventListener("click", () => {
   anchor.download = state.selectedActivity.filename;
   anchor.click();
   URL.revokeObjectURL(url);
+});
+elements.strava_button.addEventListener("click", () => {
+  const activity = state.selectedActivity;
+  if (!window.AndroidExport || activity?.kind !== "workout") return;
+  try {
+    const bytes = new Uint8Array(activity.bytes);
+    window.AndroidExport.postMessage(JSON.stringify({ type: "start", filename: activity.filename }));
+    for (let offset = 0; offset < bytes.length; offset += 24576) {
+      const piece = bytes.subarray(offset, offset + 24576);
+      let binary = "";
+      for (const byte of piece) binary += String.fromCharCode(byte);
+      window.AndroidExport.postMessage(JSON.stringify({ type: "chunk", value: btoa(binary) }));
+    }
+    window.AndroidExport.postMessage(JSON.stringify({ type: "finish" }));
+  } catch (error) {
+    showError(error);
+  }
 });
 elements.delete_button.addEventListener("click", async () => {
   if (!state.selectedActivity) return;
