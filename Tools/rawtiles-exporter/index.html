@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UNA Rawtiles Exporter (v0.0.3)</title>
+  <title>UNA Vector Map Exporter</title>
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main id="map" aria-label="UNA rawtiles export preview"></main>
   <section class="panel" aria-label="Map style and export controls">
-    <h1>UNA Rawtiles Exporter (v0.0.3)</h1>
+    <h1>UNA Vector Map Exporter</h1>
     <p>OpenFreeMap PBF topology with OSM US vector contours. No raster source.</p>
     <dl class="readout">
       <dt>Center</dt><dd id="center">—</dd>
@@ -21,21 +21,21 @@
       <label><input type="checkbox" data-layer="water" checked> Water</label>
       <label><input type="checkbox" data-layer="contours" checked> Contours</label>
       <label><input type="checkbox" data-layer="roads" checked> Roads</label>
-      <label><input type="checkbox" data-layer="labels" checked> Labels</label>
+      <label><input type="checkbox" data-layer="labels" checked> Labels (preview only)</label>
       <label><input type="checkbox" data-layer="trails" checked> OSM trails</label>
       <label><input type="checkbox" data-layer="peaks" checked> Mountain peaks</label>
     </fieldset>
     <button type="button" id="watch-preview-toggle" aria-controls="watch-preview" aria-expanded="false">Watch mockup</button>
-    <section class="export" aria-label="Rawtiles export">
-      <h2>Rawtiles export</h2>
-      <p>Shift-drag a rectangle, or use the current view. The pack is rendered and written locally in this browser.</p>
+    <section class="export" aria-label="Vector export">
+      <h2>Vector export</h2>
+      <p>Shift-drag a rectangle, or use the current view. The browser prepares vector geometry for the watch. Labels appear in the preview only.</p>
       <div class="zoom-fields">
         <label>Min zoom <select id="zoom-min" aria-label="Minimum export zoom"></select></label>
         <label>Max zoom <select id="zoom-max" aria-label="Maximum export zoom"></select></label>
       </div>
       <div class="actions">
         <button type="button" id="select-view">Use current view</button>
-        <button type="button" id="export-pack">Download rawtiles</button>
+        <button type="button" id="export-pack">Download .vtiles</button>
       </div>
       <div class="estimate" id="estimate" aria-live="polite">Choose an export area.</div>
     </section>
@@ -53,6 +53,7 @@
     <button type="button" id="watch-preview-close">Close mockup</button>
   </aside>
   <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+  <script type="importmap">{"imports":{"@mapbox/vector-tile":"https://esm.sh/@mapbox/vector-tile@2.0.4","geojson-vt":"https://esm.sh/geojson-vt@4.0.2","earcut":"https://esm.sh/earcut@3.0.2","pbf":"https://esm.sh/pbf@4.0.1"}}</script>
   <script type="module" src="app.js"></script>
 </body>
 </html>

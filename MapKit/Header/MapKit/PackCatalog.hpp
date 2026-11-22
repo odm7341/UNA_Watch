@@ -48,7 +48,7 @@ namespace MapKit
 /// `../SharedData/` is how an app reaches the cross-app shared directory.
 inline constexpr const char* kMapsDir = "../SharedData/maps";
 
-inline constexpr const char* kPackExtension = ".rawtiles";
+inline constexpr const char* kPackExtension = ".vtiles";
 
 /**
  * @brief A fixed-size roster of candidate packs, with their names owned here.
@@ -78,7 +78,7 @@ public:
     /// Longest attribution stored. The longest in `MAP_COMPLIANCE_APPENDIX.md`
     /// § 4's table is ~95 bytes once its `·` and `©` are counted as the
     /// multi-byte UTF-8 they are.
-    static constexpr size_t kMaxAttrLen      = 160;
+    static constexpr size_t kMaxAttrLen      = 161;
 
     explicit PackCatalog(const SDK::Kernel& kernel) : mKernel(kernel) {}
 
@@ -154,16 +154,7 @@ public:
     static bool fullPathFor(const char* name, char* out, size_t outSize);
 
 private:
-    /// Reads and screens one pack header. @return false if the file cannot be
-    /// used at all, in which case @p out is untouched.
-    bool peek(const char* fullPath, PackFacts& out) const;
-
-    /// Reads the pack's own trailing 4-byte declared CRC (rawtiles § 10).
-    bool declaredCrc(const char* fullPath, uint64_t& sizeOut, uint32_t& crcOut) const;
-
-    /// Peeks one pack's `ATTR` and folds it into the distinct set, or counts
-    /// the pack as unattributed. Bounded: the peek skips the tile index.
-    void collectAttribution(const char* fullPath);
+    void collectAttribution(const char* attribution);
 
     const SDK::Kernel& mKernel;
     PackFacts          mFacts[kMaxPacks] {};

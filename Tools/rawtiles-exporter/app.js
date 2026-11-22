@@ -1,6 +1,7 @@
 import { layerGroups, style } from './map-style.js';
-import { MAX_MERCATOR_LAT, appendTile, countTiles, estimatedPackBytes, finishPack, formatBytes, startPack, tileRanges } from './rawtiles.js';
-import { renderVectorTile } from './vector-renderer.js';
+import { MAX_MERCATOR_LAT, countTiles, formatBytes, tileRanges } from './tile-math.js';
+import {prepareSources} from './watch-geometry.mjs';
+import {createVectorPack, addVectorTile, finishVectorPack} from './vector-pack.mjs';
 
 const MAX_EXPORT_TILES = 1024;
 const status = document.querySelector('#status');
@@ -34,7 +35,7 @@ const map = new maplibregl.Map({
 map.addControl(new maplibregl.NavigationControl(), 'bottom-right');
 map.addControl(new maplibregl.ScaleControl({ maxWidth: 100, unit: 'imperial' }), 'bottom-left');
 
-for (let zoom = 8; zoom <= 19; zoom += 1) {
+for (let zoom = 8; zoom <= 14; zoom += 1) {
   for (const input of [zoomMinInput, zoomMaxInput]) {
     const option = document.createElement('option');
     option.value = String(zoom);
@@ -122,7 +123,7 @@ function updateEstimate() {
     return;
   }
   const coverage = `${selectedBounds.getSouth().toFixed(4)}, ${selectedBounds.getWest().toFixed(4)} → ${selectedBounds.getNorth().toFixed(4)}, ${selectedBounds.getEast().toFixed(4)}`;
-  estimate.textContent = `${count.toLocaleString()} tiles · ${formatBytes(estimatedPackBytes(count))}\nz${minZoom}–${maxZoom} · ${coverage}${count > MAX_EXPORT_TILES ? `\nLimit: ${MAX_EXPORT_TILES.toLocaleString()} tiles per browser export.` : ''}`;
+  estimate.textContent = `${count.toLocaleString()} tiles · up to ${formatBytes(228+count*(16384+20))}\nz${minZoom}–${maxZoom} · ${coverage}${count > MAX_EXPORT_TILES ? `\nLimit: ${MAX_EXPORT_TILES.toLocaleString()} tiles per browser export.` : ''}`;
   exportButton.disabled = count > MAX_EXPORT_TILES || exportInProgress;
 }
 
@@ -169,7 +170,7 @@ function selectionCoversMercator() {
   return selectedBounds && selectedBounds.getNorth() <= MAX_MERCATOR_LAT && selectedBounds.getSouth() >= -MAX_MERCATOR_LAT;
 }
 
-async function exportRawtiles() {
+async function exportVectorPack() {
   const ranges = selectedRanges();
   const count = countTiles(ranges);
   if (!selectionCoversMercator() || !count || count > MAX_EXPORT_TILES) return;
@@ -179,24 +180,24 @@ async function exportRawtiles() {
   zoomMinInput.disabled = true;
   zoomMaxInput.disabled = true;
   try {
-    const pack = startPack(ranges, Number(zoomMinInput.value), Number(zoomMaxInput.value));
-    const hiddenLayerIds = Array.from(document.querySelectorAll('[data-layer]'))
-      .filter(input => !input.checked)
-      .flatMap(input => layerGroups[input.dataset.layer]);
+    const pack = createVectorPack(ranges, Number(zoomMinInput.value), Number(zoomMaxInput.value));
+    const names = {landcover:'land', water:'water', contours:'contour', roads:'road', trails:'trail', peaks:'peak'};
+    const enabled = new Set(Array.from(document.querySelectorAll('[data-layer]:checked'), el => names[el.dataset.layer]));
+    const fetchTile = await prepareSources(style, enabled);
     for (let number = 0; number < pack.tiles.length; number += 1) {
       const tile = pack.tiles[number];
-      setStatus(`Rendering ${number + 1}/${pack.tiles.length}: z${tile.z}/${tile.x}/${tile.y}`);
-      appendTile(pack, await renderVectorTile(tile, hiddenLayerIds));
+      setStatus(`Packing ${number + 1}/${pack.tiles.length}: z${tile.z}/${tile.x}/${tile.y}`);
+      addVectorTile(pack, tile, await fetchTile(tile));
     }
-    const file = finishPack(pack);
+    const file = finishVectorPack(pack);
     const link = document.createElement('a');
     link.href = URL.createObjectURL(file);
-    link.download = `una-topo-z${zoomMinInput.value}-${zoomMaxInput.value}.rawtiles`;
+    link.download = `una-topo-z${zoomMinInput.value}-${zoomMaxInput.value}.vtiles`;
     link.click();
     window.setTimeout(() => URL.revokeObjectURL(link.href), 0);
     setStatus(`Downloaded ${link.download} (${formatBytes(file.size)}).`);
   } catch (error) {
-    setStatus(error.message || 'Rawtiles export failed.', true);
+    setStatus(error.message || 'Vector export failed.', true);
   } finally {
     exportInProgress = false;
     selectViewButton.disabled = false;
@@ -226,6 +227,6 @@ document.querySelectorAll('[data-layer]').forEach(input => input.addEventListene
 selectViewButton.addEventListener('click', () => setSelectedBounds(map.getBounds()));
 zoomMinInput.addEventListener('change', updateEstimate);
 zoomMaxInput.addEventListener('change', updateEstimate);
-exportButton.addEventListener('click', exportRawtiles);
+exportButton.addEventListener('click', exportVectorPack);
 watchPreviewToggle.addEventListener('click', showWatchPreview);
 watchPreviewClose.addEventListener('click', hideWatchPreview);

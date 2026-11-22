@@ -9,8 +9,8 @@
 #include <MapKit/PackSelection.hpp>
 #include <MapKit/PackTrustReader.hpp>
 
-#include "KernelTestDoubles.hpp"
-#include "PackFixture.hpp"
+#include "MapKernelFixture.hpp"
+#include "VectorFixture.hpp"
 
 #include <string>
 
@@ -26,16 +26,16 @@ std::string inMaps(const std::string& name)
 }
 
 struct CatalogFixture : public ::testing::Test {
-    SDK::TestSupport::KernelFixture fx;
+    MapKitTest::KernelFixture fx;
 
-    void seedPack(const std::string& name, const PackSpec& spec = PackSpec{})
+    void seedPack(const std::string& name, const VectorSpec& spec = VectorSpec{})
     {
-        fx.fileSystem.seedFile(inMaps(name), buildPack(spec));
+        fx.fileSystem.seedFile(inMaps(name), vectorFixture(spec));
     }
 
-    void seedMarker(const std::string& packName, uint32_t magic, const PackSpec& spec = PackSpec{})
+    void seedMarker(const std::string& packName, uint32_t magic, const VectorSpec& spec = VectorSpec{})
     {
-        const std::string pack = buildPack(spec);
+        const std::string pack = vectorFixture(spec);
         fx.fileSystem.seedFile(inMaps(packName) + ".trust",
                                buildMarker(magic, pack.size(), declaredCrcOf(pack)));
     }
@@ -68,12 +68,12 @@ TEST_F(CatalogFixture, ScannedIsFalseBeforeTheFirstRescan)
 
 TEST_F(CatalogFixture, FindsPacksAndNamesThemWithoutTheirDirectory)
 {
-    seedPack("city.rawtiles");
-    seedPack("region.rawtiles");
+    seedPack("city.vtiles");
+    seedPack("region.vtiles");
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 2u);
-    EXPECT_NE(indexOf(c, "city.rawtiles"), static_cast<size_t>(-1));
-    EXPECT_NE(indexOf(c, "region.rawtiles"), static_cast<size_t>(-1));
+    EXPECT_NE(indexOf(c, "city.vtiles"), static_cast<size_t>(-1));
+    EXPECT_NE(indexOf(c, "region.vtiles"), static_cast<size_t>(-1));
 }
 
 // ---------------------------------------------------------------------------
@@ -89,9 +89,9 @@ const char* const kOsmProtomaps =
     "Map data from OpenStreetMap (ODbL) \xC2\xB7 basemap \xC2\xA9 Protomaps";
 const char* const kOsmOnly = "Map data from OpenStreetMap (ODbL)";
 
-PackSpec attributed(const char* attr)
+VectorSpec attributed(const char* attr)
 {
-    PackSpec s;
+    VectorSpec s;
     s.attribution = attr;
     return s;
 }
@@ -99,7 +99,7 @@ PackSpec attributed(const char* attr)
 
 TEST_F(CatalogFixture, CollectsTheAttributionOfInstalledPacks)
 {
-    seedPack("city.rawtiles", attributed(kOsmProtomaps));
+    seedPack("city.vtiles", attributed(kOsmProtomaps));
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 1u);
 
@@ -111,7 +111,7 @@ TEST_F(CatalogFixture, CollectsTheAttributionOfInstalledPacks)
 /// Six regional packs from one pipeline owe one credit, not six.
 TEST_F(CatalogFixture, DeduplicatesIdenticalAttribution)
 {
-    for (const char* n : { "a.rawtiles", "b.rawtiles", "c.rawtiles" }) {
+    for (const char* n : { "a.vtiles", "b.vtiles", "c.vtiles" }) {
         seedPack(n, attributed(kOsmProtomaps));
     }
     PackCatalog c(fx.kernel);
@@ -123,8 +123,8 @@ TEST_F(CatalogFixture, DeduplicatesIdenticalAttribution)
 
 TEST_F(CatalogFixture, KeepsDistinctAttributionsApart)
 {
-    seedPack("proto.rawtiles", attributed(kOsmProtomaps));
-    seedPack("plain.rawtiles", attributed(kOsmOnly));
+    seedPack("proto.vtiles", attributed(kOsmProtomaps));
+    seedPack("plain.vtiles", attributed(kOsmOnly));
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 2u);
 
@@ -141,18 +141,17 @@ TEST_F(CatalogFixture, KeepsDistinctAttributionsApart)
 /// say so.
 TEST_F(CatalogFixture, CountsPacksThatSupplyNoAttribution)
 {
-    seedPack("bare.rawtiles");                              // no ATTR section
-    seedPack("credited.rawtiles", attributed(kOsmOnly));
+    VectorSpec bare; bare.attribution.clear();
+    seedPack("bare.vtiles",bare);
+    seedPack("credited.vtiles",attributed(kOsmOnly));
     PackCatalog c(fx.kernel);
-    ASSERT_EQ(c.rescan(), 2u);
-
-    EXPECT_EQ(c.attributionCount(), 1u);
-    EXPECT_EQ(c.unattributedPacks(), 1u);
+    EXPECT_EQ(c.rescan(),1u); // VMAP credit is mandatory
+    EXPECT_EQ(c.attributionCount(),1u);
 }
 
 TEST_F(CatalogFixture, AttributionIsClearedByARescan)
 {
-    seedPack("city.rawtiles", attributed(kOsmProtomaps));
+    seedPack("city.vtiles", attributed(kOsmProtomaps));
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 1u);
     ASSERT_EQ(c.attributionCount(), 1u);
@@ -175,27 +174,27 @@ TEST_F(CatalogFixture, IgnoresTrustMarkersAndUnrelatedFiles)
 {
     // Map Manager writes its markers into the same directory, so this is the
     // normal case, not a hypothetical one.
-    seedPack("city.rawtiles");
-    seedMarker("city.rawtiles", PackTrustReader::kMagicGood);
+    seedPack("city.vtiles");
+    seedMarker("city.vtiles", PackTrustReader::kMagicGood);
     fx.fileSystem.seedFile(inMaps("notes.txt"), "hello");
     fx.fileSystem.seedFile(inMaps("rawtiles"), "not one either");
 
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 1u);
-    EXPECT_STREQ(c.at(0).name, "city.rawtiles");
+    EXPECT_STREQ(c.at(0).name, "city.vtiles");
 }
 
 TEST_F(CatalogFixture, ReadsBboxAndZoomMaxFromTheHeader)
 {
-    PackSpec spec;
-    spec.zoomMax = 15;
+    VectorSpec spec;
+    spec.zoomMax = 14;
     spec.minLon = -76100000; spec.minLat = 44500000;
     spec.maxLon = -75900000; spec.maxLat = 44700000;
-    seedPack("city.rawtiles", spec);
+    seedPack("city.vtiles", spec);
 
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 1u);
-    EXPECT_EQ(c.at(0).zoomMax, 15);
+    EXPECT_EQ(c.at(0).zoomMax, 14);
     EXPECT_EQ(c.at(0).bboxMinLonUDeg, -76100000);
     EXPECT_EQ(c.at(0).bboxMaxLatUDeg, 44700000);
     EXPECT_TRUE(c.at(0).contains(44600000, -76000000));
@@ -203,72 +202,50 @@ TEST_F(CatalogFixture, ReadsBboxAndZoomMaxFromTheHeader)
 
 TEST_F(CatalogFixture, RejectsBadMagic)
 {
-    PackSpec spec;
+    VectorSpec spec;
     spec.goodMagic = false;
-    seedPack("impostor.rawtiles", spec);
+    seedPack("impostor.vtiles", spec);
     PackCatalog c(fx.kernel);
     EXPECT_EQ(c.rescan(), 0u);
 }
 
 TEST_F(CatalogFixture, RejectsAFormatMajorThisReaderDoesNotKnow)
 {
-    PackSpec spec;
+    VectorSpec spec;
     spec.formatMajor = 2;
-    seedPack("future.rawtiles", spec);
+    seedPack("future.vtiles", spec);
     PackCatalog c(fx.kernel);
     EXPECT_EQ(c.rescan(), 0u);
 }
 
-TEST_F(CatalogFixture, RejectsATileDimensionTheMosaicArithmeticCannotHandle)
+TEST_F(CatalogFixture, RejectsLegacyRasterPacksEvenWhenRenamed)
 {
-    // The mosaic addresses sub-tile offsets by shifting MapMath::TILE_SHIFT
-    // bits, which is only the same thing as a divide when tile_dim is 256.
-    PackSpec spec;
-    spec.tileDim = 64;
-    seedPack("tiny-tiles.rawtiles", spec);
+    fx.fileSystem.seedFile(inMaps("old.vtiles"),buildPack());
+    seedPack("wrong.rawtiles");
     PackCatalog c(fx.kernel);
-    EXPECT_EQ(c.rescan(), 0u);
-}
-
-TEST_F(CatalogFixture, RejectsAPixelFormatBlitCopyIsNotBeingHanded)
-{
-    PackSpec spec;
-    spec.pixelFormat = 2;   // RGB565
-    seedPack("rgb565.rawtiles", spec);
-    PackCatalog c(fx.kernel);
-    EXPECT_EQ(c.rescan(), 0u);
-}
-
-TEST_F(CatalogFixture, RejectsAProjectionMapMathDoesNotCompute)
-{
-    PackSpec spec;
-    spec.projection = 3;    // LocalLinear
-    spec.addressing = 2;    // SingleImage, the legal pairing for it
-    seedPack("local.rawtiles", spec);
-    PackCatalog c(fx.kernel);
-    EXPECT_EQ(c.rescan(), 0u);
+    EXPECT_EQ(c.rescan(),0u);
 }
 
 TEST_F(CatalogFixture, RejectsAnInvertedBoundingBox)
 {
-    PackSpec spec;
+    VectorSpec spec;
     spec.minLon = 1000; spec.maxLon = -1000;
-    seedPack("inverted.rawtiles", spec);
+    seedPack("inverted.vtiles", spec);
     PackCatalog c(fx.kernel);
     EXPECT_EQ(c.rescan(), 0u);
 }
 
 TEST_F(CatalogFixture, RejectsAFileTooShortToBeAPack)
 {
-    fx.fileSystem.seedFile(inMaps("stub.rawtiles"), std::string(100, '\0'));
+    fx.fileSystem.seedFile(inMaps("stub.vtiles"), std::string(100, '\0'));
     PackCatalog c(fx.kernel);
     EXPECT_EQ(c.rescan(), 0u);
 }
 
 TEST_F(CatalogFixture, MarksAPackKnownCorruptWhenMapManagerSaysSo)
 {
-    seedPack("broken.rawtiles");
-    seedMarker("broken.rawtiles", PackTrustReader::kMagicBad);
+    seedPack("broken.vtiles");
+    seedMarker("broken.vtiles", PackTrustReader::kMagicBad);
 
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 1u);
@@ -280,8 +257,8 @@ TEST_F(CatalogFixture, MarksAPackKnownCorruptWhenMapManagerSaysSo)
 
 TEST_F(CatalogFixture, AGoodMarkerDoesNotMarkAPackCorrupt)
 {
-    seedPack("fine.rawtiles");
-    seedMarker("fine.rawtiles", PackTrustReader::kMagicGood);
+    seedPack("fine.vtiles");
+    seedMarker("fine.vtiles", PackTrustReader::kMagicGood);
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 1u);
     EXPECT_FALSE(c.at(0).knownCorrupt);
@@ -291,9 +268,9 @@ TEST_F(CatalogFixture, AStaleBadMarkerDoesNotCondemnAReplacedPack)
 {
     // The pack on disk has this spec; the marker describes a different one.
     // Without the (size, crc) guard this would read as corrupt forever.
-    seedPack("replaced.rawtiles");
-    const std::string other = buildPack();
-    fx.fileSystem.seedFile(inMaps("replaced.rawtiles") + ".trust",
+    seedPack("replaced.vtiles");
+    const std::string other = vectorFixture();
+    fx.fileSystem.seedFile(inMaps("replaced.vtiles") + ".trust",
                            buildMarker(PackTrustReader::kMagicBad,
                                        other.size() + 4096, declaredCrcOf(other)));
     PackCatalog c(fx.kernel);
@@ -304,7 +281,7 @@ TEST_F(CatalogFixture, AStaleBadMarkerDoesNotCondemnAReplacedPack)
 TEST_F(CatalogFixture, StopsAtTheHardCapRatherThanLettingADirectorySetMemoryUse)
 {
     for (size_t i = 0; i < PackCatalog::kMaxPacks + 5; ++i) {
-        seedPack("pack" + std::to_string(i) + ".rawtiles");
+        seedPack("pack" + std::to_string(i) + ".vtiles");
     }
     PackCatalog c(fx.kernel);
     EXPECT_EQ(c.rescan(), PackCatalog::kMaxPacks);
@@ -312,7 +289,7 @@ TEST_F(CatalogFixture, StopsAtTheHardCapRatherThanLettingADirectorySetMemoryUse)
 
 TEST_F(CatalogFixture, RescanReplacesTheRosterRatherThanAppendingToIt)
 {
-    seedPack("city.rawtiles");
+    seedPack("city.vtiles");
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 1u);
     EXPECT_EQ(c.rescan(), 1u);
@@ -323,20 +300,20 @@ TEST_F(CatalogFixture, NamesRemainValidAfterTheCallReturns)
 {
     // PackFacts::name points into the catalog's own storage. Selection runs on
     // facts() after rescan() has returned, so this has to hold.
-    seedPack("city.rawtiles");
+    seedPack("city.vtiles");
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 1u);
     const MapKit::PackFacts* facts = c.facts();
-    EXPECT_STREQ(facts[0].name, "city.rawtiles");
+    EXPECT_STREQ(facts[0].name, "city.vtiles");
 }
 
 TEST_F(CatalogFixture, LeavesNoOpenFileHandlesBehind)
 {
     // FatFs has a finite lock table; a scan that leaked a handle per pack
     // would eventually stop being able to open anything.
-    seedPack("a.rawtiles");
-    seedPack("b.rawtiles");
-    seedMarker("a.rawtiles", PackTrustReader::kMagicGood);
+    seedPack("a.vtiles");
+    seedPack("b.vtiles");
+    seedMarker("a.vtiles", PackTrustReader::kMagicGood);
 
     PackCatalog c(fx.kernel);
     ASSERT_EQ(c.rescan(), 2u);
@@ -350,14 +327,14 @@ TEST_F(CatalogFixture, FullPathIsRelativeToTheSharedMapDirectory)
     // Sandbox-relative, never volume-prefixed: absolute paths do not resolve
     // from inside an app on hardware.
     char out[128] = {};
-    ASSERT_TRUE(PackCatalog::fullPathFor("city.rawtiles", out, sizeof(out)));
-    EXPECT_STREQ(out, "../SharedData/maps/city.rawtiles");
+    ASSERT_TRUE(PackCatalog::fullPathFor("city.vtiles", out, sizeof(out)));
+    EXPECT_STREQ(out, "../SharedData/maps/city.vtiles");
 }
 
 TEST_F(CatalogFixture, RefusesToTruncateALongPath)
 {
     char out[16] = {};
-    EXPECT_FALSE(PackCatalog::fullPathFor("city.rawtiles", out, sizeof(out)));
+    EXPECT_FALSE(PackCatalog::fullPathFor("city.vtiles", out, sizeof(out)));
 }
 
 } // namespace

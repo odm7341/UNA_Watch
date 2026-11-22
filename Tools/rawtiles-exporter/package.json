@@ -1,0 +1,5 @@
+{
+  "name": "una-vector-exporter", "private": true, "type": "module",
+  "scripts": {"test":"node --test *.test.mjs"},
+  "dependencies": {"@mapbox/vector-tile":"2.0.4", "earcut":"3.0.2", "geojson-vt":"4.0.2", "pbf":"4.0.1"}
+}

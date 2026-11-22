@@ -54,7 +54,7 @@
 #include <MapKit/TileCache.hpp>
 #include <MapKit/TileRequestLog.hpp>
 #include <MapKit/TraceBuffer.hpp>
-#include <SDK/RawTiles/Container.hpp>
+#include <MapKit/VectorPack.hpp>
 
 #include "SDK/Interfaces/IFileSystem.hpp"
 #include "SDK/Kernel/Kernel.hpp"
@@ -131,22 +131,6 @@ public:
     ///         otherwise a watch with no maps has a dead button on this face.
     bool cycleZoom();
 
-    /// Opens a catalog entry for a manual browser. Unlike onPosition(), this
-    /// never records coverage requests or follows subsequent GPS samples.
-    bool openPack(size_t index);
-
-    /// Advances to the next non-corrupt installed pack, wrapping at the end.
-    /// The returned viewport is centred on the selected pack's declared bbox.
-    bool cyclePack(int direction);
-
-    /// Changes the manual viewport without creating a GPS fix or trace point.
-    void setViewport(int64_t centerX, int64_t centerY);
-
-    /// Polls Map Manager's marker for the browser-selected pack.
-    void poll() { pollTrust(); }
-
-    size_t packCount() const { return mCatalog.count(); }
-
     // -- read by the map face ----------------------------------------------
 
     MapStatus status() const;
@@ -154,12 +138,12 @@ public:
     /// True when there is a pack open, CRC-trusted, and safe to draw from.
     /// The map face must not draw tiles otherwise: Container::isOpen() is
     /// true from the structural open onward, i.e. before the CRC is confirmed.
-    bool renderable() const { return mOpenResult == SDK::RawTiles::OpenResult::Ok && mTrusted; }
+    bool renderable() const { return mContainer.isOpen() && mTrusted; }
 
     /// Coverage gaps this session has filed. See TileRequestLog.
     const TileRequestLog& requests() const { return mRequests; }
 
-    const SDK::RawTiles::Container& container() const { return mContainer; }
+    const VectorPack& container() const { return mContainer; }
     TileCache&                      cache() const { return mCache; }
     const TraceBuffer&              trace() const { return mTrace; }
 
@@ -208,7 +192,7 @@ private:
     TraceBuffer        mTrace;
     TileRequestLog     mRequests;
 
-    SDK::RawTiles::Container mContainer;
+    VectorPack mContainer;
 
     // Selection
     size_t mSelected = kNoPack;
@@ -216,7 +200,6 @@ private:
 
     // Open state. FileNotFound is the "nothing selected" value, which is also
     // what an absent pack would report -- both mean "no container".
-    SDK::RawTiles::OpenResult mOpenResult = SDK::RawTiles::OpenResult::FileNotFound;
 
     // Trust. Both sticky: a completed verdict about a fixed set of bytes does
     // not change, so once either is set the poll stops.

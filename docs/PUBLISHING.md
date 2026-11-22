@@ -4,14 +4,14 @@ Source of truth: [UNA's current deployment instructions](https://www.developers.
 
 ## App inventory and gaps
 
-Run `python3 Tools/watch-apps.py list` to read identity, display name and type **from CMake**, rather than maintaining duplicate app IDs here. `MapExplorer` and `HRClock` have `Resources/icon_60x60.png` and `icon_30x30.png`; `BatteryTracker` currently sets `APP_USE_ICONS Off` and has no icon resources. None of the three currently includes a store `app-manifest.json` or release previews. Treat the hard-coded CMake `APP_ID` values as development IDs until their ownership is confirmed with the portal; **do not submit a build using an ID different from the portal-issued ID**.
+Run `python3 Tools/watch-apps.py list` to read identity, display name and type **from CMake**, rather than maintaining duplicate app IDs here. `HikeMap`, `RunMap`, `MapManager` and `HRClock` have icon resources; `BatteryTracker` currently sets `APP_USE_ICONS Off` and has no icon resources. No store `app-manifest.json` or release previews are included here. Treat the hard-coded CMake `APP_ID` values as development IDs until their ownership is confirmed with the portal; **do not submit a build using an ID different from the portal-issued ID**.
 
 ## Closed-source portal flow
 
 The official [apps.unawatch.com](https://apps.unawatch.com) portal instructions describe the closed-source route. This repository is public; decide how you want to license/distribute a specific app before choosing that route.
 
 1. Create the app in the portal and copy its **portal-issued App ID** into that app's CMake `APP_ID`. Do not change the ID on later versions: the store uses it to recognize updates even if the filename changes.
-2. Build with a deliberate version, e.g. `bash MapExplorer/build.sh --version 1.0.0`. Reconfigure after changing the ID; verify the ID reported by SDK `app_merging.py` in the build output. Verify the `.uapp` name and embedded version.
+2. Build with a deliberate version, e.g. `cmake -S HikeMap/Software/Apps/HikeMap-CMake -B HikeMap/Software/Apps/HikeMap-CMake/build -DBUILD_VERSION=1.0.0 && cmake --build HikeMap/Software/Apps/HikeMap-CMake/build`. Reconfigure after changing the ID; verify the ID reported by SDK `app_merging.py` in the build output. Verify the `.uapp` name and embedded version.
 3. Make a strict JSON `app-manifest.json` for this **specific app**. Set `manifest_version` to `1`; match `id`, `binary`, `appVersion`, name, type, icon path and truthful supported features to the build. See the [official manifest example](https://www.developers.unawatch.com/latest/app-config-json.html) rather than copying activity metrics into a clockface or utility. `app-manifest.json` is phone/store metadata, not a file to install onto the watch.
 4. Run `python3 "$UNA_SDK/Utilities/Scripts/app_packer/min_kernel_version.py" --stamp path/to/app-manifest.json` and then `--check` on the same file. `minKernelVersion` is the SDK ABI-derived minimum **kernel firmware** version; never guess or lower it. Raise it only when your app requires a later firmware fix.
 5. Prepare a store `icon.png` and previews as requested by the current portal. The embedded 30×30 and 60×60 app icons alone are not a substitute for checking store image requirements; BatteryTracker needs store artwork before submission.

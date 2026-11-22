@@ -1,4 +1,8 @@
-# MapKit — the offline-map layer the map-enabled activity apps share
+# MapKit — offline activity maps
+
+The current implementation and RAM budget are described in [VMAP vector packs](VECTOR_TILES.md). HikeMap and RunMap now discover only `.vtiles`; MapManager still verifies legacy packs for other consumers.
+
+## Historical upstream raster design
 
 One copy of the map code, sitting beside the apps that use it rather than
 inside any of them. [`BikeMap`](../BikeMap), [`HikeMap`](../HikeMap) and
@@ -431,10 +435,6 @@ The map code comes from `AthensRun`, a proof of concept on `una-sdk`'s
 trace over it works on this hardware. That app was built for one place and one
 pack; nothing about that place survives here, and the apps that use MapKit are
 forks of the stock activity apps rather than of it.
-
-The exact upstream baseline and the intentional MapExplorer-specific divergence
-are recorded in [`UPSTREAM.md`](UPSTREAM.md). The upstream is a monorepo, so
-this directory cannot be linked as an independent Git submodule.
 
 What changed on the way over: the hardcoded pack path became the selection rule
 above; the `AthensRun::` namespace became `MapKit::`; the trace's storage zoom

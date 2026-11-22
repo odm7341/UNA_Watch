@@ -12,7 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 APPS = {
     "BatteryTracker": "BatteryTracker/Software/Apps/BatteryTracker-CMake",
     "HRClock": "HRClock/Software/Apps/HRClock-CMake",
-    "MapExplorer": "MapExplorer/Software/Apps/MapExplorer-CMake",
+    "HikeMap": "HikeMap/Software/Apps/HikeMap-CMake",
+    "RunMap": "RunMap/Software/Apps/RunMap-CMake",
+    "MapManager": "MapManager/Software/Apps/MapManager-CMake",
 }
 
 
@@ -93,7 +95,7 @@ def main():
               "use a clean checkout of the pinned commit for reproducible builds.",
               file=sys.stderr)
         return 1
-    if args.app in ("HRClock", "MapExplorer"):
+    if args.app in ("HRClock", "HikeMap", "RunMap", "MapManager"):
         generated = ROOT / args.app / "Software/Apps/TouchGFX-GUI/generated"
         required = [
             generated / "fonts/include/fonts/ApplicationFontProvider.hpp",

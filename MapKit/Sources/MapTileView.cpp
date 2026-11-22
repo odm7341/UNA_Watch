@@ -47,12 +47,7 @@ void MapTileView::draw(const Rect& area) const
     if (mTrace != nullptr) {
         drawTrace(absArea, viewOriginX, viewOriginY, absDX, absDY);
     }
-    if (mShowMarker) {
-        drawMarker(absArea, absDX, absDY);
-    }
-    if (mHasLocation) {
-        drawLocation(absArea, viewOriginX, viewOriginY, absDX, absDY);
-    }
+    drawMarker(absArea, absDX, absDY);
 }
 
 void MapTileView::drawTiles(const Rect& absArea,
@@ -70,12 +65,6 @@ void MapTileView::drawTiles(const Rect& absArea,
 
     for (int64_t ty = top >> MapMath::TILE_SHIFT; ty <= (bottom >> MapMath::TILE_SHIFT); ++ty) {
         for (int64_t tx = left >> MapMath::TILE_SHIFT; tx <= (right >> MapMath::TILE_SHIFT); ++tx) {
-            const uint8_t* pixels = mCache->get(*mContainer, mZoom,
-                                                static_cast<uint32_t>(tx),
-                                                static_cast<uint32_t>(ty));
-            if (pixels == nullptr) {
-                continue; // outside pack coverage (or a failed read)
-            }
             // Tile's absolute on-screen rect; origin may be negative.
             // Pre-clip against the invalidated area and hand blitCopy a
             // source-relative blitRect -- the device-proven recipe.
@@ -94,11 +83,26 @@ void MapTileView::drawTiles(const Rect& absArea,
             if (ix1 <= ix0 || iy1 <= iy0) {
                 continue;
             }
-            const Rect blitRect(static_cast<int16_t>(ix0 - source.x),
-                                static_cast<int16_t>(iy0 - source.y),
-                                static_cast<int16_t>(ix1 - ix0),
-                                static_cast<int16_t>(iy1 - iy0));
-            HAL::lcd().blitCopy(pixels, Bitmap::ABGR2222, source, blitRect, 255, false);
+            const uint8_t* pixels = mCache->get(*mContainer, mZoom, tx, ty);
+            if (!pixels) continue;
+            // Expand only damaged pixels in small bands. ABGR2222 palette:
+            // cream paper, green land/contours, blue water, near-black routes.
+            static constexpr uint8_t palette[] = {0xef, 0xd9, 0xf9, 0xc0};
+            static uint8_t band[8 * 256];
+            const int width = ix1 - ix0;
+            for (int y = iy0; y < iy1; y += 8) {
+                const int height = std::min<int>(8, iy1-y);
+                for (int row=0; row<height; ++row) {
+                    const auto* src = pixels + 64 * (y + row - source.y);
+                    for (int col=0; col<width; ++col) {
+                        const int x = ix0 + col - source.x;
+                        band[row*width+col] = palette[(src[x/4] >> (2*(x&3))) & 3];
+                    }
+                }
+                HAL::lcd().blitCopy(band, Bitmap::ABGR2222, Rect(ix0,y,width,height),
+                                    Rect(0,0,width,height), 255, false);
+                HAL::getInstance()->flushDMA(); // band may now be reused
+            }
         }
     }
 }
@@ -191,23 +195,6 @@ void MapTileView::drawMarker(const Rect& absArea, int16_t absDX, int16_t absDY) 
     } else {
         dot(absArea, cx - 4, cy - 4, 9, 160, 160, 160);
     }
-}
-
-void MapTileView::drawLocation(const Rect& absArea,
-                               int64_t viewOriginX, int64_t viewOriginY,
-                               int16_t absDX, int16_t absDY) const
-{
-    const int64_t x = MapMath::rescale(mLocationX, MapMath::TRACE_ZOOM, mZoom) - viewOriginX;
-    const int64_t y = MapMath::rescale(mLocationY, MapMath::TRACE_ZOOM, mZoom) - viewOriginY;
-    if (x < -6 || x >= getWidth() + 6 || y < -6 || y >= getHeight() + 6) {
-        return;
-    }
-
-    const int16_t cx = static_cast<int16_t>(absDX + x);
-    const int16_t cy = static_cast<int16_t>(absDY + y);
-    dot(absArea, cx - 6, cy - 6, 13, 0, 0, 0);
-    dot(absArea, cx - 4, cy - 4, 9, 0, 105, 220);
-    dot(absArea, cx - 1, cy - 1, 3, 255, 255, 255);
 }
 
 } // namespace MapKit

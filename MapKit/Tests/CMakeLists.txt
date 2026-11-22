@@ -46,6 +46,13 @@ include("${UNA_SDK_ROOT}/Tests/Host/cmake/FetchGoogleTest.cmake")
 
 enable_testing()
 
+add_executable(mapkit-vector-tile-tests
+    VectorTile_test.cpp
+    "${MAPKIT}/Sources/VectorTile.cpp"
+)
+target_include_directories(mapkit-vector-tile-tests PRIVATE "${MAPKIT}/Header")
+add_test(NAME mapkit-vector-tile-tests COMMAND mapkit-vector-tile-tests)
+
 add_executable(mapkit-pure-tests
     MapMath_test.cpp
     PackDepth_test.cpp
@@ -61,8 +68,10 @@ add_test(NAME mapkit-pure-tests COMMAND mapkit-pure-tests)
 add_executable(mapkit-kernel-tests
     Container_test.cpp
     MapSession_test.cpp
-    MapBrowserSession_test.cpp
     TileRequestLog_test.cpp
+    VectorPack_test.cpp
+    "${MAPKIT}/Sources/TileCache.cpp"
+    "${MAPKIT}/Sources/VectorTile.cpp"
     PackCatalog_test.cpp
     PackTrustReader_test.cpp
     "${MAPKIT}/Sources/Container.cpp"
@@ -71,7 +80,7 @@ add_executable(mapkit-kernel-tests
     "${MAPKIT}/Sources/PackDepth.cpp"
     "${MAPKIT}/Sources/PackSelection.cpp"
     "${MAPKIT}/Sources/TileRequestLog.cpp"
-    "${MAPKIT}/Sources/MapBrowserSession.cpp"
+    "${MAPKIT}/Sources/VectorPack.cpp"
     "${UNA_SDK_ROOT}/Tests/Host/support/KernelTestDoubles.cpp"
     "${UNA_SDK_ROOT}/Libs/Source/UnaLogger/Logger.cpp"
     "${UNA_SDK_ROOT}/Libs/Source/Wrappers/StdLibWrappers.c"

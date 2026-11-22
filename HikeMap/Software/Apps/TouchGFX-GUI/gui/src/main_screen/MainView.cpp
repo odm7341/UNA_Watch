@@ -1,0 +1,225 @@
+#include <gui/main_screen/MainView.hpp>
+#include <images/BitmapDatabase.hpp>
+
+
+MainView::MainView() :
+    mUpdateItemCb(this, &MainView::updateItem),
+    mUpdateCenterItemCb(this, &MainView::updateCenterItem),
+    mpAnimationMiddleCb(this, &MainView::onAnimationMiddle)
+{
+}
+
+void MainView::setupScreen()
+{
+    MainViewBase::setupScreen();
+
+    setupItems();
+    menuLayout.setAnimationSteps(App::Config::kMenuAnimationSteps);
+    menuLayout.setTitle(T_TEXT_APP_NAME_UC);
+    menuLayout.setInfoMsg(TYPED_TEXT_INVALID);   // GPS status now shown by the icon row
+    menuLayout.setUpdateItemCallback(mUpdateItemCb);
+    menuLayout.setUpdateCenterItemCallback(mUpdateCenterItemCb);
+    menuLayout.setAnimationMiddleCallback(mpAnimationMiddleCb);
+    menuLayout.setNumberOfItems(Menu::ID_COUNT);
+    menuLayout.invalidate();
+
+    // Sensor-status row (GPS + external HR) below the title.
+    add(mSensorRow);
+    mSensorRow.setPosition(0, 52, 240, 24);
+    mSensorRow.setIcons(BITMAP_SENSORGPSDARK_ID, BITMAP_SENSORGPSLIGHT_ID,
+                        BITMAP_SENSORHRDARK_ID, BITMAP_SENSORHRLIGHT_ID);
+    mSensorRow.setGps(SDK::Gui::SensorStatusRow::gpsState(mGpsFix));
+
+    updateBackground(menuLayout.getSelectedItem());
+
+    // The map data's credit, before anything else is looked at. It does not
+    // wait on a GPS fix: MapSession collects attribution from the packs that
+    // are installed, not from the one a fix selects, precisely so this can
+    // happen here. Added last so nothing drawn afterwards sits on top of a
+    // licence notice. See AttributionFace's header for why it is a screen and
+    // not a timed overlay.
+    if (MapKit::AttributionFace::shouldShowAtStartup(presenter->mapSession())) {
+        mAttribution.setSources(presenter->mapSession());
+        add(mAttribution);
+        mAttribution.setVisible(true);
+        mAttribution.invalidate();
+        mAttributionUp = true;
+        mAttributionTicks = 0;
+        MapKit::AttributionFace::markShown();
+    }
+}
+
+void MainView::tearDownScreen()
+{
+    MainViewBase::tearDownScreen();
+}
+
+void MainView::setGpsFix(bool state)
+{
+    mGpsFix = state;
+    mSensorRow.setGps(SDK::Gui::SensorStatusRow::gpsState(state));
+    updateBackground(menuLayout.getSelectedItem());
+}
+
+void MainView::setAccessoryStatus(uint8_t state, const char* /*name*/)
+{
+    mSensorRow.setHr(SDK::Gui::SensorStatusRow::hrState(state));
+}
+
+void MainView::setPositionId(uint16_t id)
+{
+    menuLayout.selectItem(id);
+    updateBackground(menuLayout.getSelectedItem());
+}
+
+uint16_t MainView::getPositionId()
+{
+    return menuLayout.getSelectedItem();
+}
+
+void MainView::setupItems()
+{
+    // START
+    mCenterItems[Menu::ID_START].msgId     = T_TEXT_START;
+    mCenterItems[Menu::ID_START].msgIdType = T_TMP_SEMIBOLD_35;
+
+    mItems[Menu::ID_START].msgId = T_TEXT_START;
+
+
+    // SETTINGS
+    mCenterItems[Menu::ID_SETTINGS].msgId = T_TEXT_SETTINGS;
+
+    mItems[Menu::ID_SETTINGS].msgId = T_TEXT_SETTINGS;
+}
+
+void MainView::updateItem(MainMenuItem& item, int16_t index)
+{
+    if (index < 0 || index >= Menu::ID_COUNT) {
+        return;
+    }
+    item.apply(mItems[index]);
+}
+
+void MainView::updateCenterItem(MainMenuCenterItem& item, int16_t index)
+{
+    if (index < 0 || index >= Menu::ID_COUNT) {
+        return;
+    }
+    item.apply(mCenterItems[index]);
+}
+
+void MainView::onAnimationMiddle(int16_t index)
+{
+    updateBackground(index);
+}
+
+void MainView::dismissAttribution()
+{
+    // Swallow keys for a moment afterwards.
+    //
+    // One physical press arrives as more than one key event -- press and
+    // release, at least. Without this, the first event took the notice down
+    // and the second fell straight through to the menu underneath, so a
+    // BACK press dismissed the notice *and* quit the app in one go. Three
+    // ticks at 10 Hz is 300 ms: long enough to absorb the pair, short enough
+    // that a deliberate second press still lands.
+    mAttributionGuard = 3;
+    mAttribution.setVisible(false);
+    mAttribution.invalidate();
+    remove(mAttribution);
+    mAttributionUp = false;
+    invalidate();
+}
+
+void MainView::handleTickEvent()
+{
+    MainViewBase::handleTickEvent();
+
+    // Auto-advance. The guidelines allow an untouched notice to collapse
+    // after five seconds, so a wearer who does nothing is not left holding a
+    // screen they cannot read any more of.
+    if (mAttributionUp && ++mAttributionTicks >= MapKit::AttributionFace::kAutoDismissTicks) {
+        dismissAttribution();
+    } else if (mAttributionGuard > 0) {
+        --mAttributionGuard;
+    }
+}
+
+void MainView::handleKeyEvent(uint8_t key)
+{
+    // Any key dismisses the notice, and that key does nothing else. The
+    // guidelines permit collapsing attribution "immediately with a dismiss
+    // interaction", so there is no minimum time to sit through -- but a press
+    // that both dismissed the notice and actioned the menu underneath would
+    // mean the wearer acted on a screen they had not seen yet.
+    if (mAttributionUp) {
+        (void)key;
+        dismissAttribution();
+        return;
+    }
+    if (mAttributionGuard > 0) {
+        return;     // the tail of the press that dismissed the notice
+    }
+
+    if (key == SDK::GUI::Button::L1) {
+        menuLayout.selectPrev();
+    }
+
+    if (key == SDK::GUI::Button::L2) {
+        menuLayout.selectNext();
+    }
+
+    if (key == SDK::GUI::Button::R1) {
+        onConfirm();
+    }
+
+    if (key == SDK::GUI::Button::R2) {
+        presenter->exitApp();
+    }
+}
+
+void MainView::onConfirm()
+{
+    int16_t idx = static_cast<int16_t>(menuLayout.getSelectedItem());
+    if (idx < 0 || idx >= Menu::ID_COUNT) {
+        return;
+    }
+
+    switch (idx) {
+    case Menu::ID_START:
+        if (mGpsFix) {
+            presenter->startTrack();
+            application().gotoTrackScreenNoTransition();
+        } else {
+            application().gotoTrackStartConfirmationScreenNoTransition();
+        }
+        break;
+
+    case Menu::ID_SETTINGS:
+        application().gotoMenuSettingsScreenNoTransition();
+        break;
+
+    default:
+        break;
+    }
+}
+
+void MainView::updateBackground(int16_t index)
+{
+    switch (index) {
+        case Menu::ID_START:
+            if (mGpsFix) {
+                menuLayout.setBackground(SDK::GUI::Color::TEAL_DARK);
+                menuLayout.getButtons().setR1(Buttons::AMBER);
+            } else {
+                menuLayout.setBackground(SDK::GUI::Color::GRAY_DARK);
+                menuLayout.getButtons().setR1(Buttons::NONE);
+            }
+            break;
+
+        default:
+            menuLayout.setBackground(SDK::GUI::Color::TEAL_DARK);
+            menuLayout.getButtons().setR1(Buttons::AMBER);
+            break;
+    }
+}

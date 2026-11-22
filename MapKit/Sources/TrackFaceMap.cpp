@@ -91,6 +91,9 @@ void TrackFaceMap::update(const MapSession& session)
             break;
     }
 
+    size_t i = 0;
+    while (text[i] && mStatusBuf[i] == static_cast<unsigned char>(text[i])) ++i;
+    if (!text[i] && !mStatusBuf[i]) return;
     touchgfx::Unicode::strncpy(mStatusBuf, text, kStatusBufSize - 1);
     mStatusBuf[kStatusBufSize - 1] = 0;
     mStatus.setWildcard(mStatusBuf);

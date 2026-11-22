@@ -93,81 +93,21 @@ void MapSession::closePack()
     mCache.clear();
     mSelected     = kNoPack;
     mPackPath[0]  = '\0';
-    mOpenResult   = SDK::RawTiles::OpenResult::FileNotFound;
     mTrusted      = false;
     mCorrupt      = false;
     mZoom         = 0;
 }
 
-bool MapSession::openPack(size_t choice)
-{
-    if (choice >= mCatalog.count() || mCatalog.at(choice).knownCorrupt) {
-        return false;
-    }
-    closePack();
-    if (!PackCatalog::fullPathFor(mCatalog.at(choice).name, mPackPath, sizeof(mPackPath))) {
-        return false;
-    }
-    mOpenResult = mContainer.openFromFile(mKernel.fs, mPackPath, /*skipCrcVerify=*/true);
-    mSelected = choice;
-    if (mOpenResult != SDK::RawTiles::OpenResult::Ok) {
-        LOG_INFO("map: %s failed to open: %s\n", mPackPath,
-                 SDK::RawTiles::Container::describeResult(mOpenResult));
-        return false;
-    }
-    mZoom = mContainer.header().zoomMax;
-    for (uint8_t z = mContainer.header().zoomMax; ; --z) {
-        if (mContainer.tileCountAtZoom(z) != 0) {
-            mZoom = z;
-            break;
-        }
-        if (z == mContainer.header().zoomMin) {
-            break;
-        }
-    }
-    const PackFacts& pack = mCatalog.at(choice);
-    const int32_t lat = pack.bboxMinLatUDeg + (pack.bboxMaxLatUDeg - pack.bboxMinLatUDeg) / 2;
-    const int32_t lon = pack.bboxMinLonUDeg + (pack.bboxMaxLonUDeg - pack.bboxMinLonUDeg) / 2;
-    setViewport(MapMath::lonToWorldX(lon, MapMath::TRACE_ZOOM),
-                MapMath::latToWorldY(lat, MapMath::TRACE_ZOOM));
-    mHadFix = true;
-    mFix = false;
-    LOG_INFO("map: opened %s, z%u..z%u, %lu tiles\n", mPackPath,
-             mContainer.header().zoomMin, mContainer.header().zoomMax,
-             static_cast<unsigned long>(mContainer.header().tileCount));
-    return true;
-}
-
-bool MapSession::cyclePack(int direction)
-{
-    const size_t count = mCatalog.count();
-    if (count == 0 || direction == 0) {
-        return false;
-    }
-    if (mSelected == kNoPack) {
-        return openPack(0);
-    }
-    size_t next = mSelected;
-    for (size_t tried = 0; tried < count; ++tried) {
-        next = direction > 0 ? (next + 1) % count : (next + count - 1) % count;
-        if (openPack(next)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void MapSession::setViewport(int64_t centerX, int64_t centerY)
-{
-    mCenterX = centerX;
-    mCenterY = centerY;
-}
-
 void MapSession::chooseAndOpen()
 {
+    if (mSelected != kNoPack) closePack();
+
     const size_t choice = selectPack(mCatalog.facts(), mCatalog.count(), mLatUDeg, mLonUDeg);
     if (choice == kNoPack) {
-        closePack();
+        // Said once, not once a second for the whole activity. Standing
+        // outside every pack's coverage is a normal situation and it lasts as
+        // long as the wearer stays there; a log line per GPS sample would bury
+        // whatever else the app has to say.
         if (!mReportedNoPack) {
             mReportedNoPack = true;
             LOG_INFO("map: no pack covers this position (%zu candidate(s))\n", mCatalog.count());
@@ -175,12 +115,33 @@ void MapSession::chooseAndOpen()
         return;
     }
     mReportedNoPack = false;
-    openPack(choice);
+
+    if (!PackCatalog::fullPathFor(mCatalog.at(choice).name, mPackPath, sizeof(mPackPath))) {
+        mPackPath[0] = '\0';
+        return;
+    }
+
+    if (!mContainer.open(mKernel.fs, mPackPath)) {
+        LOG_INFO("map: invalid vector pack %s\n", mPackPath);
+        mSelected = choice;     // keep it, so the status line can name the pack
+        return;
+    }
+
+    mSelected = choice;
+    // Start at the pack's finest zoom: the wearer is looking at where they
+    // are, and can zoom out from there. "Finest" means the deepest zoom that
+    // has tiles, not the deepest the header declares -- opening on a zoom the
+    // pack carries nothing for is a blank screen the wearer has to guess
+    // their way out of by pressing zoom. See PackDepth.hpp.
+    mZoom = mContainer.header().zoomMax;
+    LOG_INFO("map: opened %s, z%u..z%u, %lu tiles\n", mPackPath,
+             mContainer.header().zoomMin, mContainer.header().zoomMax,
+             static_cast<unsigned long>(mContainer.header().tileCount));
 }
 
 void MapSession::pollTrust()
 {
-    if (mOpenResult != SDK::RawTiles::OpenResult::Ok || mTrusted || mCorrupt) {
+    if (!mContainer.isOpen() || mTrusted || mCorrupt) {
         return;     // nothing to open, or already decided -- either way, final
     }
 
@@ -225,7 +186,7 @@ bool MapSession::cycleZoom()
         // thing.
         return false;
     }
-    const SDK::RawTiles::Header& h = mContainer.header();
+    const VectorPack::Header& h = mContainer.header();
     mZoom = (mZoom >= h.zoomMax) ? h.zoomMin : static_cast<uint8_t>(mZoom + 1);
     return true;
 }
@@ -238,7 +199,7 @@ MapStatus MapSession::status() const
     if (mSelected == kNoPack) {
         return MapStatus::NoPack;
     }
-    if (mOpenResult != SDK::RawTiles::OpenResult::Ok) {
+    if (!mContainer.isOpen()) {
         return MapStatus::PackError;
     }
     if (mCorrupt) {
@@ -251,7 +212,7 @@ MapStatus MapSession::status() const
     // rectangle around a set of tiles, not the set itself -- and it only
     // promises coverage somewhere in [zoomMin, zoomMax], not at every zoom.
     // So the honest test is whether the tile under the crosshair exists.
-    const SDK::RawTiles::TileInfo here = mContainer.findTile(
+    const VectorPack::Tile here = mContainer.findTile(
         mZoom,
         MapMath::tileCoord(MapMath::rescale(mCenterX, MapMath::TRACE_ZOOM, mZoom)),
         MapMath::tileCoord(MapMath::rescale(mCenterY, MapMath::TRACE_ZOOM, mZoom)));
@@ -260,10 +221,10 @@ MapStatus MapSession::status() const
 
 const char* MapSession::packErrorText() const
 {
-    if (mSelected == kNoPack || mOpenResult == SDK::RawTiles::OpenResult::Ok) {
+    if (mSelected == kNoPack || mContainer.isOpen()) {
         return nullptr;
     }
-    return SDK::RawTiles::Container::describeResult(mOpenResult);
+    return "invalid VMAP";
 }
 
 const char* MapSession::packName() const
