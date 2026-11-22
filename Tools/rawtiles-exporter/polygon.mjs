@@ -1,6 +1,8 @@
+import {MAX_PACK_TILES} from './vector-pack.mjs';
+
 // Work in normalized Web Mercator so the edges match the map's straight
 // screen segments. Recursively discard empty quadrants (even for thin shapes).
-export function polygonTiles(vertices, min, max, limit = 1024) {
+export function polygonTiles(vertices, min, max, limit = MAX_PACK_TILES) {
   if (min > max) throw Error('Minimum zoom exceeds maximum zoom.');
   if (vertices.length < 3) throw Error('Add at least three corners.');
   if (vertices.length > 256) throw Error('Limit: 256 corners.');

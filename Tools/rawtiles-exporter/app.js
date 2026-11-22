@@ -4,7 +4,10 @@ import {style} from './map-style.js';
 import {formatBytes} from './tile-math.js';
 import {polygonTiles} from './polygon.mjs';
 import {prepareSources} from './watch-geometry.mjs';
-import {packFromTiles,addVectorTile,finishVectorPack,MAX_PACK_ZOOM} from './vector-pack.mjs';
+import {
+  packFromTiles,addVectorTile,finishVectorPack,MAX_PACK_ZOOM,
+  HEADER_BYTES,ENTRY_BYTES,MAX_TILE_BYTES
+} from './vector-pack.mjs';
 import {rasterizeTile,paintTile,renderWatch} from './watch-preview.mjs';
 
 const $=id=>document.getElementById(id);
@@ -83,7 +86,9 @@ function controls() {
 function update() {
   try {
     tiles=polygonTiles(polygon,storageGrid,storageGrid);
-    $('estimate').textContent=`${tiles.length} geometry tiles · up to ${formatBytes(228+tiles.length*16404)}`;
+    const maxBytes=HEADER_BYTES+4+tiles.length*(ENTRY_BYTES+MAX_TILE_BYTES);
+    $('estimate').textContent=`${tiles.length.toLocaleString()} geometry tiles · up to ${formatBytes(maxBytes)}`+
+      (tiles.length>1024?' · Requires updated HikeMap/RunMap. Allow extra time for download and verification.':'');
   } catch(e) {tiles=[];$('estimate').textContent=e.message;}
   included=new Set(tiles.map(key));
   controls();outline();watch();

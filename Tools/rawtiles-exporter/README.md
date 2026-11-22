@@ -24,7 +24,9 @@ Above a provider's maximum source zoom, the exporter clips and scales its
 parent geometry. This magnifies existing detail; it doesn't create new data. Dense
 tiles are simplified, and exports that still exceed the watch budget fail
 with the tile address. Try fewer layers. Packs are limited
-to 1,024 tiles with 16 KiB of payload each.
+to 16,384 tiles with 16 KiB of payload each (about 256 MiB at the maximum).
+Packs over 1,024 tiles require updated HikeMap or RunMap. Leave room on the
+watch and allow time for Map Manager to verify the whole download.
 
 Credits are shown beside the preview and embedded in the pack metadata; they
 are not painted over the watch map.

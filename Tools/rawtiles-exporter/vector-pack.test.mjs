@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { addVectorTile, createVectorPack, finishVectorPack } from './vector-pack.mjs';
+import { addVectorTile, createVectorPack, finishVectorPack, MAX_PACK_TILES } from './vector-pack.mjs';
 
 test('writes sorted indexed MVT payloads and a CRC footer', async () => {
   const range = [{ zoom: 8, minX: 128, maxX: 128, minY: 90, maxY: 91 }];
@@ -24,4 +24,15 @@ test('bounds tile sizes and zoom range', () => {
   const pack = createVectorPack([{ zoom: 8, minX: 0, maxX: 0, minY: 0, maxY: 0 }], 8, 8);
   assert.throws(() => addVectorTile(pack, pack.tiles[0], new Uint8Array(16385)), /16 KiB/);
   assert.throws(() => finishVectorPack(pack), /Missing/);
+});
+
+test('writes a full 16,384-entry pack and rejects more tiles', async () => {
+  const range = {zoom:14, minX:0, maxX:127, minY:0, maxY:127};
+  const pack = createVectorPack([range], 14, 14);
+  assert.equal(pack.tiles.length, MAX_PACK_TILES);
+  for (const tile of pack.tiles) addVectorTile(pack, tile, Uint8Array.of(1));
+  const bytes = new DataView(await finishVectorPack(pack).arrayBuffer());
+  assert.equal(bytes.getUint32(8, true), MAX_PACK_TILES);
+  assert.equal(bytes.getUint32(32, true), 224 + 20 * MAX_PACK_TILES);
+  assert.throws(() => createVectorPack([{...range,maxX:128}], 14, 14), /Limit/);
 });

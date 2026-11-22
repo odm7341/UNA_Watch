@@ -7,15 +7,18 @@
 export const HEADER_BYTES = 224;
 export const ENTRY_BYTES = 20;
 export const MAX_TILE_BYTES = 16384;
+export const MAX_PACK_TILES = 16384;
 export const MAX_PACK_ZOOM = 17;
 export const ATTRIBUTION = 'OpenFreeMap | © OpenMapTiles | © OpenStreetMap contributors | Contours © OpenStreetMap US, Mapzen DEM.';
 
+const crcTable = Uint32Array.from({length:256}, (_, crc) => {
+  for (let bit = 0; bit < 8; bit++) crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+  return crc;
+});
+
 function crc32(bytes, previous = 0) {
-  let crc = (previous ^ 0xffffffff) >>> 0;
-  for (const byte of bytes) {
-    crc ^= byte;
-    for (let bit = 0; bit < 8; bit += 1) crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
-  }
+  let crc = previous ^ 0xffffffff;
+  for (let i = 0; i < bytes.length; i++) crc = (crc >>> 8) ^ crcTable[(crc ^ bytes[i]) & 255];
   return (crc ^ 0xffffffff) >>> 0;
 }
 
@@ -29,7 +32,8 @@ export function createVectorPack(ranges, minZoom, maxZoom) {
   for (const [i,range] of ranges.entries()) {
     if (range.zoom !== minZoom+i || ![range.minX,range.minY,range.maxX,range.maxY].every(v=>Number.isInteger(v)&&v>=0&&v<2**range.zoom)
       || range.minX>range.maxX || range.minY>range.maxY) throw new Error('Invalid XYZ range.');
-    if ((range.maxX-range.minX+1)*(range.maxY-range.minY+1)>1024-tiles.length) throw new Error('Limit: 1024 tiles.');
+    if ((range.maxX-range.minX+1)*(range.maxY-range.minY+1)>MAX_PACK_TILES-tiles.length)
+      throw new Error(`Limit: ${MAX_PACK_TILES} tiles.`);
     for (let x = range.minX; x <= range.maxX; x += 1) {
       for (let y = range.minY; y <= range.maxY; y += 1) tiles.push({ z: range.zoom, x, y });
     }
@@ -41,7 +45,8 @@ export function packFromTiles(tiles,minZoom,maxZoom) {
   if (!Number.isInteger(minZoom) || !Number.isInteger(maxZoom) || minZoom<0 || minZoom>maxZoom ||
       maxZoom>MAX_PACK_ZOOM || tiles.some(t=>t.z<minZoom || t.z>maxZoom))
     throw new Error(`Unsupported vector zoom range (0–${MAX_PACK_ZOOM}).`);
-  if (!tiles.length || tiles.length > 1024) throw new Error('Pack must contain 1–1024 tiles.');
+  if (!tiles.length || tiles.length > MAX_PACK_TILES)
+    throw new Error(`Pack must contain 1–${MAX_PACK_TILES} tiles.`);
   let west=180,south=90,east=-180,north=-90;
   for(const {z,x,y} of tiles) {
     west=Math.min(west,lon(x,z)); east=Math.max(east,lon(x+1,z));

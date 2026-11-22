@@ -19,7 +19,7 @@ public:
     static constexpr size_t kHeaderBytes = 224;
     static constexpr size_t kEntryBytes = 20;
     static constexpr size_t kMaxTileBytes = 16384;
-    static constexpr uint32_t kMaxTiles = 1024;
+    static constexpr uint32_t kMaxTiles = 16384;
     static constexpr size_t kAttributionBytes = 160;
 
     struct Header {

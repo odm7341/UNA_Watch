@@ -91,7 +91,7 @@ Open the [vector exporter](https://odm7341.github.io/UNA_Watch/rawtiles-exporter
 1. Move to a place you know. Click **Draw polygon**, tap its corners and choose **Finish polygon**, or click **Use current view**.
 2. For a fast first test select a small area covering one or a few geometry tiles.
 3. Leave the desired layers enabled and click **Download .vtiles**.
-4. Keep the downloaded `una-topo.vtiles` file. One geometry grid serves all watch display scales (z14–17); packs are limited to 1,024 tiles of up to 16 KiB each.
+4. Keep the downloaded `una-topo.vtiles` file. One geometry grid serves all watch display scales (z14–17); packs are limited to 16,384 tiles of up to 16 KiB each. Packs over 1,024 tiles need updated HikeMap or RunMap.
 
 See the [vector exporter guide](Tools/rawtiles-exporter/README.md) for selection, layer, attribution, and hosting details.
 

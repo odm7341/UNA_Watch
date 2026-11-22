@@ -46,7 +46,10 @@ are keyed by the parity of X and Y, so neighbors never evict each other.
 Each cached tile takes 16 KiB at two bits/pixel. Cache hits do not access the
 filesystem or decode MVT. Cache and input scratch are static (64 + 16 KiB);
 only damaged spans are expanded into a reusable 2 KiB LCD band. Both the
-writer and reader cap pack size at 1,024 tiles. Expensive geometry is
+writer and reader cap pack size at 16,384 tiles. This is a practical limit
+for export and verification time, not a cache requirement. VMAP v1's
+32-bit offsets and reader size check impose a separate ceiling below 4 GiB.
+Expensive geometry is
 simplified on the desktop or rejected; it cannot grow the watch heap. The
 index is checked in batches when opened, not re-scanned at each sample.
 
