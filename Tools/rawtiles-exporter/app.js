@@ -1,265 +1,140 @@
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import {style} from './map-style.js';
-import { MAX_MERCATOR_LAT, countTiles, formatBytes, tileRanges } from './tile-math.js';
+import {formatBytes} from './tile-math.js';
+import {polygonTiles} from './polygon.mjs';
 import {prepareSources} from './watch-geometry.mjs';
-import {createVectorPack, addVectorTile, finishVectorPack} from './vector-pack.mjs';
-import {rasterizeTile, renderWatch} from './watch-preview.mjs';
+import {packFromTiles,addVectorTile,finishVectorPack} from './vector-pack.mjs';
+import {rasterizeTile,paintTile,renderWatch} from './watch-preview.mjs';
 
-const MAX_EXPORT_TILES = 1024;
-const status = document.querySelector('#status');
-const centerReadout = document.querySelector('#center');
-const zoomReadout = document.querySelector('#zoom');
-const estimate = document.querySelector('#estimate');
-const zoomMinInput = document.querySelector('#zoom-min');
-const zoomMaxInput = document.querySelector('#zoom-max');
-const exportButton = document.querySelector('#export-pack');
-const selectViewButton = document.querySelector('#select-view');
-const watchPreview = document.querySelector('#watch-preview');
-const watchPreviewToggle = document.querySelector('#watch-preview-toggle');
-const watchPreviewClose = document.querySelector('#watch-preview-close');
-const mainPreview = document.querySelector('#map-preview');
-const watchCanvas = document.querySelector('#watch-map');
-const selectionOutline = document.querySelector('#selection-outline');
-
-let selectedBounds;
-let selecting = false;
-let selectionStart;
-let exportInProgress = false;
-let previewVersion = 0;
-let previewTiles = new Map();
-let sourcePromise;
-
-const map = new maplibregl.Map({
-  container: 'map',
-  // MapLibre handles gestures and projection only. It must never contribute
-  // desktop-style pixels, labels, or a separately styled watch mockup.
-  style: {version:8, sources:{}, layers:[{id:'background', type:'background',
-    paint:{'background-color':'#e0dcd4'}}]},
-  center: [-70.7746224, 43.4387179],
-  zoom: 12,
-  minZoom: 8,
-  maxZoom: 14,
-  attributionControl: false
-});
-map.addControl(new maplibregl.NavigationControl(), 'bottom-right');
-map.addControl(new maplibregl.ScaleControl({ maxWidth: 100, unit: 'imperial' }), 'bottom-left');
-
-for (let zoom = 8; zoom <= 14; zoom += 1) {
-  for (const input of [zoomMinInput, zoomMaxInput]) {
-    const option = document.createElement('option');
-    option.value = String(zoom);
-    option.textContent = String(zoom);
-    input.append(option);
-  }
+const $=id=>document.getElementById(id);
+const layers=[...document.querySelectorAll('[data-layer]')];
+const names={landcover:'land',water:'water',contours:'contour',roads:'road',trails:'trail',peaks:'peak'};
+const map=L.map('map',{minZoom:8,maxZoom:14,zoomControl:false,attributionControl:false,
+  maxBounds:[[-85.05112878,-180],[85.05112878,180]],maxBoundsViscosity:1
+}).setView([43.4387179,-70.7746224],13);
+L.control.zoom({position:'bottomright'}).addTo(map);
+const overlay=L.layerGroup().addTo(map);
+const key=t=>`${t.z}/${t.x}/${t.y}`;
+let polygon=[],draft=null, tiles=[],included=new Set(),busy=false,watchVersion=0;
+for(const id of ['zoom-min','zoom-max']) {
+  for(let z=8;z<=14;z++) $(id).add(new Option(z,z));
+  $(id).value=id==='zoom-min'?11:13;
 }
-zoomMinInput.value = '11';
-zoomMaxInput.value = '13';
-
-function updateReadout() {
-  const center = map.getCenter();
-  centerReadout.textContent = `${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}`;
-  zoomReadout.textContent = `z${previewZoom()} (watch tile zoom)`;
-}
-
-function previewZoom() {
-  return Math.max(Number(zoomMinInput.value),
-    Math.min(Number(zoomMaxInput.value), Math.round(map.getZoom())));
-}
-
-function enabledLayers() {
-  const names = {landcover:'land', water:'water', contours:'contour', roads:'road',
-    trails:'trail', peaks:'peak'};
-  return new Set(Array.from(document.querySelectorAll('[data-layer]:checked'),
-    el => names[el.dataset.layer]));
-}
-
-function resizeMainPreview() {
-  const ratio = window.devicePixelRatio || 1;
-  // 1 canvas pixel = 1 watch pixel, even on high-DPI desktop screens.
-  mainPreview.width = Math.ceil(mainPreview.clientWidth);
-  mainPreview.height = Math.ceil(mainPreview.clientHeight);
-  mainPreview.style.imageRendering = ratio > 1 ? 'pixelated' : 'auto';
-  schedulePreview();
-}
-
-function schedulePreview(reloadSources = false) {
-  if (reloadSources) { sourcePromise = undefined; previewTiles = new Map(); }
-  mainPreview.style.opacity = '0';
-  if (!exportInProgress) setStatus('Preparing watch-style tiles…');
-  const version = ++previewVersion;
-  const cache = previewTiles;
-  void (async () => {
-    try {
-      sourcePromise ??= prepareSources(style, enabledLayers());
-      const fetchTile = await sourcePromise;
-      const zoom = previewZoom();
-      const range = selectedRanges().find(r => r.zoom === zoom);
-      const getTile = async tile => {
-        if (!range || tile.x < range.minX || tile.x > range.maxX ||
-            tile.y < range.minY || tile.y > range.maxY) return null;
-        const key = `${tile.z}/${tile.x}/${tile.y}`;
-        if (!cache.has(key)) {
-          const bytes = await fetchTile(tile);
-          cache.set(key, rasterizeTile(bytes));
-          if (cache.size > 96) cache.delete(cache.keys().next().value);
-        }
-        return cache.get(key);
-      };
-      if (version !== previewVersion) return;
-      const center = map.getCenter();
-      await renderWatch(mainPreview, center, zoom, getTile, () => version === previewVersion);
-      if (!watchPreview.hidden && version === previewVersion)
-        await renderWatch(watchCanvas, center, zoom, getTile, () => version === previewVersion);
-      if (version === previewVersion) {
-        mainPreview.style.opacity = '1';
-        if (!exportInProgress)
-          setStatus('Watch-style preview ready. Shift-drag to select export coverage.');
-      }
-    } catch (error) {
-      if (version === previewVersion) {
-        sourcePromise = undefined;
-        setStatus(error.message || 'Watch preview failed.', true);
-      }
+function sourceCache() {
+  const enabled=new Set(layers.filter(el=>el.checked).map(el=>names[el.dataset.layer]));
+  let source; const cache=new Map();
+  return async t=>{
+    const k=key(t);
+    if(!cache.has(k)) {
+      source??=prepareSources(style,enabled).catch(e=>{source=null;throw e;});
+      const promise=source.then(get=>get(t)).then(bytes=>({bytes,pixels:rasterizeTile(bytes)}));
+      cache.set(k,promise);
+      if(cache.size>128) cache.delete(cache.keys().next().value);
+      promise.catch(()=>{if(cache.get(k)===promise) cache.delete(k);});
     }
-  })();
+    return cache.get(k);
+  };
 }
+let loadTile=sourceCache();
+const grid=L.gridLayer({tileSize:256,noWrap:true,updateWhenIdle:true});
+grid.createTile=function(coords,done) {
+  const canvas=document.createElement('canvas');
+  canvas.width=canvas.height=256;
+  loadTile(coords).then(({pixels})=>{paintTile(canvas,pixels);done(null,canvas);},
+    error=>{done(error,canvas);if(!busy) $('status').textContent=error.message;});
+  return canvas;
+};
+grid.addTo(map);
 
-function showWatchPreview() {
-  watchPreview.hidden = false;
-  watchPreviewToggle.setAttribute('aria-expanded', 'true');
-  schedulePreview();
-}
-
-function hideWatchPreview() {
-  watchPreview.hidden = true;
-  watchPreviewToggle.setAttribute('aria-expanded', 'false');
-}
-
-function setStatus(message, isError = false) {
-  status.textContent = message;
-  status.classList.toggle('error', isError);
-}
-
-function selectedRanges() {
-  if (!selectedBounds) return [];
-  return tileRanges(selectedBounds, Number(zoomMinInput.value), Number(zoomMaxInput.value));
-}
-
-function updateEstimate() {
-  const ranges = selectedRanges();
-  const count = countTiles(ranges);
-  const minZoom = Number(zoomMinInput.value);
-  const maxZoom = Number(zoomMaxInput.value);
-  if (!selectedBounds) {
-    estimate.textContent = 'Choose a coverage area.';
-    exportButton.disabled = true;
-    return;
-  }
-  if (minZoom > maxZoom || count === 0) {
-    estimate.textContent = 'Choose a valid zoom range.';
-    exportButton.disabled = true;
-    return;
-  }
-  const coverage = `${selectedBounds.getSouth().toFixed(4)}, ${selectedBounds.getWest().toFixed(4)} → ${selectedBounds.getNorth().toFixed(4)}, ${selectedBounds.getEast().toFixed(4)}`;
-  estimate.textContent = `${count.toLocaleString()} tiles · up to ${formatBytes(228+count*(16384+20))}\nz${minZoom}–${maxZoom} · ${coverage}${count > MAX_EXPORT_TILES ? `\nLimit: ${MAX_EXPORT_TILES.toLocaleString()} tiles per browser export.` : ''}`;
-  exportButton.disabled = count > MAX_EXPORT_TILES || exportInProgress;
-}
-
-function setSelectedBounds(bounds) {
-  selectedBounds = new maplibregl.LngLatBounds(bounds.getSouthWest(), bounds.getNorthEast());
-  updateEstimate();
-  if (!selecting) schedulePreview();
-}
-
-function beginSelection(event) {
-  if (!event.originalEvent.shiftKey || exportInProgress) return;
-  selecting = true;
-  selectionStart = event.lngLat;
-  map.dragPan.disable();
-  map.getCanvas().style.cursor = 'crosshair';
-  selectionOutline.hidden = false;
-}
-
-function moveSelection(event) {
-  if (!selecting) return;
-  setSelectedBounds(new maplibregl.LngLatBounds(selectionStart, event.lngLat));
-  const start = map.project(selectionStart);
-  selectionOutline.style.left = `${Math.min(start.x, event.point.x)}px`;
-  selectionOutline.style.top = `${Math.min(start.y, event.point.y)}px`;
-  selectionOutline.style.width = `${Math.abs(start.x - event.point.x)}px`;
-  selectionOutline.style.height = `${Math.abs(start.y - event.point.y)}px`;
-}
-
-function endSelection() {
-  if (!selecting) return;
-  selecting = false;
-  map.dragPan.enable();
-  map.getCanvas().style.cursor = '';
-  selectionOutline.hidden = true;
-  schedulePreview();
-}
-
-function selectionCoversMercator() {
-  return selectedBounds && selectedBounds.getNorth() <= MAX_MERCATOR_LAT && selectedBounds.getSouth() >= -MAX_MERCATOR_LAT;
-}
-
-async function exportVectorPack() {
-  const ranges = selectedRanges();
-  const count = countTiles(ranges);
-  if (!selectionCoversMercator() || !count || count > MAX_EXPORT_TILES) return;
-  exportInProgress = true;
-  exportButton.disabled = true;
-  selectViewButton.disabled = true;
-  zoomMinInput.disabled = true;
-  zoomMaxInput.disabled = true;
+async function watch() {
+  const v=++watchVersion;
+  if($('watch-preview').hidden) return;
+  const zoom=Math.max(+$('zoom-min').value,Math.min(+$('zoom-max').value,map.getZoom()));
+  const canvas=$('watch-map'), state=$('watch-state');
+  state.textContent=`Loading watch tiles at z${zoom}…`;
+  let hits=0;
   try {
-    const pack = createVectorPack(ranges, Number(zoomMinInput.value), Number(zoomMaxInput.value));
-    const fetchTile = await prepareSources(style, enabledLayers());
-    for (let number = 0; number < pack.tiles.length; number += 1) {
-      const tile = pack.tiles[number];
-      setStatus(`Packing ${number + 1}/${pack.tiles.length}: z${tile.z}/${tile.x}/${tile.y}`);
-      addVectorTile(pack, tile, await fetchTile(tile));
-    }
-    const file = finishVectorPack(pack);
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(file);
-    link.download = `una-topo-z${zoomMinInput.value}-${zoomMaxInput.value}.vtiles`;
-    link.click();
-    window.setTimeout(() => URL.revokeObjectURL(link.href), 0);
-    setStatus(`Downloaded ${link.download} (${formatBytes(file.size)}).`);
-  } catch (error) {
-    setStatus(error.message || 'Vector export failed.', true);
-  } finally {
-    exportInProgress = false;
-    selectViewButton.disabled = false;
-    zoomMinInput.disabled = false;
-    zoomMaxInput.disabled = false;
-    updateEstimate();
-  }
+    await renderWatch(canvas,map.getCenter(),zoom,async t=>{
+      if(!included.has(key(t))) return null;
+      const {pixels}=await loadTile(t); hits++; return pixels;
+    },()=>v===watchVersion);
+    if(v===watchVersion) state.textContent=hits?`Pack preview · z${zoom}`:
+      'No selected tiles here. Pan inside the polygon or choose Use current view.';
+  } catch(e) { if(v===watchVersion) state.textContent=`Preview unavailable: ${e.message}`; }
 }
-
-map.on('move', updateReadout);
-map.on('movestart', () => { mainPreview.style.opacity = '0'; });
-map.on('moveend', () => schedulePreview());
-map.on('mousedown', beginSelection);
-map.on('mousemove', moveSelection);
-map.on('mouseup', endSelection);
-map.on('load', () => {
-  updateReadout();
-  resizeMainPreview();
-  setSelectedBounds(map.getBounds());
-  setStatus('Watch-style preview loading — shift-drag to select export coverage.');
-});
-map.on('error', event => {
-  const message = event.error?.message || 'Map tile request failed.';
-  if (!message.includes('Source') && !message.includes('style')) setStatus(message, true);
-});
-document.querySelectorAll('[data-layer]').forEach(input =>
-  input.addEventListener('change', () => schedulePreview(true)));
-selectViewButton.addEventListener('click', () => setSelectedBounds(map.getBounds()));
-for (const input of [zoomMinInput, zoomMaxInput]) input.addEventListener('change', () => {
-  updateEstimate(); updateReadout(); schedulePreview();
-});
-exportButton.addEventListener('click', exportVectorPack);
-watchPreviewToggle.addEventListener('click', showWatchPreview);
-watchPreviewClose.addEventListener('click', hideWatchPreview);
-window.addEventListener('resize', resizeMainPreview);
+function outline() {
+  overlay.clearLayers();
+  const points=draft??polygon, options={interactive:false,color:'#245cc9',weight:2,fill:false};
+  if(points.length>=2) (points.length>=3?L.polygon:L.polyline)(points,options).addTo(overlay);
+  if(draft) for(const p of draft) L.circleMarker(p,{...options,radius:3,fill:true}).addTo(overlay);
+}
+function controls() {
+  for(const id of ['undo','finish','cancel']) $(id).hidden=!draft;
+  $('undo').disabled=!draft?.length;
+  $('finish').disabled=!(draft?.length>=3);
+  $('draw').hidden=!!draft;
+  $('export-pack').disabled=busy || !!draft || !tiles.length;
+  for(const el of [ $('draw'),$('select-view'),$('zoom-min'),$('zoom-max'),...layers]) el.disabled=busy;
+}
+function update() {
+  const min=+$('zoom-min').value,max=+$('zoom-max').value;
+  try {
+    tiles=polygonTiles(polygon,min,max);
+    $('estimate').textContent=`${tiles.length} tiles · up to ${formatBytes(228+tiles.length*16404)} · z${min}–${max}`;
+  } catch(e) {tiles=[];$('estimate').textContent=e.message;}
+  included=new Set(tiles.map(key));
+  controls();outline();watch();
+}
+function useView() {
+  const b=map.getBounds();
+  polygon=[b.getNorthWest(),b.getNorthEast(),b.getSouthEast(),b.getSouthWest()];
+  draft=null;update();
+}
+function edit() {
+  controls();outline();
+  $('status').textContent=draft?`${draft.length} corners. Tap the map to add another corner.`:'';
+}
+$('draw').onclick=()=>{draft=[];edit();};
+$('undo').onclick=()=>{draft.pop();edit();};
+$('cancel').onclick=()=>{draft=null;edit();};
+$('finish').onclick=()=>{
+  try { polygonTiles(draft,+$('zoom-min').value,+$('zoom-max').value); }
+  catch(e) { $('status').textContent=e.message;return; }
+  polygon=draft;draft=null;edit();update();
+};
+map.on('click',e=>{if(draft && draft.length<256){draft.push(e.latlng);edit();}});
+$('select-view').onclick=()=>{useView();$('status').textContent='Current view selected.';};
+function readout() {
+  const c=map.getCenter();$('center').textContent=`${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}`;
+  $('zoom').textContent=map.getZoom();
+}
+map.on('moveend',()=>{readout();watch();});
+for(const id of ['zoom-min','zoom-max']) $(id).onchange=update;
+function refresh() {loadTile=sourceCache();grid.redraw();watch();}
+for(const el of layers) el.onchange=refresh;
+$('retry').onclick=refresh;
+$('watch-preview-toggle').onclick=()=>{
+  $('watch-preview').hidden=false;$('watch-preview-toggle').setAttribute('aria-expanded','true');watch();
+};
+$('watch-preview-close').onclick=()=>{
+  $('watch-preview').hidden=true;$('watch-preview-toggle').setAttribute('aria-expanded','false');watchVersion++;
+};
+$('export-pack').onclick=async()=>{
+  if(busy || draft || !tiles.length) return;
+  busy=true;controls();
+  try {
+    const pack=packFromTiles(tiles,+$('zoom-min').value,+$('zoom-max').value);
+    for(const [i,t] of tiles.entries()) {
+      $('status').textContent=`Packing ${i+1}/${tiles.length}: ${key(t)}`;
+      addVectorTile(pack,t,(await loadTile(t)).bytes);
+    }
+    const file=finishVectorPack(pack),link=document.createElement('a');
+    link.href=URL.createObjectURL(file);link.download=`una-topo-z${$('zoom-min').value}-${$('zoom-max').value}.vtiles`;
+    link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+    $('status').textContent=`Downloaded ${formatBytes(file.size)}.`;
+  } catch(e) { $('status').textContent=`Export failed: ${e.message}`; }
+  finally {busy=false;controls();}
+};
+readout();useView();
+$('status').textContent='Pan to explore, then choose your export area.';

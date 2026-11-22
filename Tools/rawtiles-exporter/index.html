@@ -4,13 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UNA Vector Map Exporter</title>
-  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main id="map" aria-label="Navigate and select a watch map area"></main>
-  <canvas id="map-preview" aria-label="Watch-style map at the selected zoom"></canvas>
-  <div id="selection-outline" hidden aria-hidden="true"></div>
   <section class="panel" aria-label="Map style and export controls">
     <h1>UNA Vector Map Exporter</h1>
     <p>Watch rendering of OpenFreeMap vectors and OSM US contours. No labels, photos or desktop-only styling.</p>
@@ -29,13 +26,17 @@
     <button type="button" id="watch-preview-toggle" aria-controls="watch-preview" aria-expanded="false">240 × 240 watch view</button>
     <section class="export" aria-label="Vector export">
       <h2>Vector export</h2>
-      <p>Shift-drag a rectangle, or use the current view. Both views use the same prepared tiles and palette as the watch; the centre marker represents a GPS fix. A live breadcrumb only exists on the watch.</p>
+      <p>Choose Draw polygon, then tap or click each corner. Finish to select the whole map tiles your shape overlaps.</p>
       <div class="zoom-fields">
         <label>Min zoom <select id="zoom-min" aria-label="Minimum export zoom"></select></label>
         <label>Max zoom <select id="zoom-max" aria-label="Maximum export zoom"></select></label>
       </div>
       <div class="actions">
+        <button type="button" id="draw">Draw polygon</button>
         <button type="button" id="select-view">Use current view</button>
+        <button type="button" hidden id="undo">Undo corner</button>
+        <button type="button" hidden id="finish">Finish polygon</button>
+        <button type="button" hidden id="cancel">Cancel</button>
         <button type="button" id="export-pack">Download .vtiles</button>
       </div>
       <div class="estimate" id="estimate" aria-live="polite">Choose an export area.</div>
@@ -51,11 +52,11 @@
       </div>
     </div>
     <p>UNA watch map · 1.2 in · 240 × 240 px · 200 PPI</p>
+    <p id="watch-state" role="status"></p>
+    <button type="button" id="retry">Refresh preview</button>
     <button type="button" id="watch-preview-close">Close mockup</button>
   </aside>
   <p class="credits">Map data: <a href="https://openfreemap.org/">OpenFreeMap</a> / <a href="https://openmaptiles.org/">OpenMapTiles</a> / <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>; contours: <a href="https://tiles.openstreetmap.us/">OpenStreetMap US</a> / Mapzen DEM. These credits are stored in the pack, not drawn on the watch map.</p>
-  <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
-  <script type="importmap">{"imports":{"@mapbox/vector-tile":"https://esm.sh/@mapbox/vector-tile@2.0.4","geojson-vt":"https://esm.sh/geojson-vt@4.0.2","earcut":"https://esm.sh/earcut@3.0.2","pbf":"https://esm.sh/pbf@4.0.1"}}</script>
   <script type="module" src="app.js"></script>
 </body>
 </html>

@@ -42,12 +42,12 @@ jobs:
         run: npm run build
       - name: Test vector exporter
         working-directory: Tools/rawtiles-exporter
-        run: npm ci && npm test
+        run: npm ci && npm test && npm run build
       - name: Assemble Pages artifact
         run: |
           mkdir -p _site/rawtiles-exporter _site/activity-dashboard
           cp -a Tools/site/. _site/
-          cp Tools/rawtiles-exporter/{index.html,style.css,app.js,map-style.js,tile-math.js,vector-pack.mjs,watch-geometry.mjs,watch-preview.mjs} _site/rawtiles-exporter/
+          cp -a Tools/rawtiles-exporter/dist/. _site/rawtiles-exporter/
           cp -a Tools/activity-dashboard/dist/. _site/activity-dashboard/
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

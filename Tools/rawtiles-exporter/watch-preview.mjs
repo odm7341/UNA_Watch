@@ -7,6 +7,16 @@ export const WATCH_COLORS = ['#ffffaa', '#55aa55', '#55aaff', '#000000'];
 export const NO_TILE_COLOR = '#e0dcd4';
 const SIDE = 256;
 
+export function paintTile(canvas,pixels) {
+  const ctx=canvas.getContext('2d'), image=ctx.createImageData(SIDE,SIDE);
+  const colors=WATCH_COLORS.map(s=>parseInt(s.slice(1),16));
+  for(let i=0;i<pixels.length;i++) {
+    const c=colors[pixels[i]], j=i*4;
+    image.data[j]=c>>>16; image.data[j+1]=(c>>>8)&255; image.data[j+2]=c&255; image.data[j+3]=255;
+  }
+  ctx.putImageData(image,0,0);
+}
+
 export function rasterizeTile(bytes) {
   const pixels = new Uint8Array(SIDE * SIDE);
   const layers = new VectorTile(new Pbf(bytes)).layers;

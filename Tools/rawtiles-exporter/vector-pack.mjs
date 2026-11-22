@@ -24,21 +24,25 @@ function lat(y, z) { return Math.atan(Math.sinh(Math.PI * (1 - 2 * y / (2 ** z))
 export function createVectorPack(ranges, minZoom, maxZoom) {
   if (!ranges.length || minZoom < 0 || maxZoom > 14 || minZoom > maxZoom) throw new Error('Unsupported vector zoom range (0–14).');
   const tiles = [];
-  let west = 180, south = 90, east = -180, north = -90;
   if (ranges.length !== maxZoom-minZoom+1) throw new Error('Missing zoom levels.');
   for (const [i,range] of ranges.entries()) {
     if (range.zoom !== minZoom+i || ![range.minX,range.minY,range.maxX,range.maxY].every(v=>Number.isInteger(v)&&v>=0&&v<2**range.zoom)
       || range.minX>range.maxX || range.minY>range.maxY) throw new Error('Invalid XYZ range.');
     if ((range.maxX-range.minX+1)*(range.maxY-range.minY+1)>1024-tiles.length) throw new Error('Limit: 1024 tiles.');
-    west = Math.min(west, lon(range.minX, range.zoom));
-    east = Math.max(east, lon(range.maxX + 1, range.zoom));
-    north = Math.max(north, lat(range.minY, range.zoom));
-    south = Math.min(south, lat(range.maxY + 1, range.zoom));
     for (let x = range.minX; x <= range.maxX; x += 1) {
       for (let y = range.minY; y <= range.maxY; y += 1) tiles.push({ z: range.zoom, x, y });
     }
   }
+  return packFromTiles(tiles,minZoom,maxZoom);
+}
+
+export function packFromTiles(tiles,minZoom,maxZoom) {
   if (!tiles.length || tiles.length > 1024) throw new Error('Pack must contain 1–1024 tiles.');
+  let west=180,south=90,east=-180,north=-90;
+  for(const {z,x,y} of tiles) {
+    west=Math.min(west,lon(x,z)); east=Math.max(east,lon(x+1,z));
+    north=Math.max(north,lat(y,z)); south=Math.min(south,lat(y+1,z));
+  }
   const attribution = new TextEncoder().encode(ATTRIBUTION);
   if (attribution.length > 160) throw new Error('Attribution does not fit VMAP header.');
   const header = new Uint8Array(HEADER_BYTES);

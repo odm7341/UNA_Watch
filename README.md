@@ -86,14 +86,9 @@ Its build produces `Map_Manager_*.uapp` in that build directory or `MapManager/O
 
 ### 5. Create a small first map pack
 
-Serve this repository over HTTP, then open the vector exporter. Do not open `index.html` with `file://`.
+Open the [vector exporter](https://odm7341.github.io/UNA_Watch/rawtiles-exporter/).
 
-```bash
-python3 -m http.server 8000
-# Open http://localhost:8000/Tools/rawtiles-exporter/
-```
-
-1. Move the map to a place you know and click **Use current view**.
+1. Move to a place you know. Click **Draw polygon**, tap its corners and choose **Finish polygon**, or click **Use current view**.
 2. For a fast first test choose zoom `8` to `8`; the current view should estimate one or a few tiles.
 3. Leave the desired layers enabled and click **Download .vtiles**.
 4. Keep the downloaded `una-topo-z8-8.vtiles` file. Larger regions and higher zooms work, but the page refuses exports above 1,024 tiles and limits each prepared tile to 16 KiB.
@@ -140,4 +135,4 @@ For subsequent maps, repeat only steps 5–7. Copy every new or replaced pack to
 
 The repository's original source and documentation are available under the [MIT License](LICENSE). It retains the copyright notices required for the MapKit code derived from [Toby Murray's watch-apps](https://github.com/tobymurray/watch-apps) and the UNA Watch SDK examples. The [third-party notices](THIRD_PARTY_NOTICES.md) identify separately licensed Poppins fonts and TouchGFX-generated integration; neither is relicensed under MIT.
 
-The vector exporter uses browser-loaded MapLibre and public vector-tile services. Exported packs retain attribution, but their data remains subject to the providers' terms and [OpenStreetMap attribution](https://www.openstreetmap.org/copyright).
+The vector exporter uses public vector-tile services. Exported packs retain attribution, but their data remains subject to the providers' terms and [OpenStreetMap attribution](https://www.openstreetmap.org/copyright).
