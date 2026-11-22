@@ -8,10 +8,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main id="map" aria-label="UNA rawtiles export preview"></main>
+  <main id="map" aria-label="Navigate and select a watch map area"></main>
+  <canvas id="map-preview" aria-label="Watch-style map at the selected zoom"></canvas>
+  <div id="selection-outline" hidden aria-hidden="true"></div>
   <section class="panel" aria-label="Map style and export controls">
     <h1>UNA Vector Map Exporter</h1>
-    <p>OpenFreeMap PBF topology with OSM US vector contours. No raster source.</p>
+    <p>Watch rendering of OpenFreeMap vectors and OSM US contours. No labels, photos or desktop-only styling.</p>
     <dl class="readout">
       <dt>Center</dt><dd id="center">—</dd>
       <dt>Zoom</dt><dd id="zoom">—</dd>
@@ -21,14 +23,13 @@
       <label><input type="checkbox" data-layer="water" checked> Water</label>
       <label><input type="checkbox" data-layer="contours" checked> Contours</label>
       <label><input type="checkbox" data-layer="roads" checked> Roads</label>
-      <label><input type="checkbox" data-layer="labels" checked> Labels (preview only)</label>
       <label><input type="checkbox" data-layer="trails" checked> OSM trails</label>
       <label><input type="checkbox" data-layer="peaks" checked> Mountain peaks</label>
     </fieldset>
-    <button type="button" id="watch-preview-toggle" aria-controls="watch-preview" aria-expanded="false">Watch mockup</button>
+    <button type="button" id="watch-preview-toggle" aria-controls="watch-preview" aria-expanded="false">240 × 240 watch view</button>
     <section class="export" aria-label="Vector export">
       <h2>Vector export</h2>
-      <p>Shift-drag a rectangle, or use the current view. The browser prepares vector geometry for the watch. Labels appear in the preview only.</p>
+      <p>Shift-drag a rectangle, or use the current view. Both views use the same prepared tiles and palette as the watch; the centre marker represents a GPS fix. A live breadcrumb only exists on the watch.</p>
       <div class="zoom-fields">
         <label>Min zoom <select id="zoom-min" aria-label="Minimum export zoom"></select></label>
         <label>Max zoom <select id="zoom-max" aria-label="Maximum export zoom"></select></label>
@@ -45,13 +46,14 @@
     <div class="watch-case">
       <div class="watch-screen">
         <div class="watch-pixels">
-          <main id="watch-map" aria-label="Current map view at watch display size"></main>
+          <canvas id="watch-map" width="240" height="240" aria-label="Watch-style map at 240 by 240 pixels"></canvas>
         </div>
       </div>
     </div>
     <p>UNA watch map · 1.2 in · 240 × 240 px · 200 PPI</p>
     <button type="button" id="watch-preview-close">Close mockup</button>
   </aside>
+  <p class="credits">Map data: <a href="https://openfreemap.org/">OpenFreeMap</a> / <a href="https://openmaptiles.org/">OpenMapTiles</a> / <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>; contours: <a href="https://tiles.openstreetmap.us/">OpenStreetMap US</a> / Mapzen DEM. These credits are stored in the pack, not drawn on the watch map.</p>
   <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
   <script type="importmap">{"imports":{"@mapbox/vector-tile":"https://esm.sh/@mapbox/vector-tile@2.0.4","geojson-vt":"https://esm.sh/geojson-vt@4.0.2","earcut":"https://esm.sh/earcut@3.0.2","pbf":"https://esm.sh/pbf@4.0.1"}}</script>
   <script type="module" src="app.js"></script>
