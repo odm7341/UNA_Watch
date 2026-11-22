@@ -121,6 +121,6 @@ export async function prepareSources(style, enabled) {
         if(bytes.length<=MAX_TILE_BYTES) return bytes;
       } catch (err) { if (!(err instanceof TileTooComplex)) throw err; }
     }
-    throw new Error(`Tile ${tile.z}/${tile.x}/${tile.y} is too dense; disable layers or choose a higher zoom.`);
+    throw new Error(`Tile ${tile.z}/${tile.x}/${tile.y} is too dense; disable layers or exclude this tile.`);
   };
 }

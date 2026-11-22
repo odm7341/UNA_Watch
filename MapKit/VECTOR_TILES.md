@@ -11,7 +11,7 @@ is 224 bytes:
 | --- | --- | --- |
 | 0 | 4 bytes | `VMAP` |
 | 4 | u8 | version = 1 |
-| 5, 6 | u8 each | minimum, maximum native zoom (maximum 14) |
+| 5, 6 | u8 each | minimum, maximum stored zoom (maximum 17; older readers accept up to 14) |
 | 7 | u8 | reserved = 0 |
 | 8 | u32 | tile count, 1–1024 |
 | 12–24 | four i32 | west, south, east, north in microdegrees |
@@ -34,7 +34,10 @@ and its declared CRC before any payload is rendered.
 The exporter clips and simplifies geometry, resolves polygon holes, triangulates
 fills, and writes MVT v2 layers in paint order (`land`, `water`, `contour`,
 `road`, `trail`, `peak`) at extent 256. Coordinates are tile-local. It packages
-z8–14; contours above z12 are clipped from the native parent. The watch draws
+one z14 spatial grid. Display zooms 14–17 reuse this same geometry,
+transforming vertices before scan conversion into the cached display tile.
+Legacy multilevel packs retain their stored zoom range. Sources above their native maximum are clipped from the parent
+at export time. The watch draws
 triangles, lines and points using integer arithmetic. Labels are preview-only.
 An arbitrary provider PBF is not a prepared watch tile.
 

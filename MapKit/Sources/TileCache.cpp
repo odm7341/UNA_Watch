@@ -10,7 +10,7 @@ namespace {
 // desktop. No polygon lists, sorting, floating point or allocation on watch.
 class Paint final : public VectorTile::Sink {
 public:
-    explicit Paint(uint8_t* dst) : pixels(dst) {}
+    Paint(uint8_t* dst,int scale,int ox,int oy) : pixels(dst),scale(scale),ox(ox),oy(oy) {}
     bool good = true;
     void beginLayer(const char* name, size_t n, uint32_t extent) override {
         auto is = [&](const char* s){ return strlen(s)==n && !memcmp(name,s,n); };
@@ -22,18 +22,22 @@ public:
     void beginFeature(VectorTile::Geometry g) override { type = g; vertices = 0; }
     void moveTo(int32_t x,int32_t y) override {
         if (!bounded(x,y)) return;
+        x=x*scale-ox; y=y*scale-oy;
         first = last = {x,y}; vertices = 1;
         if (type == VectorTile::Geometry::Point) dot(x,y);
     }
     void lineTo(int32_t x,int32_t y) override {
         if (!bounded(x,y)) return;
+        x=x*scale-ox; y=y*scale-oy;
         if (type == VectorTile::Geometry::Polygon) {
             if (++vertices == 2) middle = {x,y};
             else if (vertices != 3) good = false;
         } else {
+            if ((last.x<0 && x<0) || (last.y<0 && y<0) ||
+                (last.x>=256 && x>=256) || (last.y>=256 && y>=256)) { last={x,y}; return; }
             int dx = abs(x-last.x), dy = -abs(y-last.y);
             int sx = last.x<x ? 1:-1, sy = last.y<y ? 1:-1, err=dx+dy;
-            if (!spend(1+std::max(dx,-dy))) return;
+            if (!spend(1+std::max(dx,-dy)/scale)) return;
             for (int i=0;;++i) {
                 if ((!dashed || (i%6)<4) && (!contour || ((last.x+last.y)&3)==0)) dot(last.x,last.y);
                 if (last.x==x && last.y==y) break;
@@ -56,7 +60,7 @@ public:
             int l=cross(a,c), r=y<b.y ? cross(a,b):cross(b,c);
             if(l>r) std::swap(l,r);
             l=std::max(0,l);r=std::min(256,r);
-            if(!spend(4+std::max(0,r-l)/4)) return;
+            if((y+oy)%scale==0 && !spend(4+std::max(0,r-l)/(4*scale))) return;
             while(l<r && (l&3)) dot(l++,y);
             int bytes=(r-l)/4;
             if(bytes>0){memset(pixels+y*64+l/4,colour*0x55,bytes);l+=bytes*4;}
@@ -66,6 +70,7 @@ public:
 private:
     struct P {int x,y;} first{},middle{},last{};
     uint8_t* pixels;
+    int scale,ox,oy;
     VectorTile::Geometry type{};
     unsigned vertices=0, colour=0;
     int budget=500000;
@@ -83,10 +88,11 @@ const uint8_t* TileCache::get(const VectorPack& pack,uint8_t z,uint32_t x,uint32
     Slot& s=slots[(x&1)+2*(y&1)];
     if(!s.used || s.x!=x || s.y!=y || s.z!=z){
         s.x=x;s.y=y;s.z=z;s.used=true;s.valid=false;
-        auto tile=pack.findTile(z,x,y);
+        const unsigned shift=pack.displayShift(z), scale=1u<<shift;
+        auto tile=pack.findTile(z-shift,x>>shift,y>>shift);
         if(tile.valid() && pack.readTile(tile,input,sizeof(input))){
             memset(s.pixels,0,sizeof(s.pixels));
-            Paint paint(s.pixels);
+            Paint paint(s.pixels,scale,(x%scale)*256,(y%scale)*256);
             s.valid=VectorTile::decode(input,tile.length,paint) && paint.good;
         }
     }

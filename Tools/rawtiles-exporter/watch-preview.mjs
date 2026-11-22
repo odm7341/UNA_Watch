@@ -17,7 +17,7 @@ export function paintTile(canvas,pixels) {
   ctx.putImageData(image,0,0);
 }
 
-export function rasterizeTile(bytes) {
+export function rasterizeTile(bytes, scale=1, ox=0, oy=0) {
   const pixels = new Uint8Array(SIDE * SIDE);
   const layers = new VectorTile(new Pbf(bytes)).layers;
   let budget = 500000;
@@ -35,14 +35,16 @@ export function rasterizeTile(bytes) {
         if (!path.length) continue;
         if (path.some(({x, y}) => x < -8 || x > 264 || y < -8 || y > 264))
           throw new Error('Watch tile coordinates out of range');
+        for (const p of new Set(path)) { p.x=p.x*scale-ox; p.y=p.y*scale-oy; }
         if (feature.type === 1) {
           for (const p of path) dot(p.x, p.y, color);
         } else if (feature.type === 2) {
           let last = path[0];
           for (const end of path.slice(1)) {
             let x = last.x, y = last.y;
+            if ((x<0 && end.x<0)||(x>=256 && end.x>=256)||(y<0 && end.y<0)||(y>=256 && end.y>=256)) {last=end;continue;}
             const dx = Math.abs(end.x - x), dy = -Math.abs(end.y - y);
-            budget -= 1 + Math.max(dx, -dy);
+            budget -= 1 + Math.trunc(Math.max(dx, -dy)/scale);
             if (budget < 0) throw new Error('Watch tile drawing budget exceeded');
             const sx = x < end.x ? 1 : -1, sy = y < end.y ? 1 : -1;
             let err = dx + dy;
@@ -66,7 +68,7 @@ export function rasterizeTile(bytes) {
             let left = cross(a, c, y), right = y < b.y ? cross(a, b, y) : cross(b, c, y);
             if (left > right) [left, right] = [right, left];
             left = Math.max(0, left); right = Math.min(SIDE, right);
-            budget -= 4 + Math.trunc(Math.max(0, right - left) / 4);
+            if ((y+oy)%scale===0) budget -= 4 + Math.trunc(Math.max(0, right - left) / (4*scale));
             if (budget < 0) throw new Error('Watch tile drawing budget exceeded');
             for (let x = left; x < right; x++) dot(x, y, color);
           }

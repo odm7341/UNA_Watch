@@ -44,6 +44,14 @@ public:
     void close();
     bool isOpen() const { return mFile != nullptr; }
     const Header& header() const { return mHeader; }
+    // Single-grid packs can be magnified up to 8x without another index.
+    uint8_t displayMax() const {
+        return mHeader.zoomMin == mHeader.zoomMax && mHeader.zoomMax >= 14
+            ? 17 : mHeader.zoomMax;
+    }
+    unsigned displayShift(uint8_t z) const {
+        return z > mHeader.zoomMax && z <= displayMax() ? z - mHeader.zoomMax : 0;
+    }
     uint64_t packSize() const { return mSize; }
     bool declaredCrc32(uint32_t& out) const { if (!isOpen()) return false; out = mCrc; return true; }
     Tile findTile(uint8_t z, uint32_t x, uint32_t y) const;

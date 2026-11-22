@@ -89,9 +89,9 @@ Its build produces `Map_Manager_*.uapp` in that build directory or `MapManager/O
 Open the [vector exporter](https://odm7341.github.io/UNA_Watch/rawtiles-exporter/).
 
 1. Move to a place you know. Click **Draw polygon**, tap its corners and choose **Finish polygon**, or click **Use current view**.
-2. For a fast first test choose zoom `8` to `8`; the current view should estimate one or a few tiles.
+2. For a fast first test select a small area covering one or a few geometry tiles.
 3. Leave the desired layers enabled and click **Download .vtiles**.
-4. Keep the downloaded `una-topo-z8-8.vtiles` file. Larger regions and higher zooms work, but the page refuses exports above 1,024 tiles and limits each prepared tile to 16 KiB.
+4. Keep the downloaded `una-topo.vtiles` file. One geometry grid serves all watch display scales (z14–17); packs are limited to 1,024 tiles of up to 16 KiB each.
 
 See the [vector exporter guide](Tools/rawtiles-exporter/README.md) for selection, layer, attribution, and hosting details.
 
@@ -106,7 +106,7 @@ mkdir -p "$WATCH/Apps/HikeMap" "$WATCH/Apps/RunMap" "$WATCH/Apps/MapManager" "$W
 cp HikeMap/Software/Apps/HikeMap-CMake/build/Hike_Map_*.uapp "$WATCH/Apps/HikeMap/"
 cp RunMap/Software/Apps/RunMap-CMake/build/Run_Map_*.uapp "$WATCH/Apps/RunMap/"
 cp MapManager/Software/Apps/MapManager-CMake/build/Map_Manager_*.uapp "$WATCH/Apps/MapManager/"
-cp ~/Downloads/una-topo-z8-8.vtiles "$WATCH/Apps/SharedData/maps/"
+cp ~/Downloads/una-topo.vtiles "$WATCH/Apps/SharedData/maps/"
 ```
 
 Use the actual package locations printed by your builds if they differ. The USB path is `Apps/SharedData/maps/` (a sibling of the app directories); the current apps only scan `*.vtiles` there. Safely eject the watch volume, unplug the cable, and power-cycle the watch. The SDK's [USB deployment guide](https://developers.unawatch.com/latest/deploy.html) requires safe ejection and a restart so the app scan runs.

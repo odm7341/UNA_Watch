@@ -7,6 +7,7 @@
 export const HEADER_BYTES = 224;
 export const ENTRY_BYTES = 20;
 export const MAX_TILE_BYTES = 16384;
+export const MAX_PACK_ZOOM = 17;
 export const ATTRIBUTION = 'OpenFreeMap | © OpenMapTiles | © OpenStreetMap contributors | Contours © OpenStreetMap US, Mapzen DEM.';
 
 function crc32(bytes, previous = 0) {
@@ -22,7 +23,7 @@ function lon(x, z) { return x * 360 / (2 ** z) - 180; }
 function lat(y, z) { return Math.atan(Math.sinh(Math.PI * (1 - 2 * y / (2 ** z)))) * 180 / Math.PI; }
 
 export function createVectorPack(ranges, minZoom, maxZoom) {
-  if (!ranges.length || minZoom < 0 || maxZoom > 14 || minZoom > maxZoom) throw new Error('Unsupported vector zoom range (0–14).');
+  if (!ranges.length || minZoom < 0 || maxZoom > MAX_PACK_ZOOM || minZoom > maxZoom) throw new Error(`Unsupported vector zoom range (0–${MAX_PACK_ZOOM}).`);
   const tiles = [];
   if (ranges.length !== maxZoom-minZoom+1) throw new Error('Missing zoom levels.');
   for (const [i,range] of ranges.entries()) {
@@ -37,6 +38,9 @@ export function createVectorPack(ranges, minZoom, maxZoom) {
 }
 
 export function packFromTiles(tiles,minZoom,maxZoom) {
+  if (!Number.isInteger(minZoom) || !Number.isInteger(maxZoom) || minZoom<0 || minZoom>maxZoom ||
+      maxZoom>MAX_PACK_ZOOM || tiles.some(t=>t.z<minZoom || t.z>maxZoom))
+    throw new Error(`Unsupported vector zoom range (0–${MAX_PACK_ZOOM}).`);
   if (!tiles.length || tiles.length > 1024) throw new Error('Pack must contain 1–1024 tiles.');
   let west=180,south=90,east=-180,north=-90;
   for(const {z,x,y} of tiles) {

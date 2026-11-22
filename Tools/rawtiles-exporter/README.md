@@ -4,8 +4,10 @@ Open the [hosted exporter](https://odm7341.github.io/UNA_Watch/rawtiles-exporter
 or run `npm ci && npm run dev` in this directory. Select **Draw polygon**,
 click or tap the corners, then **Finish polygon**. **Undo corner** and
 **Cancel** are available while drawing. Only whole tiles intersecting the
-polygon are included. Alternatively select **Use current view**. Choose a
-native zoom range (8–14) and layers, then **Download .vtiles**. Start with a
+polygon are included. Alternatively select **Use current view**. Choose your
+layers, then **Download .vtiles**. The pack stores geometry once on a z14
+spatial grid. Updated HikeMap and RunMap redraw it at z14 through z17;
+older versions can display these packs at z14. Start with a
 small region near your GPS position. Copy the pack to `Apps/SharedData/maps/`
 on USB, safely disconnect, and let the updated Map Manager verify it. See the
 [watch installation guide](../../README.md#complete-guide-put-a-map-on-your-own-watch).
@@ -18,9 +20,10 @@ shows the selected pack's tiles at the displayed integer watch zoom; areas
 outside the selected pack appear as the watch's no-tile background. The watch
 adds live breadcrumb points during an activity, which cannot be previewed
 before a recording exists. The export contains geometry, not rendered images.
-The exporter clips parent contour tiles at z13–14. Dense
+Above a provider's maximum source zoom, the exporter clips and scales its
+parent geometry. This magnifies existing detail; it doesn't create new data. Dense
 tiles are simplified, and exports that still exceed the watch budget fail
-with the tile address. Try fewer layers or a higher zoom. Packs are limited
+with the tile address. Try fewer layers. Packs are limited
 to 1,024 tiles with 16 KiB of payload each.
 
 Credits are shown beside the preview and embedded in the pack metadata; they

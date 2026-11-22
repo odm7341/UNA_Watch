@@ -4,23 +4,20 @@ import {style} from './map-style.js';
 import {formatBytes} from './tile-math.js';
 import {polygonTiles} from './polygon.mjs';
 import {prepareSources} from './watch-geometry.mjs';
-import {packFromTiles,addVectorTile,finishVectorPack} from './vector-pack.mjs';
+import {packFromTiles,addVectorTile,finishVectorPack,MAX_PACK_ZOOM} from './vector-pack.mjs';
 import {rasterizeTile,paintTile,renderWatch} from './watch-preview.mjs';
 
 const $=id=>document.getElementById(id);
 const layers=[...document.querySelectorAll('[data-layer]')];
 const names={landcover:'land',water:'water',contours:'contour',roads:'road',trails:'trail',peaks:'peak'};
-const map=L.map('map',{minZoom:8,maxZoom:14,zoomControl:false,attributionControl:false,
+const map=L.map('map',{minZoom:8,maxZoom:MAX_PACK_ZOOM,zoomControl:false,attributionControl:false,
   maxBounds:[[-85.05112878,-180],[85.05112878,180]],maxBoundsViscosity:1
 }).setView([43.4387179,-70.7746224],13);
 L.control.zoom({position:'bottomright'}).addTo(map);
 const overlay=L.layerGroup().addTo(map);
 const key=t=>`${t.z}/${t.x}/${t.y}`;
 let polygon=[],draft=null, tiles=[],included=new Set(),busy=false,watchVersion=0;
-for(const id of ['zoom-min','zoom-max']) {
-  for(let z=8;z<=14;z++) $(id).add(new Option(z,z));
-  $(id).value=id==='zoom-min'?11:13;
-}
+const storageGrid=14;
 function sourceCache() {
   const enabled=new Set(layers.filter(el=>el.checked).map(el=>names[el.dataset.layer]));
   let source; const cache=new Map();
@@ -37,11 +34,18 @@ function sourceCache() {
   };
 }
 let loadTile=sourceCache();
+async function displayPixels(t,selected=false) {
+  const scale=2**Math.max(0,t.z-storageGrid);
+  const parent={z:Math.min(t.z,storageGrid),x:Math.floor(t.x/scale),y:Math.floor(t.y/scale)};
+  if(selected && !included.has(key(parent))) return null;
+  const {bytes,pixels}=await loadTile(parent);
+  return scale===1?pixels:rasterizeTile(bytes,scale,256*(t.x%scale),256*(t.y%scale));
+}
 const grid=L.gridLayer({tileSize:256,noWrap:true,updateWhenIdle:true});
 grid.createTile=function(coords,done) {
   const canvas=document.createElement('canvas');
   canvas.width=canvas.height=256;
-  loadTile(coords).then(({pixels})=>{paintTile(canvas,pixels);done(null,canvas);},
+  displayPixels(coords).then(pixels=>{paintTile(canvas,pixels);done(null,canvas);},
     error=>{done(error,canvas);if(!busy) $('status').textContent=error.message;});
   return canvas;
 };
@@ -50,14 +54,13 @@ grid.addTo(map);
 async function watch() {
   const v=++watchVersion;
   if($('watch-preview').hidden) return;
-  const zoom=Math.max(+$('zoom-min').value,Math.min(+$('zoom-max').value,map.getZoom()));
+  const zoom=Math.max(storageGrid,map.getZoom());
   const canvas=$('watch-map'), state=$('watch-state');
   state.textContent=`Loading watch tiles at z${zoom}…`;
   let hits=0;
   try {
     await renderWatch(canvas,map.getCenter(),zoom,async t=>{
-      if(!included.has(key(t))) return null;
-      const {pixels}=await loadTile(t); hits++; return pixels;
+      const pixels=await displayPixels(t,true); if(pixels) hits++; return pixels;
     },()=>v===watchVersion);
     if(v===watchVersion) state.textContent=hits?`Pack preview · z${zoom}`:
       'No selected tiles here. Pan inside the polygon or choose Use current view.';
@@ -75,13 +78,12 @@ function controls() {
   $('finish').disabled=!(draft?.length>=3);
   $('draw').hidden=!!draft;
   $('export-pack').disabled=busy || !!draft || !tiles.length;
-  for(const el of [ $('draw'),$('select-view'),$('zoom-min'),$('zoom-max'),...layers]) el.disabled=busy;
+  for(const el of [ $('draw'),$('select-view'),...layers]) el.disabled=busy;
 }
 function update() {
-  const min=+$('zoom-min').value,max=+$('zoom-max').value;
   try {
-    tiles=polygonTiles(polygon,min,max);
-    $('estimate').textContent=`${tiles.length} tiles · up to ${formatBytes(228+tiles.length*16404)} · z${min}–${max}`;
+    tiles=polygonTiles(polygon,storageGrid,storageGrid);
+    $('estimate').textContent=`${tiles.length} geometry tiles · up to ${formatBytes(228+tiles.length*16404)}`;
   } catch(e) {tiles=[];$('estimate').textContent=e.message;}
   included=new Set(tiles.map(key));
   controls();outline();watch();
@@ -99,7 +101,7 @@ $('draw').onclick=()=>{draft=[];edit();};
 $('undo').onclick=()=>{draft.pop();edit();};
 $('cancel').onclick=()=>{draft=null;edit();};
 $('finish').onclick=()=>{
-  try { polygonTiles(draft,+$('zoom-min').value,+$('zoom-max').value); }
+  try { polygonTiles(draft,storageGrid,storageGrid); }
   catch(e) { $('status').textContent=e.message;return; }
   polygon=draft;draft=null;edit();update();
 };
@@ -110,7 +112,6 @@ function readout() {
   $('zoom').textContent=map.getZoom();
 }
 map.on('moveend',()=>{readout();watch();});
-for(const id of ['zoom-min','zoom-max']) $(id).onchange=update;
 function refresh() {loadTile=sourceCache();grid.redraw();watch();}
 for(const el of layers) el.onchange=refresh;
 $('retry').onclick=refresh;
@@ -124,13 +125,13 @@ $('export-pack').onclick=async()=>{
   if(busy || draft || !tiles.length) return;
   busy=true;controls();
   try {
-    const pack=packFromTiles(tiles,+$('zoom-min').value,+$('zoom-max').value);
+    const pack=packFromTiles(tiles,storageGrid,storageGrid);
     for(const [i,t] of tiles.entries()) {
       $('status').textContent=`Packing ${i+1}/${tiles.length}: ${key(t)}`;
       addVectorTile(pack,t,(await loadTile(t)).bytes);
     }
     const file=finishVectorPack(pack),link=document.createElement('a');
-    link.href=URL.createObjectURL(file);link.download=`una-topo-z${$('zoom-min').value}-${$('zoom-max').value}.vtiles`;
+    link.href=URL.createObjectURL(file);link.download='una-topo.vtiles';
     link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
     $('status').textContent=`Downloaded ${formatBytes(file.size)}.`;
   } catch(e) { $('status').textContent=`Export failed: ${e.message}`; }

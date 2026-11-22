@@ -16,6 +16,9 @@ test('preview paints exported triangles, holes and routes as watch pixels', asyn
   for (const pixel of pixels) counts[pixel]++;
   // Counts from MapKit's host rasterizer using the same synthetic VMAP pack.
   assert.deepEqual(counts, [29980, 0, 35300, 256]);
+  const child=rasterizeTile(data,8,2*256,4*256);
+  assert.equal(child[88],3);
+  assert.equal(child[256+88],2);
 });
 
 test('preview center snaps to the watch microdegree and integer-pixel grid', () => {

@@ -20,7 +20,7 @@ test('writes sorted indexed MVT payloads and a CRC footer', async () => {
 });
 
 test('bounds tile sizes and zoom range', () => {
-  assert.throws(() => createVectorPack([{ zoom: 15, minX: 0, maxX: 0, minY: 0, maxY: 0 }], 15, 15), /Unsupported/);
+  assert.throws(() => createVectorPack([{ zoom: 18, minX: 0, maxX: 0, minY: 0, maxY: 0 }], 18, 18), /Unsupported/);
   const pack = createVectorPack([{ zoom: 8, minX: 0, maxX: 0, minY: 0, maxY: 0 }], 8, 8);
   assert.throws(() => addVectorTile(pack, pack.tiles[0], new Uint8Array(16385)), /16 KiB/);
   assert.throws(() => finishVectorPack(pack), /Missing/);

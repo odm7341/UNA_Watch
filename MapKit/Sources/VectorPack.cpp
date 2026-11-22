@@ -24,7 +24,7 @@ bool VectorPack::decodeHeader(const uint8_t* p, uint64_t size, Header& out)
 {
     if (size < kHeaderBytes + 4 || size > std::numeric_limits<uint32_t>::max()
         || std::memcmp(p, "VMAP", 4) || p[4] != 1 || p[7] != 0
-        || p[5] > p[6] || p[6] > 14
+        || p[5] > p[6] || p[6] > 17
         || u32(p + 8) == 0 || u32(p + 8) > kMaxTiles
         || u32(p + 28) != kHeaderBytes
         || u32(p + 32) != kHeaderBytes + u32(p + 8) * kEntryBytes

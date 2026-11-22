@@ -187,7 +187,7 @@ bool MapSession::cycleZoom()
         return false;
     }
     const VectorPack::Header& h = mContainer.header();
-    mZoom = (mZoom >= h.zoomMax) ? h.zoomMin : static_cast<uint8_t>(mZoom + 1);
+    mZoom = (mZoom >= mContainer.displayMax()) ? h.zoomMin : static_cast<uint8_t>(mZoom + 1);
     return true;
 }
 
@@ -212,10 +212,11 @@ MapStatus MapSession::status() const
     // rectangle around a set of tiles, not the set itself -- and it only
     // promises coverage somewhere in [zoomMin, zoomMax], not at every zoom.
     // So the honest test is whether the tile under the crosshair exists.
+    const uint8_t stored = mZoom - mContainer.displayShift(mZoom);
     const VectorPack::Tile here = mContainer.findTile(
-        mZoom,
-        MapMath::tileCoord(MapMath::rescale(mCenterX, MapMath::TRACE_ZOOM, mZoom)),
-        MapMath::tileCoord(MapMath::rescale(mCenterY, MapMath::TRACE_ZOOM, mZoom)));
+        stored,
+        MapMath::tileCoord(MapMath::rescale(mCenterX, MapMath::TRACE_ZOOM, stored)),
+        MapMath::tileCoord(MapMath::rescale(mCenterY, MapMath::TRACE_ZOOM, stored)));
     return here.valid() ? MapStatus::Live : MapStatus::OffCoverage;
 }
 
